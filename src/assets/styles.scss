@@ -1,0 +1,19 @@
+@import "bootstrap/scss/functions";
+
+@import './variables.scss';
+
+@import "bootstrap/scss/variables";
+
+
+@import 'bootstrap/scss/bootstrap.scss';
+
+body {
+    // background-color: rgb(96, 212, 90);
+    font-family: HK Grotesk;
+}
+.btn-success {
+    color: white;
+    &:hover{
+        color: white;
+    }
+}
