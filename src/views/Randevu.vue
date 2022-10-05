@@ -27,7 +27,7 @@
 
 <script>
 export default {
-    name: 'DERSRandevu',
+    name: 'Randevu',
 
     data() {
         return {

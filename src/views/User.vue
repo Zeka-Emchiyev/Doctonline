@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-7 ">
-        <div class="row w-100 bg-light">
+        <div class="row w-100">
           <div class="col-3 col-sm-3 me-4">
             <img class="image" src="../assets/Rectangle 332.png" alt="">
           </div>
@@ -70,8 +70,8 @@
         <div class="container">
           <div class="row">
             <div class="col-7">
-              <h2>Ünvan</h2>
-              <h2 class="fw-bold">Ege Hospital</h2>
+              <h2 class="head">Ünvan</h2>
+              <h3 class="head-ege">Ege Hospital</h3>
               <p class="street">Academician Hasan Aliyev St.38</p>
               <p class="number">+994 (55) 850 11 15</p>
               <h5 class="mb-4"><img src="../assets/File_dock_fill.png" alt=""> Məlumat</h5>
@@ -113,31 +113,31 @@
             </span>
           </p>
 
-          <h2 class="mb-4"><img src="../assets/Widget.svg" alt=""> Xidmətlər</h2>
+          <h2 class="mb-4 head"><img src="../assets/Widget.svg" alt=""> Xidmətlər</h2>
 
           <div class="row">
             <div class="col mb-3">
-              <button class="text-header border-0">Kanal müalicəsi</button>
+              <button class="text-kanal text-nowrap border-0">Kanal müalicəsi</button>
             </div>
             <div class="col">
-              <button class="text-header border-0">Kanal müalicəsi</button>
+              <button class="text-kanal text-nowrap border-0">Kanal müalicəsi</button>
             </div>
             <div class="col">
-              <button class="text-header border-0">Kanal müalicəsi</button>
+              <button class="text-kanal text-nowrap border-0">Kanal müalicəsi</button>
             </div>
             <div class="col">
-              <button class="text-header border-0">Kanal müalicəsi</button>
+              <button class="text-kanal text-nowrap border-0">Kanal müalicəsi</button>
             </div>
 
             <div class="col-1"><img src="../assets/more.png" alt=""></div>
           </div>
 
-          <h2 class="mb-4"><img src="../assets/Lable_fill.png" alt=""> İş təcrübəsi</h2>
-          <p class="text fw-bold">İstanbul NS klinikası- (2010-2015)</p>
-          <p class="text fw-bold">Baku medical plaza- (2016-2019)</p>
-          <p class="text fw-bold">Ege hospital- (2019-2022)</p>
+          <h2 class="mb-4 head"><img src="../assets/Lable_fill.png" alt=""> İş təcrübəsi</h2>
+          <p class="text-experience">İstanbul NS klinikası- (2010-2015)</p>
+          <p class="text-experience">Baku medical plaza- (2016-2019)</p>
+          <p class="text-experience">Ege hospital- (2019-2022)</p>
 
-          <h2 class="mb-4"><img src="../assets/Mortarboard.png" alt=""> Təhsil</h2>
+          <h2 class="mb-4 head"><img src="../assets/Mortarboard.png" alt=""> Təhsil</h2>
           <p class="text">Azərbaycan Tibb Universiteti</p>
           <p class="txt-light">Kurs</p>
           <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -149,11 +149,11 @@
           <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           <p class="text">Aliquam nulla egestas non, ac.</p>
 
-          <h5>FAQ</h5>
+          <h5 class="text-faq">FAQ</h5>
 
           <div class="accordion" id="accordionExample">
             <div class="accordion-item border-0">
-              <button class="fw-bold border-0 bg-light accordion-button accor-button" type="button"
+              <button class=" fw-bold border-0 bg-light accordion-button accor-button" type="button"
                 data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                 aria-controls="collapseOne">
                 Rhoncus nullam aliquam nam proin</button>
@@ -220,7 +220,7 @@
         <div class="container">
           <h2>Randevu al</h2>
           <p>Randevu tipini və tarixi seçərək davam edin</p>
-          <div class="row d-none d-md-block">
+          <div class="row d-none d-md-flex">
             <div class="col-6">
               <div class="container btn btn-outline-success randevu">
                 <div class="row mb-2 ">
@@ -307,6 +307,23 @@
   line-height: 20px;
 }
 
+.head {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.head-ege {
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.text-experience {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: bold;
+}
+
 .street {
   font-size: 24px;
   line-height: 24px;
@@ -333,12 +350,27 @@
   line-height: 22px;
 }
 
-// .accordion-button {
-//   --bs-bg-opacity: none !important;
-//   border: 0;
-//   background-color: none;
-// }
+.text-kanal {
+  font-size: 14px;
+  line-height: 20px;
+}
 
+.text-faq {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.accordion-button {
+  font-size: 16px !important;
+  line-height: 19.2px;
+}
+
+.accordion-body {
+  font-size: 16px;
+  line-height: 22.4px;
+  color: rgba(60, 60, 67, 0.85);
+  font-family: 'HK Grotesk';
+}
 
 .accordion-button:not(.collapsed) {
   background-color: none !important;
@@ -376,12 +408,55 @@
     line-height: 28px;
   }
 
+  .head {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .head-ege {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+
+  .text-experience {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: bold;
+  }
+
+  .street {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .text-kanal {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .text-faq {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
   .randevu {
     width: 160px;
     height: 48px;
     border: 1px solid #4CB147;
     border-radius: 8px;
+  }
 
+  .accordion-button {
+    font-size: 14px !important;
+    line-height: 16.8px;
+  }
+
+  .accordion-body {
+    font-size: 14px;
+    line-height: 19.6px;
+    color: rgba(60, 60, 67, 0.85);
+    font-family: 'HK Grotesk';
   }
 }
 </style>
@@ -393,7 +468,7 @@ import 'vue-cal/dist/vuecal.css'
 
 
 export default {
-  name: 'HomeView',
+  name: 'User',
   data() {
     return {
       selectedDate: null,

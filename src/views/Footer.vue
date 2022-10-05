@@ -1,9 +1,9 @@
 <template>
     <div>
         <!-- Footer -->
-        <footer class="text-center text-lg-start text-muted pt-3">
+        <footer class=" text-lg-start text-muted pt-3">
             <!-- Section: Links  -->
-            <div class="container-fluid text-center text-md-start mt-5 text-white">
+            <div class="container-fluid text-center-lg text-md-start mt-5 text-white">
                 <!-- Grid row -->
                 <div class="row mt-3">
                     <!-- Grid column -->
@@ -20,7 +20,7 @@
                     <!-- Grid column -->
                     <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">
+                        <h6 class="text-contact fw-bold mb-4">
                             Linklər
                         </h6>
                         <p>
@@ -40,13 +40,17 @@
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">
+                        <h6 class="text-contact  mb-4">
                             Əlaqə
                         </h6>
-                        <p>+994 (50) 831 31 16</p>
-                        <p>Xan Şuşinski küç 21</p>
+                        <p class="link">+994 (50) 831 31 16</p>
+                        <p class="link">Xan Şuşinski küç 21</p>
                     </div>
-                    <!-- Grid column -->
+                    <div class="col-6 d-md-none mb-5">
+                        <a class="me-4" href="https://www.facebook.com/"><img src="../assets/fb.png" alt=""></a>
+                        <a class="me-4" href="https://www.instagram.com/"><img src="../assets/instagram.png" alt=""></a>
+                        <a class="me-4" href="https://www.telegram.com/"><img src="../assets/telegram.png" alt=""></a>
+                    </div>
                 </div>
                 <!-- Grid row -->
             </div>
@@ -54,14 +58,14 @@
 
             <!-- Copyright -->
             <div class="container-fluid footer bg-dark">
-                <div class="row p-4">
-                    <div class="col-3 ms-5">
+                <div class="row justify-content-between p-3">
+                    <div class="col-3 ms-5 d-none d-md-block">
                         <a class="me-5" href="https://www.facebook.com/"><img src="../assets/fb.png" alt=""></a>
                         <a class="me-5" href="https://www.instagram.com/"><img src="../assets/instagram.png" alt=""></a>
                         <a class="me-5" href="https://www.telegram.com/"><img src="../assets/telegram.png" alt=""></a>
                     </div>
-                    <div class="col text-end">
-                        © 2020 Doctonline - Bütün hüquqlar qorunur.
+                    <div class="col-12 col-md-3">
+                        <p class="text-footer">© 2020 Doctonline - Bütün hüquqlar qorunur.</p>
                     </div>
                 </div>
             </div>
@@ -100,6 +104,19 @@ footer {
 
 .link {
     text-decoration: none;
+    color: white;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.text-contact {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.text-footer {
+    font-size: 16px;
+    line-height: 24px;
     color: white;
 }
 </style>
