@@ -1,71 +1,57 @@
 <template>
     <div class="container-fluid">
         <div class="contain-img ">
-            <router-link to="/user" class="btn btn-primary">Usere kec</router-link>
             <h1 class="text-center mt-5">Sağlamlığınıza baxın!</h1>
+
             <div class="row my-4 justify-content-center">
                 <div class=" col-10 col-md-6 ">
-                    <!-- <input type="text" class="icon form-control" value placeholder="Search" @click="searchDoctor"
-                        @blur="closeProfessional">
-                    <div class="border mt-1 content" v-if="textLoad">
-                        <p class="text-position my-3">Ixtisaslar</p>
-                        <button class="btn btn-light">Kardioloq</button>
-                    </div> -->
                     <div class="dropdown">
-                        <input class="dropdown-toggle form-control" type="text" id="dropdownMenuButton1"
+                        <input class="icon dropdown-toggle form-control" type="text" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
 
-                        <diw class=" dropdown-menu form-control mt-2" aria-labelledby="dropdownMenuButton1">
+                        <div class=" dropdown-menu form-control mt-2" aria-labelledby="dropdownMenuButton1">
                             <p class="dropdown-item text-position">Ixtisaslar</p>
+
                             <div class="d-flex flex-row flex-wrap">
-                                <div class="profession-title me-3" v-for="a in 6">
-                                    <p><a class="dropdown-item btn btn-light" href="#">Dermatoloq {{ a }}</a></p>
+                                <div class="profession-title me-3" v-for="profession in professions">
+                                    <router-link :to="{ name: 'search', params: { id: profession.id } }"
+                                        class="dropdown-item link">
+                                        {{ profession.name }}
+                                    </router-link>
                                 </div>
-                                <!-- <div class="">
-                                    <p><a class="dropdown-item btn btn-light" href="#">Endokrinoloq</a></p>
-                                </div>
-                                <div class="">
-                                    <p><a class="dropdown-item btn btn-light" href="#">Mama-ginekoloq</a></p>
-                                </div>
-                                <div class="">
-                                    <p><a class="dropdown-item btn btn-light" href="#">Kardioloq</a></p>
-                                </div>
-                                <div class="">
-                                    <p><a class="dropdown-item btn btn-light" href="#">Kardioloq</a></p>
-                                </div> -->
                             </div>
-                        </diw>
+                        </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'Home',
 
     data() {
         return {
-            textLoad: false
+            professions: '',
         };
     },
 
     mounted() {
-
+        this.professionsApi()
     },
 
     methods: {
-        searchDoctor() {
-            this.textLoad = true
 
-        },
-        closeProfessional() {
-            this.textLoad = false
+        professionsApi() {
+            axios.get("http://159.223.22.111/api-professions")
+                .then(response => {
+                    this.professions = response.data
+                    console.log(this.professions)
+                })
+                .catch(e => console.log(e))
         }
     },
 };
@@ -100,5 +86,16 @@ export default {
     font-size: 20px;
     line-height: 20px;
     font-weight: 500;
+}
+
+.link {
+    text-decoration: none;
+    font-weight: 500;
+    color: #101825;
+    background-color: #edf0f4;
+    cursor: pointer;
+    padding: 5px 12px;
+    margin: 5px;
+    border-radius: 8px;
 }
 </style>

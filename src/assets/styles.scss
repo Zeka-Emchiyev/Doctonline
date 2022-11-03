@@ -7,13 +7,22 @@
 
 @import 'bootstrap/scss/bootstrap.scss';
 
+// @import url('../../public/fonts/Gilroy/Gilroy-Regular.otf');
+
 body {
     // background-color: rgb(96, 212, 90);
-    font-family: HK Grotesk;
+    // font-family: HK Grotesk;
 }
+
+@font-face {
+    font-family: Gilroy-Regular;
+    src: url('../../public/fonts/Gilroy/Gilroy-Regular.otf');
+}
+
 .btn-success {
     color: white;
-    &:hover{
+
+    &:hover {
         color: white;
     }
 }

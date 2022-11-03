@@ -4,23 +4,23 @@
       <div class="col-md-7 ">
         <div class="row w-100">
           <div class="col-3 col-sm-3 me-4">
-            <img class="image" src="../assets/Rectangle 332.png" alt="">
+            <img class="image" src="../assets/Rectangle 332.png" alt="profile picture">
           </div>
 
           <div class="col-7">
-            <p class="text-success doc-profession">Stomatoloq</p>
-            <h5 class="name-surname">Azər Həsənov</h5>
+            <p class="text-success doc-profession">{{ doctor.profession }}</p>
+            <h5 class="name-surname">{{ doctor.fullname }}</h5>
             <div class="d-none d-md-flex flex-row mb-2">
-              <p class="city">Bakı</p>
-              <p class="location"><span class="location-square">&#9632;</span> Elmed Medical Center <span
+              <p class="city">{{ doctor.city }}</p>
+              <p class="location"><span class="location-square">&#9632;</span>{{ doctor.clinic }}<span
                   class="location-square">&#9632;</span></p>
             </div>
             <button class="btn btn-success d-none d-md-block col-sm-12 col-lg-5 ">Randevu al</button>
           </div>
           <div class="col-12 d-md-none">
             <div class="d-flex flex-row mb-2">
-              <p class="city">Bakı</p>
-              <p class="location"><span class="location-square">&#9632;</span> Elmed Medical Center <span
+              <p class="city">{{ doctor.city }}</p>
+              <p class="location"><span class="location-square">&#9632;</span>{{ doctor.clinic }}<span
                   class="location-square">&#9632;</span></p>
             </div>
             <div class="container">
@@ -71,9 +71,9 @@
           <div class="row">
             <div class="col-7">
               <h2 class="head">Ünvan</h2>
-              <h3 class="head-ege">Ege Hospital</h3>
-              <p class="street">Academician Hasan Aliyev St.38</p>
-              <p class="number">+994 (55) 850 11 15</p>
+              <h3 class="head-ege">{{ doctor.clinic }}</h3>
+              <p class="street">{{ doctor.address }}</p>
+              <p class="number">{{ doctor.phone }}</p>
               <h5 class="mb-4"><img src="../assets/File_dock_fill.png" alt=""> Məlumat</h5>
             </div>
             <div class="col">
@@ -91,23 +91,12 @@
                   <h2 class="modal-title" id="exampleModalLabel">Məlumat</h2>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body text">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur molestiae consequatur non ipsum
-                  sint beatae a quo excepturi temporibus ex? Temporibus, sint. Tenetur facilis fuga odit amet ad sint
-                  velit, facere porro quaerat! Sed itaque aut nam quisquam minima ipsam asperiores delectus nostrum
-                  voluptates veniam possimus omnis maxime nemo in tempore, accusantium mollitia expedita. Exercitationem
-                  saepe veniam pariatur accusantium? Ducimus quod harum accusamus magni officia dicta odio in
-                  blanditiis, tempora, vel quaerat sunt repellat possimus rerum corporis neque? Cupiditate sequi omnis
-                  ad laboriosam consequuntur impedit modi, dignissimos hic, tempora exercitationem repudiandae
-                  blanditiis dolore alias doloribus totam, sapiente possimus voluptate. Qui?
-                </div>
+                <div class="modal-body text">{{ doctor.description }}</div>
 
               </div>
             </div>
           </div>
-          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit cursus hac ut sit tempor et
-            fames. Malesuada mattis amet arcu elementum vitae. Egestas bibendum lorem tempor augue cursus laoreet
-            placerat lacus.Interdum et scelerisque non accumsan venenatis mattis. Aliquam nulla egestas non, ac.
+          <p class="text">{{ doctor.description }}
             <span class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
               Ətraflı
             </span>
@@ -117,28 +106,19 @@
 
           <div class="row">
             <div class="col mb-3">
-              <button class="text-kanal text-nowrap border-0">Kanal müalicəsi</button>
+              <button class="text-kanal text-nowrap border-0">{{ doctor.service }}</button>
             </div>
-            <div class="col">
-              <button class="text-kanal text-nowrap border-0">Kanal müalicəsi</button>
-            </div>
-            <div class="col">
-              <button class="text-kanal text-nowrap border-0">Kanal müalicəsi</button>
-            </div>
-            <div class="col">
-              <button class="text-kanal text-nowrap border-0">Kanal müalicəsi</button>
-            </div>
-
             <div class="col-1"><img src="../assets/more.png" alt=""></div>
           </div>
 
           <h2 class="mb-4 head"><img src="../assets/Lable_fill.png" alt=""> İş təcrübəsi</h2>
-          <p class="text-experience">İstanbul NS klinikası- (2010-2015)</p>
-          <p class="text-experience">Baku medical plaza- (2016-2019)</p>
-          <p class="text-experience">Ege hospital- (2019-2022)</p>
+          <div v-for="doctorExperience in doctor.experiences">
+            <p class="text-experience">{{ doctorExperience }}</p>
+          </div>
+
 
           <h2 class="mb-4 head"><img src="../assets/Mortarboard.png" alt=""> Təhsil</h2>
-          <p class="text">Azərbaycan Tibb Universiteti</p>
+          <p class="text"> {{ doctor.educations }}Azərbaycan Tibb Universiteti</p>
           <p class="txt-light">Kurs</p>
           <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           <p class="text">Egestas bibendum lorem tempor augue cursus laoreet</p>
@@ -277,6 +257,7 @@
 .doc-profession {
   font-size: 20px;
   line-height: 28px;
+  // font-family: Gilroy-Regular;
 }
 
 .name-surname {
@@ -465,10 +446,12 @@
 <script>
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
+import axios from 'axios'
 
 
 export default {
-  name: 'User',
+  name: 'Doctor',
+
   data() {
     return {
       selectedDate: null,
@@ -525,9 +508,24 @@ export default {
           class: 'health'
         }
 
-      ]
+      ],
+      doctor: '',
     };
   },
   components: { VueCal },
+  mounted() {
+    this.user()
+  },
+
+  methods: {
+    user() {
+      axios.get("http://159.223.22.111/api-doctors")
+        .then(response => {
+          this.doctor = response.data[0]
+          console.log(this.doctor)
+        })
+        .catch(e => console.log(e))
+    }
+  },
 }
 </script>
