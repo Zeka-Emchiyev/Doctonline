@@ -11,10 +11,6 @@
                         <div>
                             <img src="../assets/Logo 1.png" alt="">
                         </div>
-
-                        <div class="mt-5">
-                            <img src="../assets/Frame 77.png" alt="" class="img-fluid">
-                        </div>
                     </div>
 
                     <!-- Grid column -->

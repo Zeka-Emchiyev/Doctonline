@@ -1,16 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import User from '../views/User.vue'
+import Doctor from '../views/Doctor.vue'
 import Randevu from '../views/Randevu.vue'
 import Home from '../views/Home.vue'
+import DoctorHolder from '../views/DoctorHolder.vue'
+import Search from '../views/Search.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/user',
-    name: 'user',
-    component: User
+    path: '/doctor/:id',
+    name: 'doctor',
+    component: Doctor
+  },
+  {
+    path: '/search/:id',
+    name: 'search',
+    component: Search
+  },
+  {
+    path: '/doctors/',
+    name: 'doctors',
+    component: DoctorHolder
   },
   {
     path: '/',

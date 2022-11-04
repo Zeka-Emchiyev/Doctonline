@@ -3,7 +3,7 @@
         <div class="row align-items-center justify-content-between mt-2 mb-2">
 
             <div class="col-8 col-md-4">
-                <img src="../assets/24px.png" alt="" class="img me-3 pb-2">
+                <!-- <img src="../assets/24px.png" alt="" class="img me-3 pb-2"> -->
                 <router-link to="/" class="text-decoration-none">
                     <span class="text">Doct</span>
                     <span class="text-online">Online</span>
