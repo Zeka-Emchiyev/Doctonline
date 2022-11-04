@@ -519,7 +519,7 @@ export default {
 
   methods: {
     user() {
-      axios.get("http://159.223.22.111/api-doctors")
+      axios.get("https://admin.drrandevu.az/api-doctors")
         .then(response => {
           this.doctor = response.data[0]
           console.log(this.doctor)

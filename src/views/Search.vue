@@ -94,7 +94,7 @@ export default {
 
     methods: {
         professionApi() {
-            axios.get("http://159.223.22.111/api-professions")
+            axios.get("https://admin.drrandevu.az/api-professions")
                 .then(response => {
                     this.professions = response.data
                     // console.log(this.professions)
@@ -103,7 +103,7 @@ export default {
         },
 
         getDoctorsForProfession(professionId) {
-            axios.get("http://159.223.22.111/api-doctors/profession/" + professionId)
+            axios.get("https://admin.drrandevu.az/api-doctors/profession/" + professionId)
                 .then(response => {
                     this.doctors = response.data
                     console.log(this.doctors)
