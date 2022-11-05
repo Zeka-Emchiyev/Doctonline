@@ -13,6 +13,7 @@
                         <div class="d-flex flex-row flex-wrap">
                             <div class="profession-title me-3" v-for="profession in filterProfessions">
                                 <router-link :to="{ name: 'search', params: { id: profession.id } }"
+                                             @click.native="getDoctorsForProfession(profession.id)"
                                     class="dropdown-item link">
                                     {{ profession.name }}
                                 </router-link>
@@ -24,44 +25,46 @@
         </div>
 
         <div class="row">
-            <div class="col-md-9 col-sm-12 border rounded mb-2">
-                <div class="row mt-4">
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="position-relative rounded-circle border" style="width:104px; height: 104px">
-                                    <img class="rounded-circle" style="height: 100%;"
-                                        src="../assets/7f7c19d5-51e4-4c6c-ac41-527b59b41892.jpg" alt="">
-                                    <span
-                                        class="position-absolute top-0 p-2 bg-light border border-light rounded-circle">
+            <div class="col-md-9 col-sm-12">
+                <div v-for="doctor in doctors" :key="doctor.id" class="border rounded mb-2">
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="position-relative rounded-circle border" style="width:104px; height: 104px">
+                                        <img class="rounded-circle" style="height: 100%;"
+                                             src="../assets/7f7c19d5-51e4-4c6c-ac41-527b59b41892.jpg" alt="">
+                                        <span
+                                                class="position-absolute top-0 p-2 bg-light border border-light rounded-circle">
                                         <i class="bi bi-heart"></i>
                                     </span>
-                                </div>
-                                <div v-for="doctor in doctors">
-                                    <router-link class="text-decoration-none"
-                                        :to="{ name: 'doctor', params: { id: doctor.id } }">
-                                        Profile bax
-                                    </router-link>
-                                </div>
+                                    </div>
+                                    <div >
+                                        <router-link class="text-decoration-none"
+                                                     :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                            Profile bax
+                                        </router-link>
+                                    </div>
 
-                            </div>
-                            <div class="col-9" v-for="doctor in doctors">
-                                <p>{{ doctor.profession }}</p>
-                                <router-link class="text-decoration-none"
-                                    :to="{ name: 'doctor', params: { id: doctor.id } }">
-                                    {{ doctor.fullname }}
-                                </router-link>
-                                <p>{{ doctor.city }}</p>
-                                <p><i class="bi bi-star"></i>
-                                    <span>4.86</span>
-                                    (254 dəyərləndirmə )
-                                </p>
+                                </div>
+                                <div class="col-9" v-for="doctor in doctors">
+                                    <p>{{ doctor.profession }}</p>
+                                    <router-link class="text-decoration-none"
+                                                 :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                        {{ doctor.fullname }}
+                                    </router-link>
+                                    <p>{{ doctor.city }}</p>
+                                    <p><i class="bi bi-star"></i>
+                                        <span>4.86</span>
+                                        (254 dəyərləndirmə )
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-6">
-                        Calendar
+                        <div class="col-6">
+                            Calendar
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,12 +103,12 @@ export default {
 
     mounted() {
         this.professionApi()
-        this.doctorsApi()
+        this.getDoctorsForProfession(this.$route.params.id)
     },
 
     methods: {
         professionApi() {
-            axios.get("http://159.223.22.111/api-professions")
+            axios.get("https://admin.drrandevu.az/api-professions")
                 .then(response => {
                     this.professions = response.data
                     // console.log(this.professions)
@@ -113,8 +116,8 @@ export default {
                 .catch(e => console.log(e))
         },
 
-        doctorsApi() {
-            axios.get("http://159.223.22.111/api-doctors/" + this.$route.params.id)
+        getDoctorsForProfession(professionId) {
+            axios.get("https://admin.drrandevu.az/api-doctors/profession/" + professionId)
                 .then(response => {
                     this.doctors = response.data
                     console.log(this.doctors)
