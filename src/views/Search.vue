@@ -13,8 +13,7 @@
                         <div class="d-flex flex-row flex-wrap">
                             <div class="profession-title me-3" v-for="profession in filterProfessions">
                                 <router-link :to="{ name: 'search', params: { id: profession.id } }"
-                                             @click.native="getDoctorsForProfession(profession.id)"
-                                    class="dropdown-item link">
+                                    @click.native="getDoctorsForProfession" class="dropdown-item link">
                                     {{ profession.name }}
                                 </router-link>
                             </div>
@@ -31,17 +30,18 @@
                         <div class="col-6">
                             <div class="row">
                                 <div class="col-3">
-                                    <div class="position-relative rounded-circle border" style="width:104px; height: 104px">
+                                    <div class="position-relative rounded-circle border"
+                                        style="width:104px; height: 104px">
                                         <img class="rounded-circle" style="height: 100%;"
-                                             src="../assets/7f7c19d5-51e4-4c6c-ac41-527b59b41892.jpg" alt="">
+                                            src="../assets/7f7c19d5-51e4-4c6c-ac41-527b59b41892.jpg" alt="">
                                         <span
-                                                class="position-absolute top-0 p-2 bg-light border border-light rounded-circle">
-                                        <i class="bi bi-heart"></i>
-                                    </span>
+                                            class="position-absolute top-0 p-2 bg-light border border-light rounded-circle">
+                                            <i class="bi bi-heart"></i>
+                                        </span>
                                     </div>
-                                    <div >
+                                    <div>
                                         <router-link class="text-decoration-none"
-                                                     :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                            :to="{ name: 'doctor', params: { id: doctor.id } }">
                                             Profile bax
                                         </router-link>
                                     </div>
@@ -50,7 +50,7 @@
                                 <div class="col-9" v-for="doctor in doctors">
                                     <p>{{ doctor.profession }}</p>
                                     <router-link class="text-decoration-none"
-                                                 :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                        :to="{ name: 'doctor', params: { id: doctor.id } }">
                                         {{ doctor.fullname }}
                                     </router-link>
                                     <p>{{ doctor.city }}</p>
@@ -103,12 +103,12 @@ export default {
 
     mounted() {
         this.professionApi()
-        this.getDoctorsForProfession(this.$route.params.id)
+        this.getDoctorsForProfession()
     },
 
     methods: {
         professionApi() {
-            axios.get("https://admin.drrandevu.az/api-professions")
+            axios.get(this.$apiUrl + "/api-professions")
                 .then(response => {
                     this.professions = response.data
                     // console.log(this.professions)
@@ -116,8 +116,8 @@ export default {
                 .catch(e => console.log(e))
         },
 
-        getDoctorsForProfession(professionId) {
-            axios.get("https://admin.drrandevu.az/api-doctors/profession/" + professionId)
+        getDoctorsForProfession() {
+            axios.get(this.$apiUrl + "/api-doctors/profession/" + this.$route.params.id)
                 .then(response => {
                     this.doctors = response.data
                     console.log(this.doctors)

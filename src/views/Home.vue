@@ -60,7 +60,7 @@ export default {
     methods: {
 
         professionsApi() {
-            axios.get("https://admin.drrandevu.az/api-professions")
+            axios.get(this.$apiUrl + "/api-professions")
                 .then(response => {
                     this.professions = response.data
                     console.log(this.professions)
