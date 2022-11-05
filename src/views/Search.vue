@@ -4,14 +4,14 @@
         <div class="row my-4">
             <div class=" col-10 col-md-6 ">
                 <div class="dropdown">
-                    <input class="icon dropdown-toggle form-control" type="text" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <input v-model="searchProfession" class="icon dropdown-toggle form-control" type="text"
+                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
                     <div class=" dropdown-menu form-control mt-2" aria-labelledby="dropdownMenuButton1">
                         <p class="dropdown-item text-position">Ixtisaslar</p>
 
                         <div class="d-flex flex-row flex-wrap">
-                            <div class="profession-title me-3" v-for="profession in professions">
+                            <div class="profession-title me-3" v-for="profession in filterProfessions">
                                 <router-link :to="{ name: 'search', params: { id: profession.id } }"
                                     class="dropdown-item link">
                                     {{ profession.name }}
@@ -80,8 +80,22 @@ export default {
     data() {
         return {
             professions: '',
-            doctors: ''
+            doctors: '',
+            searchProfession: ''
         };
+    },
+    computed: {
+        filterProfessions() {
+            let filtered = this.professions
+            if (this.searchProfession != '') {
+                filtered = this.professions.filter(profession => {
+                    let professionNameLowercase = profession.name.toLowerCase()
+                    let searchProfessionLowercase = this.searchProfession.toLowerCase()
+                    return professionNameLowercase.includes(searchProfessionLowercase)
+                })
+            }
+            return filtered
+        }
     },
 
     mounted() {
