@@ -2,7 +2,11 @@
     <div class="container-fluid">
         <div class="contain-img ">
             <h1 class="text-center mt-5">Sağlamlığınıza baxın!</h1>
+<<<<<<< HEAD
             <span>Daha cox idman edin.</span>
+=======
+            <div>daha cox qacin</div>
+>>>>>>> add-headline
 
             <div class="row my-4 justify-content-center">
                 <div class=" col-10 col-md-6 ">
