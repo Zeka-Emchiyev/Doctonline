@@ -39,25 +39,25 @@
                                             <i class="bi bi-heart"></i>
                                         </span>
                                     </div>
-                                    <div>
-                                        <router-link class="text-decoration-none"
+                                    <!-- <div>
+                                        <router-link class="text-decoration-none profile"
                                             :to="{ name: 'doctor', params: { id: doctor.id } }">
                                             Profile bax
                                         </router-link>
-                                    </div>
+                                    </div> -->
 
                                 </div>
-                                <div class="col-9" v-for="doctor in doctors">
-                                    <p>{{ doctor.profession }}</p>
-                                    <router-link class="text-decoration-none"
+                                <div class="col-9">
+                                    <p class="text-profession">{{ doctor.profession }}</p>
+                                    <router-link class="text-decoration-none rout-link"
                                         :to="{ name: 'doctor', params: { id: doctor.id } }">
                                         {{ doctor.fullname }}
                                     </router-link>
-                                    <p>{{ doctor.city }}</p>
-                                    <p><i class="bi bi-star"></i>
-                                        <span>4.86</span>
-                                        (254 dəyərləndirmə )
-                                    </p>
+                                    <p class="city">{{ doctor.city }}</p>
+                                    <div><i class="bi bi-star-fill star"></i>
+                                        <span class="star-assess mx-1">4.86</span>
+                                        <span class="text-worth">(254 dəyərləndirmə )</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -144,4 +144,43 @@ export default {
         box-shadow: 0 0 0 0.25rem rgb(76, 177, 71, 15%);
     }
 }
+
+.rout-link {
+    color: black;
+    font-size: 24px;
+
+}
+
+.text-profession {
+    color: #848b98;
+}
+
+.city {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.star {
+    color: #ffad0d;
+    font-size: 24px;
+
+}
+
+.star-assess {
+    color: #ffad0d;
+    font-size: 20px;
+
+}
+
+.text-worth {
+    color: #273142;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+// .profile {
+//     color: #4cb147;
+
+// }
 </style>

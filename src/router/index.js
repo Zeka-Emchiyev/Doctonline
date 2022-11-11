@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Doctor from '../views/Doctor.vue'
 import Randevu from '../views/Randevu.vue'
 import Home from '../views/Home.vue'
-import DoctorHolder from '../views/DoctorHolder.vue'
 import Search from '../views/Search.vue'
 
 Vue.use(VueRouter)
@@ -19,11 +18,7 @@ const routes = [
     name: 'search',
     component: Search
   },
-  {
-    path: '/doctors/',
-    name: 'doctors',
-    component: DoctorHolder
-  },
+
   {
     path: '/',
     name: 'home',

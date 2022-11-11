@@ -1,28 +1,27 @@
 <template>
-    <div class="container-fluid">
-        <div class="contain-img ">
-            <h1 class="text-center mt-5">Sağlamlığınıza baxın!</h1>
-<<<<<<< HEAD
-            <span>Daha cox idman edin.</span>
-=======
-            <div>daha cox qacin</div>
->>>>>>> add-headline
+    <div class="container-fluid position-relative">
+        <div class="contain-img">
+            <div class="search-content pt-5">
+                <h1 class="text-center animate__animated animate__bounce animate__zoomInDown">
+                    Sağlamlığınıza
+                    baxın!</h1>
 
-            <div class="row my-4 justify-content-center">
-                <div class=" col-10 col-md-6 ">
-                    <div class="dropdown">
-                        <input v-model="searchProfession" class="icon dropdown-toggle form-control" type="text"
-                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="row my-4 justify-content-center">
+                    <div class=" col-10 col-md-6 ">
+                        <div class="dropdown">
+                            <input v-model="searchProfession" class="icon dropdown-toggle form-control" type="text"
+                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
-                        <div class=" dropdown-menu form-control mt-2" aria-labelledby="dropdownMenuButton1">
-                            <p class="dropdown-item text-position">Ixtisaslar</p>
+                            <div class=" dropdown-menu form-control mt-2" aria-labelledby="dropdownMenuButton1">
+                                <p class="dropdown-item text-position">Ixtisaslar</p>
 
-                            <div class="d-flex flex-row flex-wrap">
-                                <div class="profession-title me-3" v-for="profession in filterProfessions">
-                                    <router-link :to="{ name: 'search', params: { id: profession.id } }"
-                                        class="dropdown-item link">
-                                        {{ profession.name }}
-                                    </router-link>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="profession-title me-3" v-for="profession in filterProfessions">
+                                        <router-link :to="{ name: 'search', params: { id: profession.id } }"
+                                            class="dropdown-item link">
+                                            {{ profession.name }}
+                                        </router-link>
+                                    </div>
                                 </div>
                             </div>
                         </div>

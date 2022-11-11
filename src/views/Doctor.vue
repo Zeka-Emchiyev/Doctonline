@@ -59,9 +59,16 @@
         <hr>
         <div class="container ms-2">
           <div class="row">
-            <div class="col-2 text-header">Ünvan</div>
-            <div class="col-2 text-header">Məlumat</div>
-            <div class="col-2 text-header">FAQ</div>
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="col-2 text-header" href="#scrollspyHeading1">Ünvan</a>
+              </li>
+              <li class="nav-item">
+                <a class="col-2 text-header" href="#scrollspyHeading2">Məlumat</a>
+              </li>
+
+            </ul>
+
           </div>
         </div>
 
@@ -70,12 +77,16 @@
         <div class="container">
           <div class="row">
             <div class="col-7">
-              <h2 class="head">Ünvan</h2>
-              <h3 class="head-ege">{{ doctor.clinic }}</h3>
-              <p class="street">{{ doctor.address }}</p>
-              <p class="number">{{ doctor.phone }}</p>
-              <h5 class="mb-4"><img src="../assets/File_dock_fill.png" alt=""> Məlumat</h5>
+              <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example"
+                tabindex="0">
+                <h2 class="head" id="scrollspyHeading1">Ünvan</h2>
+                <h3 class="head-ege">{{ doctor.clinic }}</h3>
+                <p class="street">{{ doctor.address }}</p>
+                <p class="number">{{ doctor.phone }}</p>
+                <h5 class="mb-4" id="scrollspyHeading2"><img src="../assets/File_dock_fill.png" alt=""> Məlumat</h5>
+              </div>
             </div>
+
             <div class="col">
               <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
             </div>
@@ -286,6 +297,11 @@
 .text-header {
   font-size: 14px;
   line-height: 20px;
+  text-decoration: none;
+  margin-right: 20px;
+  color: black;
+  border-bottom: 2px solid #4CB147;
+  padding-bottom: 18px;
 }
 
 .head {
@@ -438,6 +454,10 @@
     line-height: 19.6px;
     color: rgba(60, 60, 67, 0.85);
     font-family: 'HK Grotesk';
+  }
+
+  .text-nowrap {
+    font-size: 14px;
   }
 }
 </style>
