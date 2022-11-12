@@ -4,7 +4,9 @@
       <div class="col-md-7 ">
         <div class="row w-100">
           <div class="col-3 col-sm-3 me-4">
-            <img class="image" src="../assets/Rectangle 332.png" alt="profile picture">
+            <!--            <img class="image" src="../assets/Rectangle 332.png" alt="profile picture">-->
+            <img class="image" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture"
+                 style="border-radius: 50%">
           </div>
 
           <div class="col-7">
@@ -78,7 +80,7 @@
           <div class="row">
             <div class="col-7">
               <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example"
-                tabindex="0">
+                   tabindex="0">
                 <h2 class="head" id="scrollspyHeading1">Ünvan</h2>
                 <h3 class="head-ege">{{ doctor.clinic }}</h3>
                 <p class="street">{{ doctor.address }}</p>
@@ -95,7 +97,7 @@
 
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+               aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -131,25 +133,22 @@
           <h2 class="mb-4 head"><img src="../assets/Mortarboard.png" alt=""> Təhsil</h2>
           <p class="text"> {{ doctor.educations }}Azərbaycan Tibb Universiteti</p>
           <p class="txt-light">Kurs</p>
-          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <p class="text">Egestas bibendum lorem tempor augue cursus laoreet</p>
-          <p class="text">Aliquam nulla egestas non, ac.</p>
+          <p class="text" v-for="experience in doctor.experiences">{{ experience }}</p>
 
           <p class="txt-light">Konqresslər</p>
-          <p class="text">Egestas bibendum lorem tempor augue cursus laoreet</p>
-          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <p class="text">Aliquam nulla egestas non, ac.</p>
+          <p class="text">{{ doctor.congress }}</p>
 
           <h5 class="text-faq">FAQ</h5>
 
           <div class="accordion" id="accordionExample">
             <div class="accordion-item border-0">
               <button class=" fw-bold border-0 bg-light accordion-button accor-button" type="button"
-                data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                aria-controls="collapseOne">
-                Rhoncus nullam aliquam nam proin</button>
+                      data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                      aria-controls="collapseOne">
+                Rhoncus nullam aliquam nam proin
+              </button>
               <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample">
+                   data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
                   Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
@@ -160,11 +159,12 @@
             <div class="accordion-item border-0">
 
               <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Duis enim bibendum dui ut fringilla suspendisse vel sed ultricies </button>
+                      data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Duis enim bibendum dui ut fringilla suspendisse vel sed ultricies
+              </button>
 
               <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                data-bs-parent="#accordionExample">
+                   data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
                   Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
@@ -175,12 +175,12 @@
             <div class="accordion-item border-0">
               <h2 class="accordion-header" id="headingThree">
                 <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                   Lectus fringilla volutpat egestas nisi, viverra mauris
                 </button>
               </h2>
               <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                data-bs-parent="#accordionExample">
+                   data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
                   Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
@@ -191,11 +191,12 @@
             <div class="accordion-item border-0">
               <h2 class="accordion-header" id="headingFour">
                 <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                  Vitae sollicitudin vitae libero tincidunt </button>
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  Vitae sollicitudin vitae libero tincidunt
+                </button>
               </h2>
               <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                data-bs-parent="#accordionExample">
+                   data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
                   Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
@@ -240,19 +241,39 @@
               </div>
             </div>
           </div>
-          <div>
+          <div class="mb-3">
             <p class="mt-3">Ege Hospital - 38 Academician Hasan </p>
             <small>Randevu saatını seçin</small>
           </div>
           <div class="d-none d-md-block" style="height:300px ;">
             <!-- <calendar></calendar> -->
             <!-- <v-date-picker v-model='selectedDate' /> -->
-            <vue-cal show-week-numbers :hide-weekdays="[]" :disable-views="['years', 'year',]" hide-weekends
-              show-time-in-cells :special-hours="specialHours" :events="events">
+            <vue-cal
+                v-model="appointmentDate"
+                title="test"
+                :hide-weekdays="[6,7]"
+                :disable-views="['years', 'year', 'day']"
+                hide-weekends
+                hide-view-selector
+                show-time-in-cells
+                :time-from="8 * 60"
+                :time-to="19 * 60"
+                :time-step="30"
+                :special-hours="specialHours"
+                :events="events"
+            >
+              <template #title="{ title, view }">
+                Kalendar
+              </template>
+              <template #weekday-heading="param">
+                {{ moment(param.heading.date).format('MMM DD') }}
+              </template>
             </vue-cal>
           </div>
           <div class="text-center mt-2">
-            <router-link to="/randevu" class="btn btn-success d-none d-md-block col-11 my-3">Randevu al</router-link>
+            <button @click="showAppointmentModal" class="btn btn-success d-none d-md-block col-11 my-3 mx-auto">Randevu
+              al
+            </button>
           </div>
         </div>
       </div>
@@ -467,6 +488,7 @@
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
 import axios from 'axios'
+import moment from 'moment'
 
 
 export default {
@@ -474,9 +496,11 @@ export default {
 
   data() {
     return {
+      appointmentDate: null,
       selectedDate: null,
+      moment,
       specialHours: {
-        1: {
+        /*1: {
           from: 8 * 60,
           to: 17 * 60,
           class: 'doctor-1',
@@ -513,38 +537,39 @@ export default {
           to: 18 * 60,
           class: 'doctor-3',
           // label: 'Doctor 3Full day shift'
-        },
+        },*/
 
       },
       events: [
-        {
-          start: '2018-11-16 10:30',
-          end: '2018-11-16 11:30',
-          // You can also define event dates with Javascript Date objects:
-          // start: new Date(2018, 11 - 1, 16, 10, 30),
-          // end: new Date(2018, 11 - 1, 16, 11, 30),
-          title: 'Doctor appointment',
-          content: '<i class="icon material-icons">local_hospital</i>',
-          class: 'health'
-        }
-
+        // {
+        //   start: '2018-11-16 10:30',
+        //   end: '2018-11-16 11:30',
+        //   // You can also define event dates with Javascript Date objects:
+        //   // start: new Date(2018, 11 - 1, 16, 10, 30),
+        //   // end: new Date(2018, 11 - 1, 16, 11, 30),
+        //   title: 'Doctor appointment',
+        //   content: '<i class="icon material-icons">local_hospital</i>',
+        //   class: 'health'
+        // }
       ],
       doctor: '',
     };
   },
-  components: { VueCal },
-  mounted() {
-    this.user()
+  components: {VueCal},
+  async mounted() {
+    await this.user()
   },
 
   methods: {
     user() {
-      axios.get(this.$apiUrl + "/api-doctors")
-        .then(response => {
-          this.doctor = response.data[0]
-          console.log(this.doctor)
-        })
-        .catch(e => console.log(e))
+      axios.get(this.$apiUrl + "/api-doctors/" + this.$route.params.id)
+          .then(response => {
+            this.doctor = response.data[0]
+          })
+          .catch(e => console.log(e))
+    },
+    showAppointmentModal() {
+      console.log(this.appointmentDate)
     }
   },
 }
