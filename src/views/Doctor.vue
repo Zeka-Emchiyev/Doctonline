@@ -4,9 +4,7 @@
       <div class="col-md-7 ">
         <div class="row w-100">
           <div class="col-3 col-sm-3 me-4">
-            <!--            <img class="image" src="../assets/Rectangle 332.png" alt="profile picture">-->
-            <img class="image" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture"
-                 style="border-radius: 50%">
+            <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture">
           </div>
 
           <div class="col-7">
@@ -63,10 +61,14 @@
           <div class="row">
             <ul class="nav nav-pills">
               <li class="nav-item">
-                <a class="col-2 text-header" href="#scrollspyHeading1">Ünvan</a>
+                <a class="col-2 text-header"
+                   :class="{ 'text-header-bottom-line': selectedHeader === 'location' }"
+                   href="#scrollspyHeading1" @click="selectedHeader = 'location'">Ünvan</a>
               </li>
               <li class="nav-item">
-                <a class="col-2 text-header" href="#scrollspyHeading2">Məlumat</a>
+                <a class="col-2 text-header"
+                   :class="{ 'text-header-bottom-line': selectedHeader === 'information' }"
+                   href="#scrollspyHeading2" @click="selectedHeader = 'information'">Məlumat</a>
               </li>
 
             </ul>
@@ -246,40 +248,136 @@
             <small>Randevu saatını seçin</small>
           </div>
           <div class="d-none d-md-block" style="height:300px ;">
-            <!-- <calendar></calendar> -->
-            <!-- <v-date-picker v-model='selectedDate' /> -->
-            <vue-cal
-                v-model="appointmentDate"
-                title="test"
-                :hide-weekdays="[6,7]"
-                :disable-views="['years', 'year', 'day']"
-                hide-weekends
-                hide-view-selector
-                show-time-in-cells
-                :time-from="8 * 60"
-                :time-to="19 * 60"
-                :time-step="30"
-                :special-hours="specialHours"
-                :events="events"
+            <Carousel
+                :per-page="4"
+                :navigation-enabled="true"
+                :pagination-enabled="false"
+                navigationPrevLabel=""
+                navigationNextLabel=""
+                :navigationClickTargetSize="4"
+                :scrollPerPage="false"
             >
-              <template #title="{ title, view }">
-                Kalendar
-              </template>
-              <template #weekday-heading="param">
-                {{ moment(param.heading.date).format('MMM DD') }}
-              </template>
-            </vue-cal>
+              <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
+                <div
+                    @click="setDay(day)"
+                    class="day-container"
+                    :class="{ 'bg-success text-white': selectedDay === day }"
+                >
+                  {{ moment(day).format('MMM DD') }}
+                </div>
+              </slide>
+            </Carousel>
+            <div class="time-slots mt-4">
+              <div class="row">
+                <div v-for="timeSlot in timeSlots" class="col-3">
+                  <div class="time-slot"
+                       :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
+                       @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="text-center mt-2">
-            <button @click="showAppointmentModal" class="btn btn-success d-none d-md-block col-11 my-3 mx-auto">Randevu
-              al
+
+            <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
+                    :class="{'text-white': !dateTimeSelected}"
+                    class="btn btn-success d-none d-md-block col-11 my-3 mx-auto"
+                    :disabled="!dateTimeSelected">
+              Randevu al
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="takeAppointmentModalLabel">Randevu detallari</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container d-flex align-items-center justify-content-center my-5 ">
+              <div class="row">
+                <div class="col-4">
+                  <img :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile image" width="100%" class="rounded-circle">
+<!--                    <img :src="$apiUrl + '/' + doctor.profile_photo" alt="profile image">-->
+                </div>
+                <div class="col-8">
+                  <h6>{{ doctor.fullname }}, {{ doctor.profession }} </h6>
+                  <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
+                  <p>{{ doctor.clinic }}</p>
+                </div>
+
+              <div class="col-8 mt-3">
+                <label for="">Ad, Soyad</label>
+                <input v-model="form.fullname" class="form-control" type="text">
+              </div>
+              <div class="col-8 mt-2" width="100%">
+                <label for="">Mobil nömrə</label>
+                <input v-model="form.phone" class="form-control" type="text">
+              </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" @click="createAppointment">Tesdiqle</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+<style lang="scss">
+.day-container {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 8px;
+  border: 1px solid #edf0f4;
+  cursor: pointer;
+  transition: border-color .15s linear,background-color .15s linear;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.time-slots {
+  .time-slot {
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    border-radius: 8px;
+    background-color: #edf0f4;
+    border: 1px solid #edf0f4;
+    color: #101825;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -.1px;
+    font-weight: 500;
+    transition: background-color .15s linear,color .15s linear,border-color .15s linear;
+    padding: 10px 3px;
+    margin-bottom: 10px;
+  }
+}
+.VueCarousel-navigation-prev {
+  &:before {
+    content: url(@/assets/icons/arrow-ios-left.svg);
+    height: 20px;
+    width: 20px;
+  }
+}
+.VueCarousel-navigation-next {
+  &:before {
+    content: url(@/assets/icons/arrow-ios-right.svg);
+    height: 20px;
+    width: 20px;
+  }
+}
+</style>
 <style lang="scss">
 .image {
   width: 153px;
@@ -321,8 +419,10 @@
   text-decoration: none;
   margin-right: 20px;
   color: black;
-  border-bottom: 2px solid #4CB147;
   padding-bottom: 18px;
+  &.text-header-bottom-line {
+    border-bottom: 2px solid #4CB147;
+  }
 }
 
 .head {
@@ -483,93 +583,100 @@
 }
 </style>
 
-
 <script>
-import VueCal from 'vue-cal'
-import 'vue-cal/dist/vuecal.css'
+import { Carousel, Slide } from 'vue-carousel';
+import 'moment/locale/az';
 import axios from 'axios'
 import moment from 'moment'
 
-
 export default {
   name: 'Doctor',
-
+  components: { Carousel, Slide },
   data() {
     return {
+      selectedDay: null,//moment().toDate().toISOString(),
+      selectedTime: '',
+      selectedHeader: 'location',
+      monthlyDates: [],
+      timeSlots: [],
+      form: {
+        date: null,
+        doctor_id: null,
+        email: null,
+        fullname: null,
+        phone: null,
+        time: null,
+      },
       appointmentDate: null,
       selectedDate: null,
       moment,
-      specialHours: {
-        /*1: {
-          from: 8 * 60,
-          to: 17 * 60,
-          class: 'doctor-1',
-          // label: 'Doctor 1Full day shift'
-        },
-        2: {
-          from: 9 * 60,
-          to: 18 * 60,
-          class: 'doctor-2',
-          // label: 'Doctor 2Full day shift'
-        },
-        3: [
-          {
-            from: 8 * 60,
-            to: 12 * 60,
-            class: 'doctor-1',
-            // label: 'Doctor 1Morning shift'
-          },
-          {
-            from: 14 * 60,
-            to: 19 * 60,
-            class: 'doctor-3',
-            // label: 'Doctor 3Afternoon shift'
-          }
-        ],
-        4: {
-          from: 8 * 60,
-          to: 17 * 60,
-          class: 'doctor-1',
-          // label: 'Doctor 1Full day shift'
-        },
-        5: {
-          from: 9 * 60,
-          to: 18 * 60,
-          class: 'doctor-3',
-          // label: 'Doctor 3Full day shift'
-        },*/
-
-      },
-      events: [
-        // {
-        //   start: '2018-11-16 10:30',
-        //   end: '2018-11-16 11:30',
-        //   // You can also define event dates with Javascript Date objects:
-        //   // start: new Date(2018, 11 - 1, 16, 10, 30),
-        //   // end: new Date(2018, 11 - 1, 16, 11, 30),
-        //   title: 'Doctor appointment',
-        //   content: '<i class="icon material-icons">local_hospital</i>',
-        //   class: 'health'
-        // }
-      ],
       doctor: '',
     };
   },
-  components: {VueCal},
-  async mounted() {
-    await this.user()
+  computed: {
+    dateTimeSelected () {
+      return this.selectedDay && this.selectedTime
+    }
+  },
+  mounted() {
+    this.moment.locale('az')
+    this.user()
+    this.generateDays()
   },
 
   methods: {
+    createAppointment() {
+      this.form.doctor_id = this.doctor.id
+      this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+      this.form.time = this.selectedTime
+      axios.post(this.$apiUrl + "/api-appointments/create", this.form)
+        .then((resp) => {
+          var myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
+          myModal.hide()
+        })
+    },
+    generateDays() {
+      // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
+      const today = moment()
+      const monthLater = moment().add(1, 'month')
+      var enumerateDaysBetweenDates = function(startDate, endDate) {
+        var now = startDate.clone(), dates = [];
+
+        while (now.isSameOrBefore(endDate)) {
+          dates.push(now.toDate());
+          now.add(1, 'days');
+        }
+        return dates;
+      };
+      this.monthlyDates = enumerateDaysBetweenDates(today, monthLater)
+    },
+    generateTimeSlots() {
+      const startTime = moment(this.doctor.start_time, "HH:mm")
+      const endTime = moment(this.doctor.end_time, "HH:mm")
+      const diffInMinutes = endTime.diff(startTime, 'minutes')
+      const slotMinute = 30
+      for (let i = 0; i <= diffInMinutes; i += slotMinute) {
+        const time = startTime.add(slotMinute, 'minutes')
+        this.timeSlots.push({
+          id: i,
+          timeFormatted: time.format('HH:mm'),
+          time: time
+        })
+      }
+    },
     user() {
       axios.get(this.$apiUrl + "/api-doctors/" + this.$route.params.id)
-          .then(response => {
-            this.doctor = response.data[0]
-          })
-          .catch(e => console.log(e))
+        .then(response => {
+          this.doctor = response.data[0]
+          this.generateTimeSlots()
+        })
+        .catch(e => console.log(e))
     },
-    showAppointmentModal() {
-      console.log(this.appointmentDate)
+    setDay(day) {
+      this.selectedDay = day
+    },
+    setSelectedTime(time) {
+      this.selectedTime = time.timeFormatted
     }
   },
 }
