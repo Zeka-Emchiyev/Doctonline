@@ -25,7 +25,7 @@
 
         <div class="row">
             <div class="col-md-9 col-sm-12">
-                <div v-for="doctor in doctors" :key="doctor.id" class="border rounded mb-2">
+                <div v-for="doctor in doctors" class="border rounded mb-2">
                     <div class="row mt-4">
                         <div class="col-6">
                             <div class="row">

@@ -14,9 +14,9 @@
                 <span class="me-2 call-line fw-bold ">Dəstək xətti:</span>
                 <a href="tel" class="call text-decoration-none">+994 (50) 831 31 16</a>
             </div>
-            <div class="d-md-none col-4">
+            <!-- <div class="d-md-none col-4">
                 <button class="btn btn-success col-sm-4" style="font-size: 14px;">Randevu al</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

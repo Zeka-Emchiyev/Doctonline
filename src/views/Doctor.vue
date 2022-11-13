@@ -12,12 +12,80 @@
             <h5 class="name-surname">{{ doctor.fullname }}</h5>
             <div class="d-none d-md-flex flex-row mb-2">
               <p class="city">{{ doctor.city }}</p>
-              <p class="location"><span class="location-square">&#9632;</span>{{ doctor.clinic }}<span
-                  class="location-square">&#9632;</span></p>
+
             </div>
             <button class="btn btn-success d-none d-md-block col-sm-12 col-lg-5 ">Randevu al</button>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary col-sm-12 " data-bs-toggle="modal"
+              data-bs-target="#exampleModal">
+              Randevu al </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="">
+                    <p class="text-success doc-profession">{{ doctor.profession }}</p>
+                    <h5 class="name-surname">{{ doctor.fullname }}</h5>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container">
+                      <p>Görüş növü</p>
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="container btn btn-outline-success">
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                              <img class="ms-2" src="../assets/16px.png" alt="">
+                              <p class="mb-0" style="font-size: 12px;">Onlayn randevu</p>
+                              <i class="bi bi-info-circle ms-2"></i>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="col-6">
+                          <div class="container btn btn-outline-success">
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                              <img class="ms-2" src="../assets/17px.png" alt="">
+                              <p class="mb-0" style="font-size: 12px;">Klinikada randevu</p>
+                              <i class="bi bi-info-circle ms-2"></i>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="location my-3">
+                        <p class="location-content my-3"> <i class="bi bi-check-circle-fill mx-3 location-icon"></i>
+                          {{ doctor.clinic }}</p>
+
+                      </div>
+                      <div>
+                        <small>Randevu saatını seçin</small>
+                      </div>
+                      <div>
+                        <vue-cal class="vuecal--rounded-theme vuecal--green-theme" small
+                          :disable-views="['years', 'year',]" :time-from="8 * 60" :time-to="20 * 60">
+                        </vue-cal>
+                      </div>
+                      <!-- <div class="text-center mt-2">
+                        <router-link to="/randevu" class="btn btn-success d-none d-md-block col-11 my-3">Randevu al
+                        </router-link>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                    <button type="button" class="btn btn-primary">Randevu götür</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-12 d-md-none">
+          <!-- <div class="col-12 d-md-none">
             <div class="d-flex flex-row mb-2">
               <p class="city">{{ doctor.city }}</p>
               <p class="location"><span class="location-square">&#9632;</span>{{ doctor.clinic }}<span
@@ -54,7 +122,7 @@
               </div>
             </div>
             <button class="btn btn-success col-12 mt-2">Randevu al</button>
-          </div>
+          </div> -->
         </div>
         <hr>
         <div class="container ms-2">
@@ -207,11 +275,11 @@
         </div>
 
       </div>
-      <div class="col-md-5 shadow p-3 mb-5 bg-body rounded h-50">
+      <div class="col-md-5 shadow p-3 mb-5 bg-body rounded h-50 d-none d-md-flex  ">
         <div class="container">
           <h2>Randevu al</h2>
           <p>Randevu tipini və tarixi seçərək davam edin</p>
-          <div class="row d-none d-md-flex">
+          <!-- <div class="row ">
             <div class="col-6">
               <div class="container btn btn-outline-success randevu">
                 <div class="row mb-2 ">
@@ -239,16 +307,43 @@
                 <p>Klinikada randevu</p>
               </div>
             </div>
+          </div> -->
+
+          <div class="row">
+            <div class="col-6">
+              <div class="container btn btn-outline-success">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                  <img class="ms-2" src="../assets/16px.png" alt="">
+                  <p class="mb-0">Onlayn randevu</p>
+                  <i class="bi bi-info-circle ms-2"></i>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-6">
+              <div class="container btn btn-outline-success">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                  <img class="ms-2" src="../assets/17px.png" alt="">
+                  <p class="mb-0">Klinikada randevu</p>
+                  <i class="bi bi-info-circle ms-2"></i>
+                </div>
+
+              </div>
+            </div>
           </div>
+
           <div>
-            <p class="mt-3">Ege Hospital - 38 Academician Hasan </p>
-            <small>Randevu saatını seçin</small>
+            <div class="location my-3">
+              <p class="location-content my-3 text-nowrap"> <i class="bi bi-check-circle-fill mx-3 location-icon"></i>
+                {{ doctor.clinic }}</p>
+            </div>
+            <!-- <small>Randevu saatını seçin</small> -->
           </div>
-          <div class="d-none d-md-block" style="height:300px ;">
+          <div class="d-none d-md-block mt-3" style="height:300px ;">
             <!-- <calendar></calendar> -->
             <!-- <v-date-picker v-model='selectedDate' /> -->
-            <vue-cal show-week-numbers :hide-weekdays="[]" :disable-views="['years', 'year',]" hide-weekends
-              show-time-in-cells :special-hours="specialHours" :events="events">
+            <vue-cal class="vuecal--rounded-theme vuecal--green-theme" small :disable-views="['years', 'year',]"
+              :time-from="8 * 60" :time-to="20 * 60">
             </vue-cal>
           </div>
           <div class="text-center mt-2">
@@ -283,11 +378,26 @@
   line-height: 24px;
 }
 
-.location {
-  // position: absolute;
+.location-content {
   width: auto;
   font-size: 16px;
   line-height: 24px;
+  color: #273142;
+}
+
+.location {
+  height: 56px;
+  border-radius: 8px;
+  padding: 0 10 px;
+  margin: auto;
+  display: flex;
+  border: 1px solid #4CB147;
+  background-color: #f2faf2;
+}
+
+.location-icon {
+  // font-size: 12px;
+  color: #4CB147;
 }
 
 .location-square {
@@ -442,6 +552,7 @@
     height: 48px;
     border: 1px solid #4CB147;
     border-radius: 8px;
+
   }
 
   .accordion-button {
@@ -459,6 +570,10 @@
   .text-nowrap {
     font-size: 14px;
   }
+
+  .location-content {
+    font-size: 14px;
+  }
 }
 </style>
 
@@ -474,61 +589,6 @@ export default {
 
   data() {
     return {
-      selectedDate: null,
-      specialHours: {
-        1: {
-          from: 8 * 60,
-          to: 17 * 60,
-          class: 'doctor-1',
-          // label: 'Doctor 1Full day shift'
-        },
-        2: {
-          from: 9 * 60,
-          to: 18 * 60,
-          class: 'doctor-2',
-          // label: 'Doctor 2Full day shift'
-        },
-        3: [
-          {
-            from: 8 * 60,
-            to: 12 * 60,
-            class: 'doctor-1',
-            // label: 'Doctor 1Morning shift'
-          },
-          {
-            from: 14 * 60,
-            to: 19 * 60,
-            class: 'doctor-3',
-            // label: 'Doctor 3Afternoon shift'
-          }
-        ],
-        4: {
-          from: 8 * 60,
-          to: 17 * 60,
-          class: 'doctor-1',
-          // label: 'Doctor 1Full day shift'
-        },
-        5: {
-          from: 9 * 60,
-          to: 18 * 60,
-          class: 'doctor-3',
-          // label: 'Doctor 3Full day shift'
-        },
-
-      },
-      events: [
-        {
-          start: '2018-11-16 10:30',
-          end: '2018-11-16 11:30',
-          // You can also define event dates with Javascript Date objects:
-          // start: new Date(2018, 11 - 1, 16, 10, 30),
-          // end: new Date(2018, 11 - 1, 16, 11, 30),
-          title: 'Doctor appointment',
-          content: '<i class="icon material-icons">local_hospital</i>',
-          class: 'health'
-        }
-
-      ],
       doctor: '',
     };
   },
@@ -539,10 +599,11 @@ export default {
 
   methods: {
     user() {
-      axios.get(this.$apiUrl + "/api-doctors")
+      axios.get(this.$apiUrl + "/api-doctors/" + this.$route.params.id)
         .then(response => {
           this.doctor = response.data[0]
           console.log(this.doctor)
+
         })
         .catch(e => console.log(e))
     }
