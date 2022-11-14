@@ -121,92 +121,27 @@
 
           <div class="row">
             <div class="col mb-3">
-              <button class="text-kanal text-nowrap border-0">{{ doctor.service }}</button>
+              <button class="text-kanal text-nowrap border-0" v-for="service in doctor.services">{{ service }}</button>
             </div>
             <div class="col-1"><img src="../assets/more.png" alt=""></div>
           </div>
 
-          <h2 class="mb-4 head"><img src="../assets/Lable_fill.png" alt=""> İş təcrübəsi</h2>
+          <h2 class="mb-4 mt-3 head"><img src="../assets/Lable_fill.png" alt=""> İş təcrübəsi</h2>
           <div v-for="doctorExperience in doctor.experiences">
             <p class="text-experience">{{ doctorExperience }}</p>
           </div>
 
 
           <h2 class="mb-4 head"><img src="../assets/Mortarboard.png" alt=""> Təhsil</h2>
-          <p class="text"> {{ doctor.educations }}Azərbaycan Tibb Universiteti</p>
+          <p class="text" v-for="education in doctor.educations"> {{ education }}</p>
           <p class="txt-light">Kurs</p>
-          <p class="text" v-for="experience in doctor.experiences">{{ experience }}</p>
+          <p class="text" >{{ doctor.courses }}</p>
 
           <p class="txt-light">Konqresslər</p>
           <p class="text">{{ doctor.congress }}</p>
 
-          <h5 class="text-faq">FAQ</h5>
+          <FaqHolder />
 
-          <div class="accordion" id="accordionExample">
-            <div class="accordion-item border-0">
-              <button class=" fw-bold border-0 bg-light accordion-button accor-button" type="button"
-                      data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                      aria-controls="collapseOne">
-                Rhoncus nullam aliquam nam proin
-              </button>
-              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                   data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
-                  Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
-                  vestibulum quis eu. Ut commodo, eget lorem venenatis urna.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item border-0">
-
-              <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Duis enim bibendum dui ut fringilla suspendisse vel sed ultricies
-              </button>
-
-              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                   data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
-                  Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
-                  vestibulum quis eu. Ut commodo, eget lorem venenatis urna.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item border-0">
-              <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  Lectus fringilla volutpat egestas nisi, viverra mauris
-                </button>
-              </h2>
-              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                   data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
-                  Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
-                  vestibulum quis eu. Ut commodo, eget lorem venenatis urna.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item border-0">
-              <h2 class="accordion-header" id="headingFour">
-                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                  Vitae sollicitudin vitae libero tincidunt
-                </button>
-              </h2>
-              <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                   data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
-                  Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
-                  vestibulum quis eu. Ut commodo, eget lorem venenatis urna.
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
       </div>
@@ -443,7 +378,7 @@
 }
 
 .street {
-  font-size: 24px;
+  font-size: 18px;
   line-height: 24px;
 }
 
@@ -473,37 +408,7 @@
   line-height: 20px;
 }
 
-.text-faq {
-  font-size: 24px;
-  line-height: 32px;
-}
 
-.accordion-button {
-  font-size: 16px !important;
-  line-height: 19.2px;
-}
-
-.accordion-body {
-  font-size: 16px;
-  line-height: 22.4px;
-  color: rgba(60, 60, 67, 0.85);
-  font-family: 'HK Grotesk';
-}
-
-.accordion-button:not(.collapsed) {
-  background-color: none !important;
-  color: black !important;
-}
-
-// .accordion-button:focus {
-//   box-shadow: none;
-// }
-
-.accor-button {
-  color: none !important;
-  box-shadow: none !important;
-  --bs-bg-opacity: none !important;
-}
 
 .randevu {
   width: 183px;
@@ -588,10 +493,11 @@ import { Carousel, Slide } from 'vue-carousel';
 import 'moment/locale/az';
 import axios from 'axios'
 import moment from 'moment'
+import FaqHolder from "@/components/FaqHolder";
 
 export default {
   name: 'Doctor',
-  components: { Carousel, Slide },
+  components: {FaqHolder, Carousel, Slide },
   data() {
     return {
       selectedDay: null,//moment().toDate().toISOString(),
