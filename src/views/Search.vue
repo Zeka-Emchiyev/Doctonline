@@ -24,48 +24,36 @@
         </div>
 
         <div class="row">
-            <div class="col-md-9 col-sm-12">
+            <div class="col-sm-12 col-md-9">
                 <div v-for="doctor in doctors" class="border rounded mb-2">
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-3">
-                                    <div class="position-relative rounded-circle border"
-                                        style="width:104px; height: 104px">
-                                        <img class="rounded-circle" style="height: 100%;"
-                                            src="../assets/7f7c19d5-51e4-4c6c-ac41-527b59b41892.jpg" alt="">
-                                        <span
+
+                    <div class="row mt-4 p-3">
+                        <div class="col-sm-3 col-lg-2">
+                            <div class="position-relative rounded-circle border img-profile">
+                                <img class="rounded-circle" style="height: 100%; width: 100%;"
+                                    :src="`${$apiUrl}/${doctor.profile_photo}`" alt="">
+                                <!-- <span
                                             class="position-absolute top-0 p-2 bg-light border border-light rounded-circle">
                                             <i class="bi bi-heart"></i>
-                                        </span>
-                                    </div>
-                                    <!-- <div>
-                                        <router-link class="text-decoration-none profile"
-                                            :to="{ name: 'doctor', params: { id: doctor.id } }">
-                                            Profile bax
-                                        </router-link>
-                                    </div> -->
+                                        </span> -->
+                            </div>
 
-                                </div>
-                                <div class="col-9">
-                                    <p class="text-profession">{{ doctor.profession }}</p>
-                                    <router-link class="text-decoration-none rout-link"
-                                        :to="{ name: 'doctor', params: { id: doctor.id } }">
-                                        {{ doctor.fullname }}
-                                    </router-link>
-                                    <p class="city">{{ doctor.city }}</p>
-                                    <div><i class="bi bi-star-fill star"></i>
-                                        <span class="star-assess mx-1">4.86</span>
-                                        <span class="text-worth">(254 dəyərləndirmə )</span>
-                                    </div>
-                                </div>
+
+                        </div>
+                        <div class="col-sm-9 col-lg-10">
+                            <p class="text-profession">{{ doctor.profession }}</p>
+                            <router-link class="text-decoration-none rout-link"
+                                :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                {{ doctor.fullname }}
+                            </router-link>
+                            <p class="city">{{ doctor.city }}</p>
+                            <div><i class="bi bi-star-fill star"></i>
+                                <span class="star-assess mx-1">4.86</span>
+                                <span class="text-worth">(254 dəyərləndirmə )</span>
                             </div>
                         </div>
-
-                        <div class="col-6">
-                            Calendar
-                        </div>
                     </div>
+
                 </div>
             </div>
             <div class="col-md-3">
@@ -183,4 +171,50 @@ export default {
 //     color: #4cb147;
 
 // }
+
+.img-profile {
+    width: 104px;
+    height: 104px;
+}
+
+@media screen and (max-width: 576px) {
+    .img-profile {
+        width: 78px;
+        height: 78px;
+    }
+
+    .text-profession {
+        color: #848b98;
+        font-size: 14px;
+    }
+
+    .rout-link {
+        color: black;
+        font-size: 16px;
+    }
+
+    .star {
+        color: #ffad0d;
+        font-size: 20px;
+
+    }
+
+    .star-assess {
+        color: #ffad0d;
+        font-size: 16px;
+
+    }
+
+    .text-worth {
+        color: #273142;
+        font-size: 14px;
+        line-height: 24px;
+        font-weight: 400;
+    }
+
+    .city {
+        font-size: 12px;
+        line-height: 24px;
+    }
+}
 </style>

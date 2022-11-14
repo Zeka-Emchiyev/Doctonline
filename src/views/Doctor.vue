@@ -1,37 +1,43 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-7 ">
-        <div class="row w-100">
-          <div class="col-3 col-sm-3 me-4">
+      <div class="col-md-7">
+        <div class="row">
+          <div class="col-3 col-sm-4 col-md-5 col-lg-4 col-xl-3 ">
             <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture">
           </div>
 
-          <div class="col-7">
+          <div class="col-9 col-sm-8 col-md-7 col-lg-8 col-xl-9 ">
             <p class="text-success doc-profession">{{ doctor.profession }}</p>
             <h5 class="name-surname">{{ doctor.fullname }}</h5>
             <div class="d-none d-md-flex flex-row mb-2">
               <p class="city">{{ doctor.city }}</p>
 
             </div>
-            <button class="btn btn-success d-none d-md-block col-sm-12 col-lg-5 ">Randevu al</button>
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary col-sm-12 " data-bs-toggle="modal"
-              data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-success col-sm-12 d-md-none" data-bs-toggle="modal"
+              data-bs-target="#randevuModal">
               Randevu al </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="randevuModal" tabindex="-1" aria-labelledby="randevuModalLabel"
               aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="">
-                    <p class="text-success doc-profession">{{ doctor.profession }}</p>
-                    <h5 class="name-surname">{{ doctor.fullname }}</h5>
+                  <div class="row px-3 p-3">
+                    <div class="col-4">
+                      <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`"
+                        alt="profile picture">
+                    </div>
+                    <div class="col-8">
+                      <p class="text-success doc-profession">{{ doctor.profession }}</p>
+                      <h5 class="name-surname">{{ doctor.fullname }}</h5>
+                    </div>
+
                   </div>
                   <div class="modal-body">
                     <div class="container">
@@ -66,63 +72,43 @@
                       <div>
                         <small>Randevu saatını seçin</small>
                       </div>
+
                       <div>
-                        <vue-cal class="vuecal--rounded-theme vuecal--green-theme" small
-                          :disable-views="['years', 'year',]" :time-from="8 * 60" :time-to="20 * 60">
-                        </vue-cal>
+                        <Carousel :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
+                          navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4"
+                          :scrollPerPage="false">
+                          <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
+                            <div @click="setDay(day)" class="day-container"
+                              :class="{ 'bg-success text-white': selectedDay === day }">
+                              {{ moment(day).format('MMM DD') }}
+                            </div>
+                          </slide>
+                        </Carousel>
+                        <div class="time-slots mt-4">
+                          <div class="row">
+                            <div v-for="timeSlot in timeSlots" class="col-3">
+                              <div class="time-slot"
+                                :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
+                                @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <!-- <div class="text-center mt-2">
-                        <router-link to="/randevu" class="btn btn-success d-none d-md-block col-11 my-3">Randevu al
-                        </router-link>
-                      </div> -->
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                    <button type="button" class="btn btn-primary">Randevu götür</button>
+                    <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
+                      :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success  col-11 my-3 mx-auto"
+                      :disabled="!dateTimeSelected">
+                      Randevu al
+                    </button>
+                    <!-- <button class="btn btn-success">Randevu gotur</button> -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- <div class="col-12 d-md-none">
-            <div class="d-flex flex-row mb-2">
-              <p class="city">{{ doctor.city }}</p>
-              <p class="location"><span class="location-square">&#9632;</span>{{ doctor.clinic }}<span
-                  class="location-square">&#9632;</span></p>
-            </div>
-            <div class="container">
-              <div class="row">
-                <div class="col-6">
-                  <div class="row randevu">
-                    <div class="col-2 mt-2">
-                      <img class="" src="../assets/17px.png" alt="">
 
-                    </div>
-                    <div class="col-10 mt-2">
-                      <p class="text-nowrap">Klinikada randevu</p>
-                    </div>
-                  </div>
-
-
-                </div>
-                <div class="col-6">
-                  <div class="row randevu ">
-                    <div class="col-2 mt-2">
-                      <img class="" src="../assets/16px.png" alt="">
-                    </div>
-                    <div class="col-10 mt-2">
-                      <p class="text-nowrap ">Video randevu</p>
-
-                    </div>
-                  </div>
-
-
-                </div>
-              </div>
-            </div>
-            <button class="btn btn-success col-12 mt-2">Randevu al</button>
-          </div> -->
         </div>
         <hr>
         <div class="container ms-2">
@@ -152,7 +138,7 @@
                 <h2 class="head" id="scrollspyHeading1">Ünvan</h2>
                 <h3 class="head-ege">{{ doctor.clinic }}</h3>
                 <p class="street">{{ doctor.address }}</p>
-                <p class="number">{{ doctor.phone }}</p>
+                <!-- <p class="number">{{ doctor.phone }}</p> -->
                 <h5 class="mb-4" id="scrollspyHeading2"><img src="../assets/File_dock_fill.png" alt=""> Məlumat</h5>
               </div>
             </div>
@@ -164,12 +150,12 @@
 
 
           <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+          <div class="modal fade" id="informationModal" tabindex="-1" aria-labelledby="informationModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h2 class="modal-title" id="exampleModalLabel">Məlumat</h2>
+                  <h2 class="modal-title" id="informationModalLabel">Məlumat</h2>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text">{{ doctor.description }}</div>
@@ -178,7 +164,7 @@
             </div>
           </div>
           <p class="text">{{ doctor.description }}
-            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#informationModal">
               Ətraflı
             </span>
           </p>
@@ -206,74 +192,7 @@
           <p class="txt-light">Konqresslər</p>
           <p class="text">{{ doctor.congress }}</p>
 
-          <h5 class="text-faq">FAQ</h5>
-
-          <div class="accordion" id="accordionExample">
-            <div class="accordion-item border-0">
-              <button class=" fw-bold border-0 bg-light accordion-button accor-button" type="button"
-                data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                aria-controls="collapseOne">
-                Rhoncus nullam aliquam nam proin
-              </button>
-              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
-                  Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
-                  vestibulum quis eu. Ut commodo, eget lorem venenatis urna.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item border-0">
-
-              <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Duis enim bibendum dui ut fringilla suspendisse vel sed ultricies
-              </button>
-              <FaqHolder />
-
-              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
-                  Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
-                  vestibulum quis eu. Ut commodo, eget lorem venenatis urna.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item border-0">
-              <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  Lectus fringilla volutpat egestas nisi, viverra mauris
-                </button>
-              </h2>
-              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
-                  Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
-                  vestibulum quis eu. Ut commodo, eget lorem venenatis urna.
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item border-0">
-              <h2 class="accordion-header" id="headingFour">
-                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                  Vitae sollicitudin vitae libero tincidunt
-                </button>
-              </h2>
-              <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Timperdiet gravida scelerisque odio nunc. Eget felis, odio bibendum quis eget sit lorem donec diam.
-                  Volutpat sed orci turpis sit dolor est a pretium eget. Vitae turpis orci vel tellus cursus lorem
-                  vestibulum quis eu. Ut commodo, eget lorem venenatis urna.
-                </div>
-              </div>
-            </div>
-          </div>
+          <FaqHolder />
         </div>
 
       </div>
@@ -281,35 +200,6 @@
         <div class="container">
           <h2>Randevu al</h2>
           <p>Randevu tipini və tarixi seçərək davam edin</p>
-          <!-- <div class="row ">
-            <div class="col-6">
-              <div class="container btn btn-outline-success randevu">
-                <div class="row mb-2 ">
-                  <div class="col-6">
-                    <img class="me-5" src="../assets/16px.png" alt="">
-                  </div>
-                  <div class="col-6">
-                    <i class="bi bi-info-circle ms-5"></i>
-                  </div>
-                </div>
-                <p>Onlayn randevu</p>
-              </div>
-
-            </div>
-            <div class="col-6">
-              <div class="container btn btn-outline-success randevu">
-                <div class="row mb-2">
-                  <div class="col-6">
-                    <img class="me-5" src="../assets/17px.png" alt="">
-                  </div>
-                  <div class="col-6">
-                    <i class="bi bi-info-circle ms-5"></i>
-                  </div>
-                </div>
-                <p>Klinikada randevu</p>
-              </div>
-            </div>
-          </div> -->
 
           <div class="row">
             <div class="col-6">
@@ -340,9 +230,9 @@
                 {{ doctor.clinic }}</p>
             </div>
           </div>
-          <div class="d-none d-md-block" style="height:300px ;">
-            <Carousel :per-page="4" :navigation-enabled="true" :pagination-enabled="false" navigationPrevLabel=""
-              navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
+          <div class="d-none d-md-block">
+            <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
+              navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
               <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
                 <div @click="setDay(day)" class="day-container"
                   :class="{ 'bg-success text-white': selectedDay === day }">
@@ -360,7 +250,6 @@
             </div>
           </div>
           <div class="text-center mt-2">
-
             <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
               :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success d-none d-md-block col-11 my-3 mx-auto"
               :disabled="!dateTimeSelected">
@@ -447,6 +336,14 @@
     margin-bottom: 10px;
   }
 }
+
+// .VueCarousel-inner {
+//   visibility: visible !important;
+//   transform: translate(0px, 0px);
+//   transition: transform 0.5s ease 0s;
+//   flex-basis: 110.5px !important;
+//   height: auto !important;
+// }
 
 .VueCarousel-navigation-prev {
   &:before {
@@ -700,6 +597,8 @@ export default {
     this.moment.locale('az')
     this.user()
     this.generateDays()
+    this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
+    this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'))
   },
 
   methods: {
@@ -709,9 +608,13 @@ export default {
       this.form.time = this.selectedTime
       axios.post(this.$apiUrl + "/api-appointments/create", this.form)
         .then((resp) => {
-          var myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
-          myModal.hide()
+          console.log(resp)
+          alert(resp.data.message)
+          this.myModal.hide()
+          this.myModal.hide()
+          this.randevuModal.hide()
         })
+        .catch(e => console.log(e))
     },
     generateDays() {
       // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row align-items-center justify-content-between mt-2 mb-2">
 
-            <div class="col-8 col-md-4">
+            <div class="col-md-7 col-lg-8">
                 <!-- <img src="../assets/24px.png" alt="" class="img me-3 pb-2"> -->
                 <router-link to="/" class="text-decoration-none">
                     <span class="text animate__animated animate__bounce animate__flash">Doct</span>
@@ -10,9 +10,9 @@
                 </router-link>
             </div>
 
-            <div class="d-none col-4 d-md-block">
+            <div class="d-none d-md-block col-md-5 col-lg-4">
                 <span class="me-2 call-line fw-bold ">Dəstək xətti:</span>
-                <a href="tel" class="call text-decoration-none">+994 (50) 831 31 16</a>
+                <a href="tel:(050) 831-31-16" class="call text-decoration-none">+994 (50) 831 31 16</a>
             </div>
             <!-- <div class="d-md-none col-4">
                 <button class="btn btn-success col-sm-4" style="font-size: 14px;">Randevu al</button>

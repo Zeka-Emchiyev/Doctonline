@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Doctor from '../views/Doctor.vue'
-import Randevu from '../views/Randevu.vue'
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
 
@@ -24,11 +23,6 @@ const routes = [
     name: 'home',
     component: Home
   },
-  {
-    path: '/randevu',
-    name: 'Randevu',
-    component: Randevu
-  }
 ]
 
 const router = new VueRouter({

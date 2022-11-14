@@ -4,27 +4,27 @@
 
     <div class="accordion" id="accordionExample">
       <div class="accordion-item border-0">
-        <button class=" fw-bold border-0 bg-light accordion-button accor-button" type="button"
-                data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                aria-controls="collapseOne">
+        <button class=" fw-bold border-0 bg-light accordion-button accor-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
           Həkimdən necə randevu ala bilərəm?
         </button>
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-             data-bs-parent="#accordionExample">
+          data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            Siz saytdan online şəkildə və ya <a href="tel:0514414330">0514414330</a> nömrəsinə zəng etməklə randevu ala bilərsiz.
+            Siz saytdan online şəkildə və ya <a href="tel:0514414330">0514414330</a> nömrəsinə zəng etməklə randevu ala
+            bilərsiz.
           </div>
         </div>
       </div>
       <div class="accordion-item border-0">
 
-        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="accordion-button collapsed fw-bold bg-white" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
           Öz yaxınım üçün randevu ala bilərəm?
         </button>
 
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-             data-bs-parent="#accordionExample">
+          data-bs-parent="#accordionExample">
           <div class="accordion-body">
             Bəli, ala bilərsiz.
           </div>
@@ -49,6 +49,11 @@ export default {
 .accordion-button {
   font-size: 16px !important;
   line-height: 19.2px;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  border-color: rgba(0, 0, 0, .125);
 }
 
 .accordion-body {

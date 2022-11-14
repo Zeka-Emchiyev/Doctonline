@@ -19,10 +19,10 @@ setupCalendar({
 
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import './assets/styles.scss'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'animate.css';
+window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
 
 
