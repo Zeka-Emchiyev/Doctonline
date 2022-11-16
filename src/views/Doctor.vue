@@ -142,10 +142,6 @@
                 <h5 class="mb-4" id="scrollspyHeading2"><img src="../assets/File_dock_fill.png" alt=""> Məlumat</h5>
               </div>
             </div>
-
-            <div class="col">
-              <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
-            </div>
           </div>
 
 
@@ -178,7 +174,7 @@
             <div class="col-1"><img src="../assets/more.png" alt=""></div>
           </div>
 
-          <h2 class="mb-4 mt-3 head"><img src="../assets/Lable_fill.png" alt=""> İş təcrübəsi</h2>
+          <h2 class="mb-4 mt-3 head"><img src="../assets/Lable_fill.png" alt="">İş təcrübəsi</h2>
           <p class="text-experience">{{ doctor.experiences }}</p>
 
 
@@ -189,6 +185,11 @@
 
           <p class="txt-light">Konqresslər</p>
           <p class="text">{{ doctor.congress }}</p>
+
+          <div>
+            <h2 class="mb-4 head">Xəritə</h2>
+            <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
+          </div>
 
           <FaqHolder />
         </div>
