@@ -179,9 +179,7 @@
           </div>
 
           <h2 class="mb-4 mt-3 head"><img src="../assets/Lable_fill.png" alt=""> İş təcrübəsi</h2>
-          <div v-for="doctorExperience in doctor.experiences">
-            <p class="text-experience">{{ doctorExperience }}</p>
-          </div>
+          <p class="text-experience">{{ doctor.experiences }}</p>
 
 
           <h2 class="mb-4 head"><img src="../assets/Mortarboard.png" alt=""> Təhsil</h2>
@@ -648,7 +646,7 @@ export default {
     user() {
       axios.get(this.$apiUrl + "/api-doctors/" + this.$route.params.id)
         .then(response => {
-          this.doctor = response.data[0]
+          this.doctor = response.data
           this.generateTimeSlots()
         })
         .catch(e => console.log(e))
