@@ -195,6 +195,11 @@
             <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
           </div>
 
+          <div>
+            <h2 class="mb-4 head">Xəritə</h2>
+            <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
+          </div>
+
           <FaqHolder />
         </div>
 
