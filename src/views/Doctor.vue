@@ -8,10 +8,10 @@
           </div>
 
           <div class="col-9 col-sm-8 col-md-7 col-lg-8 col-xl-9 ">
-            <p class="text-success doc-profession">{{ doctor.profession }}</p>
+            <span class="text-success doc-profession" style="display:block ;">{{ doctor.profession }}</span>
             <h5 class="name-surname">{{ doctor.fullname }}</h5>
             <div class="d-none d-md-flex flex-row mb-2">
-              <p class="city">{{ doctor.city }}</p>
+              <p class="city">{{ doctor.address }} {{ doctor.city }}</p>
 
             </div>
 
@@ -139,12 +139,8 @@
                 <h3 class="head-ege">{{ doctor.clinic }}</h3>
                 <p class="street">{{ doctor.address }}</p>
                 <!-- <p class="number">{{ doctor.phone }}</p> -->
-                <h5 class="mb-4" id="scrollspyHeading2"><img src="../assets/File_dock_fill.png" alt=""> Məlumat</h5>
+                <h5 class="mb-4" id="scrollspyHeading2"> Məlumat</h5>
               </div>
-            </div>
-
-            <div class="col">
-              <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
             </div>
           </div>
 
@@ -169,28 +165,35 @@
             </span>
           </p>
 
-          <h2 class="mb-4 head"><img src="../assets/Widget.svg" alt=""> Xidmətlər</h2>
+          <h2 class="mb-4 head">Xidmətlər</h2>
+          <!-- <div>
+            {{ doctor.services }}
+          </div> -->
 
           <div class="row">
             <div class="col mb-3">
               <button class="text-kanal text-nowrap border-0" v-for="service in doctor.services">{{ service }}</button>
             </div>
-            <div class="col-1"><img src="../assets/more.png" alt=""></div>
+            <!-- <div class="col-1"><img src="../assets/more.png" alt=""></div> -->
           </div>
 
-          <h2 class="mb-4 mt-3 head"><img src="../assets/Lable_fill.png" alt=""> İş təcrübəsi</h2>
-          <div v-for="doctorExperience in doctor.experiences">
-            <p class="text-experience">{{ doctorExperience }}</p>
+          <h2 class="mb-4 mt-3 head">İş təcrübəsi</h2>
+          <div>
+            <p class="text-experience">{{ doctor.experiences }}</p>
           </div>
 
 
-          <h2 class="mb-4 head"><img src="../assets/Mortarboard.png" alt=""> Təhsil</h2>
+          <h2 class="mb-4 head">Təhsil</h2>
           <p class="text" v-for="education in doctor.educations"> {{ education }}</p>
           <p class="txt-light">Kurs</p>
           <p class="text">{{ doctor.courses }}</p>
 
           <p class="txt-light">Konqresslər</p>
           <p class="text">{{ doctor.congress }}</p>
+
+          <div class="col">MAP
+            <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
+          </div>
 
           <FaqHolder />
         </div>
@@ -204,7 +207,7 @@
           <div class="row">
             <div class="col-6">
               <div class="container btn btn-outline-success">
-                <div class="d-flex flex-row justify-content-between align-items-center">
+                <div class="d-flex flex-row justify-content-between align-items-center" style="height:80px;">
                   <img class="ms-2" src="../assets/16px.png" alt="">
                   <p class="mb-0">Onlayn randevu</p>
                   <i class="bi bi-info-circle ms-2"></i>
@@ -214,7 +217,7 @@
             </div>
             <div class="col-6">
               <div class="container btn btn-outline-success">
-                <div class="d-flex flex-row justify-content-between align-items-center">
+                <div class="d-flex flex-row justify-content-between align-items-center" style="height:80px;">
                   <img class="ms-2" src="../assets/17px.png" alt="">
                   <p class="mb-0">Klinikada randevu</p>
                   <i class="bi bi-info-circle ms-2"></i>
@@ -364,7 +367,7 @@
 <style lang="scss">
 .image {
   width: 153px;
-  height: 158px;
+  height: 153px;
 }
 
 .doc-profession {
@@ -648,7 +651,8 @@ export default {
     user() {
       axios.get(this.$apiUrl + "/api-doctors/" + this.$route.params.id)
         .then(response => {
-          this.doctor = response.data[0]
+          console.log(response)
+          this.doctor = response.data
           this.generateTimeSlots()
         })
         .catch(e => console.log(e))

@@ -28,7 +28,7 @@
                 <div v-for="doctor in doctors" class="border rounded mb-2">
 
                     <div class="row mt-4 p-3">
-                        <div class="col-sm-3 col-lg-2">
+                        <div class="col-3 col-lg-2">
                             <div class="position-relative rounded-circle border img-profile">
                                 <img class="rounded-circle" style="height: 100%; width: 100%;"
                                     :src="`${$apiUrl}/${doctor.profile_photo}`" alt="">
@@ -40,13 +40,16 @@
 
 
                         </div>
-                        <div class="col-sm-9 col-lg-10">
-                            <p class="text-profession">{{ doctor.profession }}</p>
+                        <div class="col-9 col-lg-10">
+                            <span class="text-profession" style="display: block;">{{ doctor.profession }}</span>
                             <router-link class="text-decoration-none rout-link"
                                 :to="{ name: 'doctor', params: { id: doctor.id } }">
                                 {{ doctor.fullname }}
                             </router-link>
-                            <p class="city">{{ doctor.city }}</p>
+
+                            <span class="city mb-1">{{ doctor.address }} {{ doctor.city }}</span>
+                            <span class="city fw-bold">{{ doctor.clinic }}</span>
+                            <span class="city ">{{ doctor.experiences }}</span>
                             <div><i class="bi bi-star-fill star"></i>
                                 <span class="star-assess mx-1">4.86</span>
                                 <span class="text-worth">(254 dəyərləndirmə )</span>
@@ -146,6 +149,7 @@ export default {
 .city {
     font-size: 16px;
     line-height: 24px;
+    display: block;
 }
 
 .star {

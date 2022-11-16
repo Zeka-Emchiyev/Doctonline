@@ -39,7 +39,7 @@
                         <h6 class="text-contact  mb-4">
                             Əlaqə
                         </h6>
-                        <a href="tel:(50)-831-31-16" class="link text-decoration-none">+994 (50) 831 31 16</a>
+                        <a href="tel:(050)-831-31-16" class="link text-decoration-none">+994 (50) 831 31 16</a>
                         <p class="link">Xan Şuşinski küç 21</p>
                     </div>
                     <div class="col-6 d-md-none mb-5">
