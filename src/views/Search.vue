@@ -1,72 +1,76 @@
 <template>
-    <div class="container mt-3">
+    <div class="container-fluid">
+        <Navbar></Navbar>
+        <div class="container mt-3">
+            <div class="row my-4">
+                <div class=" col-10 col-md-6 ">
+                    <div class="dropdown">
+                        <input v-model="searchProfession" class="icon dropdown-toggle form-control" type="text"
+                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
-        <div class="row my-4">
-            <div class=" col-10 col-md-6 ">
-                <div class="dropdown">
-                    <input v-model="searchProfession" class="icon dropdown-toggle form-control" type="text"
-                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class=" dropdown-menu form-control mt-2" aria-labelledby="dropdownMenuButton1">
+                            <p class="dropdown-item text-position">Ixtisaslar</p>
 
-                    <div class=" dropdown-menu form-control mt-2" aria-labelledby="dropdownMenuButton1">
-                        <p class="dropdown-item text-position">Ixtisaslar</p>
-
-                        <div class="d-flex flex-row flex-wrap">
-                            <div class="profession-title me-3" v-for="profession in filterProfessions">
-                                <router-link :to="{ name: 'search', params: { id: profession.id } }"
-                                    @click.native="getDoctorsForProfession" class="dropdown-item link">
-                                    {{ profession.name }}
-                                </router-link>
+                            <div class="d-flex flex-row flex-wrap">
+                                <div class="profession-title me-3" v-for="profession in filterProfessions">
+                                    <router-link :to="{ name: 'search', params: { id: profession.id } }"
+                                        @click.native="getDoctorsForProfession" class="dropdown-item link">
+                                        {{ profession.name }}
+                                    </router-link>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-12 col-md-9">
-                <div v-for="doctor in doctors" class="border rounded mb-2">
+            <div class="row">
+                <div class="col-sm-12 col-md-9">
+                    <div v-for="doctor in doctors" class="border rounded mb-2">
 
-                    <div class="row mt-4 p-3">
-                        <div class="col-3 col-lg-2">
-                            <div class="position-relative rounded-circle border img-profile">
-                                <img class="rounded-circle" style="height: 100%; width: 100%;"
-                                    :src="`${$apiUrl}/${doctor.profile_photo}`" alt="">
-                                <!-- <span
+                        <div class="row mt-4 p-3">
+                            <div class="col-3 col-lg-2">
+                                <div class="position-relative rounded-circle border img-profile">
+                                    <img class="rounded-circle" style="height: 100%; width: 100%;"
+                                        :src="`${$apiUrl}/${doctor.profile_photo}`" alt="">
+                                    <!-- <span
                                             class="position-absolute top-0 p-2 bg-light border border-light rounded-circle">
                                             <i class="bi bi-heart"></i>
                                         </span> -->
+                                </div>
+
+
                             </div>
+                            <div class="col-9 col-lg-10">
+                                <span class="text-profession" style="display: block;">{{ doctor.profession }}</span>
+                                <router-link class="text-decoration-none rout-link"
+                                    :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                    {{ doctor.fullname }}
+                                </router-link>
 
-
-                        </div>
-                        <div class="col-9 col-lg-10">
-                            <span class="text-profession" style="display: block;">{{ doctor.profession }}</span>
-                            <router-link class="text-decoration-none rout-link"
-                                :to="{ name: 'doctor', params: { id: doctor.id } }">
-                                {{ doctor.fullname }}
-                            </router-link>
-
-                            <span class="city mb-1">{{ doctor.address }} {{ doctor.city }}</span>
-                            <span class="city fw-bold">{{ doctor.clinic }}</span>
-                            <span class="city ">{{ doctor.experiences }}</span>
-                            <div><i class="bi bi-star-fill star"></i>
-                                <span class="star-assess mx-1">4.86</span>
-                                <span class="text-worth">(254 dəyərləndirmə )</span>
+                                <span class="city mb-1">{{ doctor.address }} {{ doctor.city }}</span>
+                                <span class="city fw-bold">{{ doctor.clinic }}</span>
+                                <span class="city ">{{ doctor.experiences }}</span>
+                                <div><i class="bi bi-star-fill star"></i>
+                                    <span class="star-assess mx-1">4.86</span>
+                                    <span class="text-worth">(254 dəyərləndirmə )</span>
+                                </div>
                             </div>
                         </div>
+
                     </div>
-
                 </div>
-            </div>
-            <div class="col-md-3">
-                google map
+                <div class="col-md-3">
+                    google map
+                </div>
             </div>
         </div>
     </div>
+
 </template>
 
 <script>
+import Navbar from '@/components/Navbar.vue';
 import axios from 'axios'
 export default {
     name: 'ProjectsSearch',
@@ -77,6 +81,9 @@ export default {
             doctors: '',
             searchProfession: ''
         };
+    },
+    components: {
+        Navbar
     },
     computed: {
         filterProfessions() {
@@ -102,7 +109,7 @@ export default {
             axios.get(this.$apiUrl + "/api-professions")
                 .then(response => {
                     this.professions = response.data
-                    // console.log(this.professions)
+                    console.log(this.professions)
                 })
                 .catch(e => console.log(e))
         },

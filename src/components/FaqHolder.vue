@@ -1,6 +1,6 @@
 <template>
   <div class="my-5">
-    <h5 class="text-faq">FAQ</h5>
+    <h5 class="text-faq">ÇSS</h5>
 
     <div class="accordion" id="accordionExample">
       <div class="accordion-item border-0">

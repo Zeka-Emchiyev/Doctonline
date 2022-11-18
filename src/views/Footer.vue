@@ -17,19 +17,19 @@
                     <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                         <!-- Links -->
                         <h6 class="text-contact fw-bold mb-4">
-                            Linklər
+                            Əsas ixtisaslar
                         </h6>
                         <p>
-                            <a href="#!" class="link">Daxil ol</a>
+                            <a href="#!" class="link">Terapevt </a>
                         </p>
                         <p>
-                            <a href="#!" class="link">Qeydiyyatdan keç</a>
+                            <a href="#!" class="link">Dermatoloq</a>
                         </p>
                         <p>
-                            <a href="#!" class="link">Dəstək (FAQ)</a>
+                            <a href="#!" class="link">Ginekoloq</a>
                         </p>
                         <p>
-                            <a href="#!" class="link">Həkim qeydiyyatı</a>
+                            <a href="#!" class="link">Kardioloq</a>
                         </p>
                     </div>
 

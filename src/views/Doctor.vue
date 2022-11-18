@@ -1,310 +1,344 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-7">
-        <div class="row">
-          <div class="col-3 col-sm-4 col-md-5 col-lg-4 col-xl-3 ">
-            <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture">
-          </div>
-
-          <div class="col-9 col-sm-8 col-md-7 col-lg-8 col-xl-9 ">
-            <span class="text-success doc-profession" style="display:block ;">{{ doctor.profession }}</span>
-            <h5 class="name-surname">{{ doctor.fullname }}</h5>
-            <div class="d-none d-md-flex flex-row mb-2">
-              <p class="city">{{ doctor.address }} {{ doctor.city }}</p>
-
+  <div>
+    <NavbarDoctor></NavbarDoctor>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="row">
+            <div class="col-3 col-sm-4 col-md-5 col-lg-4 col-xl-3 ">
+              <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture">
             </div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-success col-sm-12 d-md-none" data-bs-toggle="modal"
-              data-bs-target="#randevuModal">
-              Randevu al </button>
+            <div class="col-9 col-sm-8 col-md-7 col-lg-8 col-xl-9 ">
+              <span class="text-success doc-profession" style="display:block ;">{{ doctor.profession }}</span>
+              <h5 class="name-surname">{{ doctor.fullname }}</h5>
+              <div class="d-none d-md-flex flex-row mb-2">
+                <p class="city">{{ doctor.address }} {{ doctor.city }}</p>
+
+              </div>
+
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-success col-sm-12 d-md-none" data-bs-toggle="modal"
+                data-bs-target="#randevuModal">
+                Randevu al </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="randevuModal" tabindex="-1" aria-labelledby="randevuModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="row px-3 p-3">
+                      <div class="col-4">
+                        <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`"
+                          alt="profile picture">
+                      </div>
+                      <div class="col-8">
+                        <p class="text-success doc-profession">{{ doctor.profession }}</p>
+                        <h5 class="name-surname">{{ doctor.fullname }}</h5>
+                      </div>
+
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <p>Görüş növü</p>
+                        <div class="row ms-2">
+
+                          <div class="col-5 me-2">
+                            <div @click="selectedBox = 'clinic'"
+                              class="row justify-content-center align-items-center rounded b-default"
+                              :class="{ 'clinic-border': selectedBox === 'clinic' }">
+                              <div class="col-3">
+                                <i class="icon-clinic bi bi-person-fill border rounded-circle p-1"></i>
+                              </div>
+                              <div class="col-9 pt-3 ">
+                                <p class="mb-0">Klinikada</p>
+                                <p>{{ doctor.online_service_price }} AZN</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-5">
+                            <div @click="selectedBox = 'video'"
+                              class="row justify-content-center align-items-center rounded b-default"
+                              :class="{ 'clinic-border': selectedBox === 'video' }">
+                              <div class="col-3">
+                                <i class="icon-video bi bi-camera-video border rounded-circle p-1"></i>
+                              </div>
+                              <div class="col-9 pt-3 ">
+                                <p class="mb-0">Video</p>
+                                <p>{{ doctor.online_service_price }} AZN</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="location my-3">
+                          <p class="location-content my-3"> <i class="bi bi-check-circle-fill mx-3 location-icon"></i>
+                            {{ doctor.clinic }}</p>
+
+                        </div>
+                        <div>
+                          <small>Randevu saatını seçin</small>
+                        </div>
+
+                        <div>
+                          <Carousel :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
+                            navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4"
+                            :scrollPerPage="false">
+                            <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
+                              <div @click="setDay(day)" class="day-container"
+                                :class="{ 'bg-success text-white': selectedDay === day }">
+                                {{ moment(day).format('MMM DD') }}
+                              </div>
+                            </slide>
+                          </Carousel>
+                          <div class="time-slots mt-4">
+                            <div class="row">
+                              <div v-for="timeSlot in timeSlots" class="col-3">
+                                <div class="time-slot"
+                                  :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
+                                  @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
+                        :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success  col-11 my-3 mx-auto"
+                        :disabled="!dateTimeSelected">
+                        Randevu al
+                      </button>
+                      <!-- <button class="btn btn-success">Randevu gotur</button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <hr>
+          <div class="container ms-2">
+            <div class="row">
+              <ul class="nav nav-pills">
+                <li class="nav-item">
+                  <a class="col-2 text-header" :class="{ 'text-header-bottom-line': selectedHeader === 'information' }"
+                    href="#scrollspyHeading2" @click="selectedHeader = 'information'">Haqqında</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="col-2 text-header" :class="{ 'text-header-bottom-line': selectedHeader === 'insurance' }"
+                    href="#scrollspyHeading3" @click="selectedHeader = 'insurance'">Sığorta</a>
+                </li>
+                <li class="nav-item">
+                  <a class="col-2 text-header" :class="{ 'text-header-bottom-line': selectedHeader === 'location' }"
+                    href="#scrollspyHeading1" @click="selectedHeader = 'location'">Ünvan</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="col-2 text-header" :class="{ 'text-header-bottom-line': selectedHeader === 'comment' }"
+                    href="#scrollspyHeading4" @click="selectedHeader = 'comment'">Rəylər</a>
+                </li>
+                <li class="nav-item">
+                  <a class="col-2 text-header" :class="{ 'text-header-bottom-line': selectedHeader === 'faq' }"
+                    href="#scrollspyHeading5" @click="selectedHeader = 'faq'">ÇSS</a>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-7">
+                <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example"
+                  tabindex="0">
+                  <h5 class="mb-4" id="scrollspyHeading2"> Haqqında</h5>
+
+                  <!-- <p class="number">{{ doctor.phone }}</p> -->
+
+                </div>
+              </div>
+            </div>
+
 
             <!-- Modal -->
-            <div class="modal fade" id="randevuModal" tabindex="-1" aria-labelledby="randevuModalLabel"
+            <div class="modal fade" id="informationModal" tabindex="-1" aria-labelledby="informationModalLabel"
               aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
+                    <h2 class="modal-title" id="informationModalLabel">Məlumat</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="row px-3 p-3">
-                    <div class="col-4">
-                      <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`"
-                        alt="profile picture">
-                    </div>
-                    <div class="col-8">
-                      <p class="text-success doc-profession">{{ doctor.profession }}</p>
-                      <h5 class="name-surname">{{ doctor.fullname }}</h5>
-                    </div>
+                  <div class="modal-body text">{{ doctor.description }}</div>
 
-                  </div>
-                  <div class="modal-body">
-                    <div class="container">
-                      <p>Görüş növü</p>
-                      <div class="row">
-                        <div class="col-6">
-                          <div class="container btn btn-outline-success">
-                            <div class="d-flex flex-row justify-content-between align-items-center">
-                              <img class="ms-2" src="../assets/16px.png" alt="">
-                              <p class="mb-0" style="font-size: 12px;">Onlayn randevu</p>
-                              <i class="bi bi-info-circle ms-2"></i>
-                            </div>
-                          </div>
-
-                        </div>
-                        <div class="col-6">
-                          <div class="container btn btn-outline-success">
-                            <div class="d-flex flex-row justify-content-between align-items-center">
-                              <img class="ms-2" src="../assets/17px.png" alt="">
-                              <p class="mb-0" style="font-size: 12px;">Klinikada randevu</p>
-                              <i class="bi bi-info-circle ms-2"></i>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                      <div class="location my-3">
-                        <p class="location-content my-3"> <i class="bi bi-check-circle-fill mx-3 location-icon"></i>
-                          {{ doctor.clinic }}</p>
-
-                      </div>
-                      <div>
-                        <small>Randevu saatını seçin</small>
-                      </div>
-
-                      <div>
-                        <Carousel :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
-                          navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4"
-                          :scrollPerPage="false">
-                          <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
-                            <div @click="setDay(day)" class="day-container"
-                              :class="{ 'bg-success text-white': selectedDay === day }">
-                              {{ moment(day).format('MMM DD') }}
-                            </div>
-                          </slide>
-                        </Carousel>
-                        <div class="time-slots mt-4">
-                          <div class="row">
-                            <div v-for="timeSlot in timeSlots" class="col-3">
-                              <div class="time-slot"
-                                :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
-                                @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
-                      :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success  col-11 my-3 mx-auto"
-                      :disabled="!dateTimeSelected">
-                      Randevu al
-                    </button>
-                    <!-- <button class="btn btn-success">Randevu gotur</button> -->
-                  </div>
                 </div>
               </div>
             </div>
+
+            <p class="text">{{ doctor.description }}
+              <span class="text-primary" data-bs-toggle="modal" data-bs-target="#informationModal">
+                Ətraflı
+              </span>
+            </p>
+
+            <h2 id="scrollspyHeading3" class="mb-4 head">Sığorta </h2>
+            <div>
+              <!-- {{ doctor. }} -->
+            </div>
+            <h2 class="head" id="scrollspyHeading1">Ünvan</h2>
+            <div>
+              <h3 class="head-ege">{{ doctor.clinic }}</h3>
+              <p class="street">{{ doctor.address }}</p>
+            </div>
+
+
+            <div class="row">
+              <div class="col mb-3">
+                <button class="text-kanal text-nowrap border-0" v-for="service in doctor.services">{{ service
+                }}</button>
+              </div>
+              <!-- <div class="col-1"><img src="../assets/more.png" alt=""></div> -->
+            </div>
+
+            <h2 class="mb-4 mt-3 head">İş təcrübəsi</h2>
+            <div>
+              <p class="text-experience">{{ doctor.experiences }}</p>
+            </div>
+
+
+            <h2 class="mb-4 head">Təhsil</h2>
+            <p class="text" v-for="education in doctor.educations"> {{ education }}</p>
+            <p class="txt-light">Kurs</p>
+            <p class="text">{{ doctor.courses }}</p>
+
+            <p class="txt-light">Konqresslər</p>
+            <p class="text">{{ doctor.congress }}</p>
+
+            <div>
+              <h2 class="mb-4 head">Xəritə</h2>
+              <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
+            </div>
+
+            <FaqHolder id="scrollspyHeading5" />
           </div>
 
         </div>
-        <hr>
-        <div class="container ms-2">
-          <div class="row">
-            <ul class="nav nav-pills">
-              <li class="nav-item">
-                <a class="col-2 text-header" :class="{ 'text-header-bottom-line': selectedHeader === 'location' }"
-                  href="#scrollspyHeading1" @click="selectedHeader = 'location'">Ünvan</a>
-              </li>
-              <li class="nav-item">
-                <a class="col-2 text-header" :class="{ 'text-header-bottom-line': selectedHeader === 'information' }"
-                  href="#scrollspyHeading2" @click="selectedHeader = 'information'">Məlumat</a>
-              </li>
+        <div class="col-md-5 shadow p-3 mb-5 bg-body rounded h-50 d-none d-md-flex  ">
+          <div class="container">
+            <h2>Randevu al</h2>
+            <p>Randevu tipini və tarixi seçərək davam edin</p>
 
-            </ul>
+            <div class="row justify-content-start ms-1">
 
-          </div>
-        </div>
-
-        <hr>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-7">
-              <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example"
-                tabindex="0">
-                <h2 class="head" id="scrollspyHeading1">Ünvan</h2>
-                <h3 class="head-ege">{{ doctor.clinic }}</h3>
-                <p class="street">{{ doctor.address }}</p>
-                <!-- <p class="number">{{ doctor.phone }}</p> -->
-                <h5 class="mb-4" id="scrollspyHeading2"> Məlumat</h5>
-              </div>
-            </div>
-          </div>
-
-
-          <!-- Modal -->
-          <div class="modal fade" id="informationModal" tabindex="-1" aria-labelledby="informationModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h2 class="modal-title" id="informationModalLabel">Məlumat</h2>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text">{{ doctor.description }}</div>
-
-              </div>
-            </div>
-          </div>
-          <p class="text">{{ doctor.description }}
-            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#informationModal">
-              Ətraflı
-            </span>
-          </p>
-
-          <h2 class="mb-4 head">Xidmətlər</h2>
-          <!-- <div>
-            {{ doctor.services }}
-          </div> -->
-
-          <div class="row">
-            <div class="col mb-3">
-              <button class="text-kanal text-nowrap border-0" v-for="service in doctor.services">{{ service }}</button>
-            </div>
-            <!-- <div class="col-1"><img src="../assets/more.png" alt=""></div> -->
-          </div>
-
-          <h2 class="mb-4 mt-3 head">İş təcrübəsi</h2>
-          <div>
-            <p class="text-experience">{{ doctor.experiences }}</p>
-          </div>
-
-
-          <h2 class="mb-4 head">Təhsil</h2>
-          <p class="text" v-for="education in doctor.educations"> {{ education }}</p>
-          <p class="txt-light">Kurs</p>
-          <p class="text">{{ doctor.courses }}</p>
-
-          <p class="txt-light">Konqresslər</p>
-          <p class="text">{{ doctor.congress }}</p>
-
-          <div class="col">MAP
-            <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
-          </div>
-
-          <div>
-            <h2 class="mb-4 head">Xəritə</h2>
-            <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
-          </div>
-
-          <FaqHolder />
-        </div>
-
-      </div>
-      <div class="col-md-5 shadow p-3 mb-5 bg-body rounded h-50 d-none d-md-flex  ">
-        <div class="container">
-          <h2>Randevu al</h2>
-          <p>Randevu tipini və tarixi seçərək davam edin</p>
-
-          <div class="row">
-            <div class="col-6">
-              <div class="container btn btn-outline-success">
-                <div class="d-flex flex-row justify-content-between align-items-center" style="height:80px;">
-                  <img class="ms-2" src="../assets/16px.png" alt="">
-                  <p class="mb-0">Onlayn randevu</p>
-                  <i class="bi bi-info-circle ms-2"></i>
+              <div class="col-6">
+                <div @click="selectedBox = 'clinic'"
+                  class="row justify-content-center align-items-center rounded b-default"
+                  :class="{ 'clinic-border': selectedBox === 'clinic' }" style="height:80px; width: 220px;">
+                  <div class="col-3">
+                    <i class="icon-clinic bi bi-person-fill border rounded-circle p-1"></i>
+                  </div>
+                  <div class="col-9 pt-3 ">
+                    <p class="mb-0">Klinikada</p>
+                    <p>{{ doctor.online_service_price }} AZN</p>
+                  </div>
                 </div>
               </div>
-
-            </div>
-            <div class="col-6">
-              <div class="container btn btn-outline-success">
-                <div class="d-flex flex-row justify-content-between align-items-center" style="height:80px;">
-                  <img class="ms-2" src="../assets/17px.png" alt="">
-                  <p class="mb-0">Klinikada randevu</p>
-                  <i class="bi bi-info-circle ms-2"></i>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="location my-3">
-              <p class="location-content my-3 text-nowrap"> <i class="bi bi-check-circle-fill mx-3 location-icon"></i>
-                {{ doctor.clinic }}</p>
-            </div>
-          </div>
-          <div class="d-none d-md-block">
-            <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
-              navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
-              <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
-                <div @click="setDay(day)" class="day-container"
-                  :class="{ 'bg-success text-white': selectedDay === day }">
-                  {{ moment(day).format('MMM DD') }}
-                </div>
-              </slide>
-            </Carousel>
-            <div class="time-slots mt-4">
-              <div class="row">
-                <div v-for="timeSlot in timeSlots" class="col-3">
-                  <div class="time-slot" :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
-                    @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
+              <div class="col-6">
+                <div @click="selectedBox = 'video'"
+                  class="row justify-content-center align-items-center rounded b-default"
+                  :class="{ 'clinic-border': selectedBox === 'video' }" style="height:80px; width: 220px;">
+                  <div class="col-3">
+                    <i class="icon-video bi bi-camera-video border rounded-circle p-1"></i>
+                  </div>
+                  <div class="col-9 pt-3 ">
+                    <p class="mb-0">Video</p>
+                    <p>{{ doctor.online_service_price }} AZN</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="text-center mt-2">
-            <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
-              :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success d-none d-md-block col-11 my-3 mx-auto"
-              :disabled="!dateTimeSelected">
-              Randevu al
-            </button>
+
+
+            <div>
+              <div class="location my-3">
+                <p class="location-content my-3 text-nowrap"> <i class="bi bi-check-circle-fill mx-3 location-icon"></i>
+                  {{ doctor.clinic }}</p>
+              </div>
+            </div>
+            <div class="d-none d-md-block">
+              <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
+                navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
+                <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
+                  <div @click="setDay(day)" class="day-container"
+                    :class="{ 'bg-success text-white': selectedDay === day }">
+                    {{ moment(day).format('MMM DD') }}
+                  </div>
+                </slide>
+              </Carousel>
+              <div class="time-slots mt-4">
+                <div class="row">
+                  <div v-for="timeSlot in timeSlots" class="col-3">
+                    <div class="time-slot" :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
+                      @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-2">
+              <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
+                :class="{ 'text-white': !dateTimeSelected }"
+                class="btn btn-success d-none d-md-block col-11 my-3 mx-auto" :disabled="!dateTimeSelected">
+                Randevu al
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="takeAppointmentModalLabel">Randevu detallari</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="container d-flex align-items-center justify-content-center my-5 ">
-              <div class="row">
-                <div class="col-4">
-                  <img :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile image" width="100%"
-                    class="rounded-circle">
-                  <!--                    <img :src="$apiUrl + '/' + doctor.profile_photo" alt="profile image">-->
-                </div>
-                <div class="col-8">
-                  <h6>{{ doctor.fullname }}, {{ doctor.profession }} </h6>
-                  <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
-                  <p>{{ doctor.clinic }}</p>
-                </div>
-
-                <div class="col-8 mt-3">
-                  <label for="">Ad, Soyad</label>
-                  <input v-model="form.fullname" class="form-control" type="text">
-                </div>
-                <div class="col-8 mt-2" width="100%">
-                  <label for="">Mobil nömrə</label>
-                  <input v-model="form.phone" class="form-control" type="text">
-                </div>
-              </div>
-
+      <!-- Modal -->
+      <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="takeAppointmentModalLabel">Randevu detallari</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" @click="createAppointment">Tesdiqle</button>
+            <div class="modal-body">
+              <div class="container d-flex align-items-center justify-content-center my-5 ">
+                <div class="row">
+                  <div class="col-4">
+                    <img :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile image" width="100%"
+                      class="rounded-circle">
+                    <!--                    <img :src="$apiUrl + '/' + doctor.profile_photo" alt="profile image">-->
+                  </div>
+                  <div class="col-8">
+                    <h6>{{ doctor.fullname }}, {{ doctor.profession }} </h6>
+                    <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
+                    <p>{{ doctor.clinic }}</p>
+                  </div>
+
+                  <div class="col-8 mt-3">
+                    <label for="">Ad, Soyad</label>
+                    <input v-model="form.fullname" class="form-control" type="text">
+                  </div>
+                  <div class="col-8 mt-2" width="100%">
+                    <label for="">Mobil nömrə</label>
+                    <input v-model="form.phone" class="form-control" type="text">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" @click="createAppointment">Tesdiqle</button>
+            </div>
           </div>
         </div>
       </div>
@@ -370,6 +404,27 @@
 }
 </style>
 <style lang="scss">
+.icon-clinic {
+  background-color: #0F42B0;
+  color: white;
+}
+
+.icon-video {
+  background-color: #AC6BFF;
+  color: white;
+}
+
+.b-default {
+  border: 1px solid #EDF0F4;
+  cursor: pointer;
+}
+
+.clinic-border {
+  border: 2px solid #1FC117A1;
+  background-color: #F2FFF2A1;
+  cursor: pointer;
+}
+
 .image {
   width: 153px;
   height: 153px;
@@ -571,15 +626,16 @@ import 'moment/locale/az';
 import axios from 'axios'
 import moment from 'moment'
 import FaqHolder from "@/components/FaqHolder";
-
+import NavbarDoctor from "@/components/NavbarDoctor";
 export default {
   name: 'Doctor',
-  components: { FaqHolder, Carousel, Slide },
+  components: { FaqHolder, Carousel, Slide, NavbarDoctor },
   data() {
     return {
       selectedDay: null,//moment().toDate().toISOString(),
       selectedTime: '',
       selectedHeader: 'location',
+      selectedBox: 'clinic',
       monthlyDates: [],
       timeSlots: [],
       form: {

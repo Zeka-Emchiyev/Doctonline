@@ -1,5 +1,6 @@
 <template>
-    <div class="container-fluid position-relative">
+    <div class="container-fluid position-relative bg-light">
+        <Navbar></Navbar>
         <div class="contain-img">
             <div class="search-content pt-5">
                 <h1 class="text-center animate__animated animate__bounce animate__zoomInDown">
@@ -34,8 +35,12 @@
 
 <script>
 import axios from 'axios'
+import Navbar from '../components/Navbar.vue'
 export default {
     name: 'Home',
+    components: {
+        Navbar
+    },
 
     data() {
         return {
