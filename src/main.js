@@ -27,8 +27,8 @@ window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
 
 Vue.config.productionTip = false
-// Vue.prototype.$apiUrl = process.env.NODE_ENV === 'development' ? 'http://159.223.22.111' : 'https://admin.drrandevu.az'
-Vue.prototype.$apiUrl = 'https://admin.drrandevu.az'
+Vue.prototype.$apiUrl = process.env.NODE_ENV === 'development' ? 'http://159.223.22.111' : 'https://admin.drrandevu.az'
+// Vue.prototype.$apiUrl = 'https://admin.drrandevu.az'
 
 
 new Vue({

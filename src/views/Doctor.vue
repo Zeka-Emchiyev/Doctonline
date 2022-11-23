@@ -337,7 +337,29 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" @click="createAppointment">Tesdiqle</button>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-success" @click="createAppointment" data-bs-toggle="modal"
+                data-bs-target="#successModal">
+                Təsdiqlə
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p class="clinic-border text-center"> <i style="color: #4CB147; "
+                  class="bi bi-check-circle-fill d-block fs-1 "></i>
+                {{ result.message }}
+              </p>
             </div>
           </div>
         </div>
@@ -650,6 +672,7 @@ export default {
       selectedDate: null,
       moment,
       doctor: '',
+      result: '',
     };
   },
   computed: {
@@ -673,7 +696,7 @@ export default {
       axios.post(this.$apiUrl + "/api-appointments/create", this.form)
         .then((resp) => {
           console.log(resp)
-          alert(resp.data.message)
+          this.result = resp.data
           this.myModal.hide()
           this.myModal.hide()
           this.randevuModal.hide()
