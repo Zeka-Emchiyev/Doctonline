@@ -1,11 +1,11 @@
 <template>
-    <div class="container-fluid position-relative bg-light">
+    <div class="container-fluid position-relative ">
         <Navbar></Navbar>
         <div class="contain-img">
-            <div class="search-content pt-5">
+            <div class="search-content pt-5 pb-5">
                 <h1 class="text-center animate__animated animate__bounce animate__zoomInDown">
-                    Sağlamlığınıza
-                    baxın!</h1>
+                    Sağlamlığınıza baxın!
+                </h1>
 
                 <div class="row my-4 justify-content-center">
                     <div class=" col-10 col-md-6 ">
@@ -29,6 +29,21 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+        <div class="container my-5">
+            <h1 class="mb-5">Ən çox axtarılan ixtisaslar</h1>
+            <div class="row">
+                <div class="col-2" v-for="profession in frequentlyUsedProfessions">
+                    <div class="professions-box">
+                        <img src="" alt="">
+                        <router-link :to="{ name: 'search', params: { id: profession.id } }"
+                            class="professions-txt pt-5">
+                            {{ profession.name }}
+                        </router-link>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -46,6 +61,32 @@ export default {
         return {
             professions: '',
             searchProfession: '',
+            frequentlyUsedProfessions: [
+                {
+                    id: 23,
+                    name: 'Stomatoloq',
+                },
+                {
+                    id: 48,
+                    name: 'Dermatoloq',
+                },
+                {
+                    id: 21,
+                    name: 'Psixiatr',
+                },
+                {
+                    id: 47,
+                    name: 'Oftalmoloq',
+                },
+                {
+                    id: 26,
+                    name: 'Terapevt',
+                },
+                {
+                    id: 11,
+                    name: 'Mama-ginekoloq',
+                },
+            ]
         };
     },
     computed: {
@@ -73,14 +114,36 @@ export default {
                 .then(response => {
                     this.professions = response.data
                     console.log(this.professions)
+                    this.frequentlyUsedProfessions === this.professions
+                    // console.log(this.frequentlyUsedProfessions)
+
+
                 })
                 .catch(e => console.log(e))
-        }
+        },
+
+
     },
 };
 </script>
 
 <style lang="scss" scoped>
+.professions-box {
+    border: 1px solid #4CB147;
+    border-radius: 10px;
+    height: 200px;
+    width: 180px;
+    background-color: #F2FFF2A1;
+    text-align: center;
+}
+
+.professions-txt {
+    text-decoration: none;
+    font-weight: 500;
+    color: #101825;
+    font-weight: bold;
+}
+
 .icon {
     padding-left: 45px;
     background: url("../assets/search-icon.png") no-repeat left;
@@ -100,7 +163,7 @@ export default {
 
 .contain-img {
     background-image: url('../assets/home.svg');
-    height: 100vh;
+    height: 60vh;
     width: 100%;
 }
 
