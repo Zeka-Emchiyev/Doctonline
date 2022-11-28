@@ -1,13 +1,37 @@
 <template>
     <div class="container-fluid position-relative ">
-        <Navbar></Navbar>
         <div class="contain-img">
-            <div class="search-content pt-5 pb-5">
-                <h1 class="text-center animate__animated animate__bounce animate__zoomInDown">
-                    Sağlamlığınıza baxın!
-                </h1>
+            <Navbar></Navbar>
 
-                <div class="row my-4 justify-content-center">
+            <div class="search-content pt-5 pb-5">
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <h1 class="animate__animated animate__bounce animate__zoomInDown">
+                                Sizə uyğun həkim <br /> seçin və randevu götürün
+                            </h1>
+                            <div class="input-group">
+                                <i class="bi bi-search icon-search"></i>
+                                <input type="text" aria-label="First name" class="form-control border-0 input-all"
+                                    placeholder="Xidmət,şikayət,həkim axtarin...">
+                                <span class="span-line"></span>
+                                <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
+                                <input type="text" aria-label="Last name" class="form-control border-0 input-all"
+                                    placeholder="Rayon">
+                                <span class="span-line"></span>
+                                <i class="bi bi-shield-check icon-insurance ms-2"></i>
+                                <input type="text" aria-label="Last name" class="form-control border-0 input-all "
+                                    placeholder="Sığorta şirkəti">
+                                <button class="icon-button btn btn-success bg-success rounded-start ms-1"></button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="row my-4 justify-content-center">
                     <div class=" col-10 col-md-6 ">
                         <div class="dropdown">
                             <input v-model="searchProfession" class="icon dropdown-toggle form-control" type="text"
@@ -27,16 +51,16 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
-
         </div>
         <div class="container my-5">
             <h1 class="mb-5">Ən çox axtarılan ixtisaslar</h1>
             <div class="row">
                 <div class="col-2" v-for="profession in frequentlyUsedProfessions">
                     <div class="professions-box">
-                        <img src="" alt="">
+                        <img class="rounded-circle my-3 border-0" :src="profession.photo" alt="image" height="100px"
+                            style="background-color:#4CB147;">
                         <router-link :to="{ name: 'search', params: { id: profession.id } }"
                             class="professions-txt pt-5">
                             {{ profession.name }}
@@ -65,26 +89,37 @@ export default {
                 {
                     id: 23,
                     name: 'Stomatoloq',
+                    photo: require('@/assets/Vector-tooth.png')
                 },
                 {
                     id: 48,
                     name: 'Dermatoloq',
+                    photo: require('@/assets/Vector-dermatoloq.png')
+
                 },
                 {
                     id: 21,
                     name: 'Psixiatr',
+                    photo: require('@/assets/Vector-psixiatr.png')
+
                 },
                 {
                     id: 47,
                     name: 'Oftalmoloq',
+                    photo: require('@/assets/Vector-oftalmoloq.png')
+
                 },
                 {
                     id: 26,
                     name: 'Terapevt',
+                    photo: require('@/assets/Vector-heart.png')
+
                 },
                 {
                     id: 11,
                     name: 'Mama-ginekoloq',
+                    photo: require('@/assets/Vector-ginekoloq.png')
+
                 },
             ]
         };
@@ -114,7 +149,8 @@ export default {
                 .then(response => {
                     this.professions = response.data
                     console.log(this.professions)
-                    this.frequentlyUsedProfessions === this.professions
+                    this.professions === this.frequentlyUsedProfessions
+
                     // console.log(this.frequentlyUsedProfessions)
 
 
@@ -128,6 +164,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.span-line {
+    border-right: 2px solid #A1A1A1;
+    height: 80%;
+    margin: auto;
+}
+
+.input-group {
+    border: 1.5px solid #01234B;
+    border-radius: 8px;
+    background-color: white;
+    height: 48px;
+}
+
 .professions-box {
     border: 1px solid #4CB147;
     border-radius: 10px;
@@ -144,15 +193,13 @@ export default {
     font-weight: bold;
 }
 
-.icon {
-    padding-left: 45px;
-    background: url("../assets/search-icon.png") no-repeat left;
+.icon-button {
+    padding-left: 33px;
+    background: url("../assets/Vector.svg") no-repeat left;
     ;
-    background-size: 20px;
+    background-size: 17px;
     line-height: 30px;
-    background-position: 12px 12px;
-    // border: 1px solid #4CB147;
-    transition: none;
+    background-position: 12px 15px;
 
     &:focus {
         border-color: #4CB147;
@@ -160,6 +207,30 @@ export default {
     }
 }
 
+.input-all {
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.icon-search {
+    padding-top: 12px;
+    padding-left: 17px;
+    font-size: 15px;
+    color: #01234B;
+}
+
+.icon-insurance {
+    padding-top: 10px;
+    font-size: 18px;
+    color: #01234B;
+}
+
+.icon-location {
+    padding-top: 10px;
+    font-size: 18px;
+    color: #01234B;
+}
 
 .contain-img {
     background-image: url('../assets/home.svg');
