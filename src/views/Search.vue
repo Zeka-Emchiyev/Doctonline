@@ -3,7 +3,46 @@
         <Navbar></Navbar>
         <div class="container mt-3">
             <div class="row my-4">
-                <div class=" col-10 col-md-6 ">
+
+                <div class="col-md-8">
+                    <h1 class="animate__animated animate__bounce animate__zoomInDown">
+                        Digər axtarışı edin
+                    </h1>
+                    <div class="input-group dropdown">
+                        <i class="bi bi-search icon-search"></i>
+                        <input v-model="searchProfession" class="icon dropdown-toggle form-control border-0 input-all"
+                            type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+                            aria-label="First name" placeholder="Xidmət,şikayət,həkim axtarin...">
+
+                        <div class="dropdown-menu form-control  border overflow-auto"
+                            aria-labelledby="dropdownMenuButton1" style="max-height:265px; min-width:230px">
+                            <p class="dropdown-item text-position">Ixtisaslar</p>
+
+                            <div class="flex-row flex-wrap ">
+                                <option :v-model="selectedProfession" @click="selected(profession)"
+                                    class="dropdown-item link" v-for="profession in filterProfessions"
+                                    v-bind:value="profession.id">
+                                    {{ profession.name }}
+                                </option>
+                            </div>
+                        </div>
+
+                        <span class="span-line"></span>
+                        <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
+                        <input type="text" aria-label="Last name" class="form-control border-0 input-all"
+                            placeholder="Rayon">
+                        <span class="span-line"></span>
+                        <i class="bi bi-shield-check icon-insurance ms-2"></i>
+                        <input type="text" aria-label="Insurance" class="form-control border-0 input-all"
+                            placeholder="Paşa sığorta" disabled>
+
+                        <button @click="searchProfessions()"
+                            class="icon-button btn btn-success bg-success rounded-start ms-1"></button>
+
+                    </div>
+                </div>
+
+                <!-- <div class=" col-10 col-md-6 ">
                     <div class="dropdown">
                         <input v-model="searchProfession" class="icon dropdown-toggle form-control" type="text"
                             id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -21,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="row">
@@ -77,6 +116,8 @@ export default {
 
     data() {
         return {
+            selectedProfession: '',
+            active: true,
             professions: '',
             doctors: '',
             searchProfession: ''
@@ -109,7 +150,7 @@ export default {
             axios.get(this.$apiUrl + "/api-professions")
                 .then(response => {
                     this.professions = response.data
-                    console.log(this.professions)
+                    // console.log(this.professions)
                 })
                 .catch(e => console.log(e))
         },
@@ -118,28 +159,103 @@ export default {
             axios.get(this.$apiUrl + "/api-doctors/profession/" + this.$route.params.id)
                 .then(response => {
                     this.doctors = response.data
-                    console.log(this.doctors)
+                    // console.log(this.doctors)
                 })
                 .catch(e => console.log(e))
+        },
+        selected(selected) {
+
+            this.searchProfession = selected.name
+            this.selectedProfession = selected.id
+            // console.log(this.selectedProfession)
+        },
+        searchProfessions() {
+            if (this.selectedProfession != '') {
+                this.$router.push('/search/' + this.selectedProfession)
+                this.getDoctorsForProfession()
+
+            }
         }
     },
 };
 </script>
 
 <style lang="scss" scoped>
-.icon {
-    padding-left: 45px;
-    background: url("../assets/search-icon.png") no-repeat left;
+.input-all {
+    background-color: #fff !important;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.icon-search {
+    padding-top: 12px;
+    padding-left: 17px;
+    font-size: 15px;
+    color: #01234B;
+}
+
+.icon-insurance {
+    padding-top: 10px;
+    font-size: 18px;
+    color: #01234B;
+}
+
+.icon-location {
+    padding-top: 10px;
+    font-size: 18px;
+    color: #01234B;
+}
+
+
+.span-line {
+    border-right: 2px solid #A1A1A1;
+    height: 80%;
+    margin: auto;
+}
+
+.professions-txt {
+    text-decoration: none;
+    font-weight: 400;
+    color: #01234B;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.icon-button {
+    padding-left: 33px;
+    background: url("../assets/Vector.svg") no-repeat left;
     ;
-    background-size: 20px;
+    background-size: 17px;
     line-height: 30px;
-    background-position: 12px 12px;
-    // border: 1px solid #4CB147;
-    transition: none;
+    background-position: 12px 15px;
 
     &:focus {
         border-color: #4CB147;
         box-shadow: 0 0 0 0.25rem rgb(76, 177, 71, 15%);
+    }
+}
+
+.input-group {
+    border: 1.5px solid #01234B;
+    border-radius: 8px;
+    background-color: white;
+    height: 48px;
+}
+
+.link {
+    text-decoration: none;
+    font-weight: 400;
+    color: #101825;
+    cursor: pointer;
+    padding: 5px 12px;
+    margin: 5px;
+    border-radius: 8px;
+    font-size: 13px;
+
+    &:hover {
+        background-color: #DDFDDB;
     }
 }
 

@@ -11,47 +11,43 @@
                             <h1 class="animate__animated animate__bounce animate__zoomInDown">
                                 Sizə uyğun həkim <br /> seçin və randevu götürün
                             </h1>
-                            <div class="input-group">
+                            <div class="input-group dropdown">
                                 <i class="bi bi-search icon-search"></i>
-                                <input type="text" aria-label="First name" class="form-control border-0 input-all"
-                                    placeholder="Xidmət,şikayət,həkim axtarin...">
+                                <input v-model="searchProfession"
+                                    class="icon dropdown-toggle form-control border-0 input-all" type="text"
+                                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+                                    aria-label="First name" placeholder="Xidmət,şikayət,həkim axtarin...">
+
+                                <div class="dropdown-menu form-control  border overflow-auto"
+                                    aria-labelledby="dropdownMenuButton1" style="max-height:265px; min-width:230px">
+                                    <p class="dropdown-item text-position">Ixtisaslar</p>
+
+                                    <div class="flex-row flex-wrap ">
+                                        <option :v-model="selectedProfession" @click="selected(profession)"
+                                            class="dropdown-item link" v-for="profession in filterProfessions"
+                                            v-bind:value="profession.id">
+                                            {{ profession.name }}
+                                        </option>
+                                    </div>
+                                </div>
+
                                 <span class="span-line"></span>
                                 <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
                                 <input type="text" aria-label="Last name" class="form-control border-0 input-all"
                                     placeholder="Rayon">
                                 <span class="span-line"></span>
                                 <i class="bi bi-shield-check icon-insurance ms-2"></i>
-                                <input type="text" aria-label="Last name" class="form-control border-0 input-all "
-                                    placeholder="Sığorta şirkəti">
-                                <button class="icon-button btn btn-success bg-success rounded-start ms-1"></button>
+                                <input type="text" aria-label="Insurance" class="form-control border-0 input-all"
+                                    placeholder="Paşa sığorta" disabled>
+
+                                <button @click="searchProfessions()"
+                                    class="icon-button btn btn-success bg-success rounded-start ms-1"></button>
 
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-                <!-- <div class="row my-4 justify-content-center">
-                    <div class=" col-10 col-md-6 ">
-                        <div class="dropdown">
-                            <input v-model="searchProfession" class="icon dropdown-toggle form-control" type="text"
-                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-
-                            <div class=" dropdown-menu form-control mt-2" aria-labelledby="dropdownMenuButton1">
-                                <p class="dropdown-item text-position">Ixtisaslar</p>
-
-                                <div class="d-flex flex-row flex-wrap">
-                                    <div class="profession-title me-3" v-for="profession in filterProfessions">
-                                        <router-link :to="{ name: 'search', params: { id: profession.id } }"
-                                            class="dropdown-item link">
-                                            {{ profession.name }}
-                                        </router-link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
         <div class="container my-5">
@@ -61,8 +57,7 @@
                     <div class="professions-box">
                         <img class="rounded-circle my-3 border-0" :src="profession.photo" alt="image" height="100px"
                             style="background-color:#4CB147;">
-                        <router-link :to="{ name: 'search', params: { id: profession.id } }"
-                            class="professions-txt pt-5">
+                        <router-link :to="{ name: 'search', params: { id: profession.id } }" class="professions-txt ">
                             {{ profession.name }}
                         </router-link>
                     </div>
@@ -83,6 +78,8 @@ export default {
 
     data() {
         return {
+            selectedProfession: '',
+            active: true,
             professions: '',
             searchProfession: '',
             frequentlyUsedProfessions: [
@@ -158,6 +155,18 @@ export default {
                 .catch(e => console.log(e))
         },
 
+        selected(selected) {
+
+            this.searchProfession = selected.name
+            this.selectedProfession = selected.id
+            console.log(this.selectedProfession)
+        },
+
+        searchProfessions() {
+            if (this.selectedProfession != '') {
+                this.$router.push('/search/' + this.selectedProfession)
+            }
+        }
 
     },
 };
@@ -184,13 +193,21 @@ export default {
     width: 180px;
     background-color: #F2FFF2A1;
     text-align: center;
+    transition: box-shadow .3s;
+
+}
+
+.professions-box:hover {
+    box-shadow: 0 0 11px rgba(33, 33, 33, .2);
+
 }
 
 .professions-txt {
     text-decoration: none;
-    font-weight: 500;
-    color: #101825;
+    font-weight: 400;
+    color: #01234B;
     font-weight: bold;
+    font-size: 13px;
 }
 
 .icon-button {
@@ -208,6 +225,8 @@ export default {
 }
 
 .input-all {
+    background-color: #fff !important;
+
     &:focus {
         box-shadow: none;
     }
@@ -239,20 +258,24 @@ export default {
 }
 
 .text-position {
-    color: #b7bbc2;
-    font-size: 20px;
+    color: #535F72;
+    font-size: 11px;
     line-height: 20px;
     font-weight: 500;
 }
 
 .link {
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 400;
     color: #101825;
-    background-color: #edf0f4;
     cursor: pointer;
     padding: 5px 12px;
     margin: 5px;
     border-radius: 8px;
+    font-size: 13px;
+
+    &:hover {
+        background-color: #DDFDDB;
+    }
 }
 </style>
