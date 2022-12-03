@@ -10,8 +10,8 @@
             </div>
 
             <div class="col-9 col-sm-8 col-md-7 col-lg-8 col-xl-9 ">
-              <span class="text-success doc-profession" style="display:block ;">{{ doctor.profession }}</span>
               <h5 class="name-surname">{{ doctor.fullname }}</h5>
+              <span class="doc-profession" style="display:block ;">{{ doctor.profession }}</span>
               <div class="d-none d-md-flex flex-row mb-2">
                 <p class="city">{{ doctor.address }} {{ doctor.city }}</p>
 
@@ -453,21 +453,27 @@
 }
 
 .doc-profession {
-  font-size: 20px;
+  font-size: 16px;
   line-height: 28px;
+  font-weight: 500;
+  color: #01234B;
   // font-family: Gilroy-Regular;
 }
 
 .name-surname {
   font-size: 34px;
+  color: #01234B;
+  font-weight: 500;
+  line-height: 40px;
   line-height: 40px;
 }
 
 .city {
   // position: relative;
   padding-right: 10px;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #535353;
 }
 
 .location-content {

@@ -14,16 +14,17 @@
                     </div>
 
                     <!-- Grid column -->
-                    <div class="col-md-6 mb-4">
+                    <div class="d-none col-6 d-lg-block  mb-4">
                         <!-- Links -->
                         <h6 class="text-contact fw-bold mb-4">
                             Əsas ixtisaslar
                         </h6>
-                        <div class="row overflow-hidden" style="max-height:400px ;">
-                            <div class="col-4" v-for="profession in professions" style="max-height:400px ;">
+                        <div class="row overflow-hidden" style="max-height:404px ;">
+                            <div class="col-md-4" v-for="profession in professions">
                                 <!-- <p @click="submit()" class="professions-text">{{ profession.name }}</p> -->
-                                <router-link :to="{ name: 'search', params: { id: profession.id } }"
-                                    @click.native="getDoctorsForProfession(profession)">
+                                <router-link class="professions-text"
+                                    :to="{ name: 'search', params: { id: profession.id } }"
+                                    @click.native="getDoctorsForProfession()">
                                     {{ profession.name
                                     }}
                                 </router-link>
@@ -104,20 +105,19 @@ export default {
                 .catch(e => console.log(e))
         },
 
-        getDoctorsForProfession(profession) {
+        getDoctorsForProfession() {
 
-            // axios.get(this.$apiUrl + "/api-doctors/profession/" + this.$route.params.id)
-            //     .then(response => {
-            //         this.doctors = response.data
-            //         // profession = this.doctors
-            //         // console.log(profession)
-            //         // window.location.reload()
-            //         console.log(this.doctors)
-            //     })
-            //     .catch(e => console.log(e))
-            this.$router.push('/search/' + profession.id).catch(() => { })
+            axios.get(this.$apiUrl + "/api-doctors/profession/" + this.$route.params.id)
+                .then(response => {
+                    this.doctors = response.data
+                    // profession = this.doctors
+                    // console.log(profession)
+                    window.location.reload()
+                    console.log(this.doctors)
 
-            console.log(profession.id)
+                })
+                .catch(e => console.log(e))
+
         },
 
 
@@ -131,6 +131,11 @@ export default {
     color: #E1E1E1;
     font-size: 14px;
     font-weight: 400;
+    text-decoration: none;
+
+    &:hover {
+        color: #4CB147;
+    }
 }
 
 footer {

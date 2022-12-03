@@ -63,46 +63,51 @@
                 </div> -->
             </div>
 
-            <div class="row">
-                <div class="col-sm-12 col-md-9">
-                    <div v-for="doctor in doctors" class="border rounded mb-2">
 
+            <div v-for="doctor in doctors" class="border rounded mb-3">
+                <div class="row">
+                    <div class="col-md-8">
                         <div class="row mt-4 p-3">
                             <div class="col-3 col-lg-2">
-                                <div class="position-relative rounded-circle border img-profile">
+                                <div class="rounded-circle border img-profile">
                                     <img class="rounded-circle" style="height: 100%; width: 100%;"
                                         :src="`${$apiUrl}/${doctor.profile_photo}`" alt="">
-                                    <!-- <span
-                                            class="position-absolute top-0 p-2 bg-light border border-light rounded-circle">
-                                            <i class="bi bi-heart"></i>
-                                        </span> -->
+                                    <router-link class="text-decoration-none profile-link"
+                                        :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                        Profilə bax
+                                    </router-link>
                                 </div>
 
 
                             </div>
                             <div class="col-9 col-lg-10">
-                                <span class="text-profession" style="display: block;">{{ doctor.profession }}</span>
+
                                 <router-link class="text-decoration-none rout-link"
                                     :to="{ name: 'doctor', params: { id: doctor.id } }">
                                     {{ doctor.fullname }}
                                 </router-link>
+                                <span class="text-profession" style="display: block;">{{ doctor.profession
+                                }}</span>
 
                                 <span class="city mb-1">{{ doctor.address }} {{ doctor.city }}</span>
                                 <span class="city fw-bold">{{ doctor.clinic }}</span>
-                                <span class="city ">{{ doctor.experiences }}</span>
-                                <div><i class="bi bi-star-fill star"></i>
+                                <i class="bi bi-shield-check icon-ins pe-1"></i>
+                                <p class="insurance">Paşa siğorta</p>
+
+                                <!-- <span class="city ">{{ doctor.experiences }}</span> -->
+                                <!-- <div><i class="bi bi-star-fill star"></i>
                                     <span class="star-assess mx-1">4.86</span>
                                     <span class="text-worth">(254 dəyərləndirmə )</span>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
-
+                    </div>
+                    <div class="col-md-4">
+                        Calendar
                     </div>
                 </div>
-                <div class="col-md-3">
-                    google map
-                </div>
             </div>
+
         </div>
     </div>
 
@@ -181,6 +186,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.profile-link {
+    color: #0072DB;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding-left: 18px;
+}
+
+.insurance {
+    font-size: 15px;
+    font-weight: 500;
+    color: #01234B;
+    display: inline;
+}
+
+.icon-ins {
+    font-size: 12px;
+    color: #0072DB;
+}
+
 .input-all {
     background-color: #fff !important;
 
@@ -260,19 +285,24 @@ export default {
 }
 
 .rout-link {
-    color: black;
+    color: #01234B;
+    font-weight: 600;
     font-size: 24px;
 
 }
 
 .text-profession {
-    color: #848b98;
+    color: #01234B;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .city {
     font-size: 16px;
     line-height: 24px;
+    font-weight: 500;
     display: block;
+    color: #01234B;
 }
 
 .star {

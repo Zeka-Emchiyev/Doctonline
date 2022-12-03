@@ -1,14 +1,14 @@
 <template>
-    <div class="container-fluid position-relative ">
+    <div class="container-fluid p-0">
         <div class="contain-img">
             <Navbar></Navbar>
 
-            <div class="search-content pt-5 pb-5">
+            <div class="search-content">
 
                 <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-8">
-                            <h1 class="animate__animated animate__bounce animate__zoomInDown">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-8">
+                            <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
                                 Sizə uyğun həkim <br /> seçin və randevu götürün
                             </h1>
                             <div class="input-group dropdown">
@@ -41,7 +41,9 @@
                                     placeholder="Paşa sığorta" disabled>
 
                                 <button @click="searchProfessions()"
-                                    class="icon-button btn btn-success bg-success rounded-start ms-1"></button>
+                                    class="icon-button btn btn-success bg-success rounded-start ms-1">
+                                    <span class="d-block d-md-none">Axtar</span>
+                                </button>
 
                             </div>
                         </div>
@@ -50,17 +52,15 @@
 
             </div>
         </div>
-        <div class="container my-5">
-            <h1 class="mb-5">Ən çox axtarılan ixtisaslar</h1>
+        <div class="container profession-container">
+            <h1 class="profession-title">Ən çox axtarılan ixtisaslar</h1>
             <div class="row">
-                <div class="col-2" v-for="profession in frequentlyUsedProfessions">
-                    <div class="professions-box">
-                        <img class="rounded-circle my-3 border-0" :src="profession.photo" alt="image" height="100px"
-                            style="background-color:#4CB147;">
-                        <router-link :to="{ name: 'search', params: { id: profession.id } }" class="professions-txt ">
-                            {{ profession.name }}
-                        </router-link>
-                    </div>
+                <div class="col-6 col-md-2 my-2" v-for="profession in frequentlyUsedProfessions">
+                    <router-link :to="{ name: 'search', params: { id: profession.id } }"
+                        class="professions-box d-block text-decoration-none">
+                        <img class="rounded-circle profession-photo" :src="profession.photo" alt="image">
+                        <p class="professions-txt ">{{ profession.name }}</p>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -173,6 +173,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search-content {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.profession-container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
 .span-line {
     border-right: 2px solid #A1A1A1;
     height: 80%;
@@ -200,14 +210,24 @@ export default {
 .professions-box:hover {
     box-shadow: 0 0 11px rgba(33, 33, 33, .2);
 
+
+}
+
+.profession-photo {
+    height: 100px;
+    border: none;
+    background-color: #4CB147;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .professions-txt {
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 500;
     color: #01234B;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 18px;
+
 }
 
 .icon-button {
@@ -276,6 +296,143 @@ export default {
 
     &:hover {
         background-color: #DDFDDB;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    // .icon-search {
+    //     font-size: 15px;
+    //     color: #01234B;
+    // }
+
+    // .icon-insurance {
+    //     padding-top: 10px;
+    //     font-size: 18px;
+    //     color: #01234B;
+    // }
+
+    // .icon-location {
+    //     padding-top: 10px;
+    //     font-size: 18px;
+    //     color: #01234B;
+    // }
+
+    .span-line {
+        // border-bottom: 1px solid #A1A1A1;
+        margin: auto;
+        display: none;
+        // padding-left: 100%;
+    }
+
+    .icon-button {
+        padding-left: 0;
+        padding-right: 0;
+        background-image: none;
+        width: 100%;
+        // background-size: 17px;
+        display: block;
+        text-align: center;
+        margin-top: 25px;
+
+
+        line-height: 30px;
+        // background-position: 12px 15px;
+
+        &:focus {
+            border-color: #4CB147;
+            box-shadow: 0 0 0 0.25rem rgb(76, 177, 71, 15%);
+        }
+    }
+
+    .input-all {
+        border-bottom: 1px solid !important;
+        background-color: #fff !important;
+        width: 100% !important;
+        padding: 10px !important;
+        // text-align: center;
+
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .search-content {
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+
+    .input-group {
+        border: 1.5px solid #01234B;
+        border-radius: 8px;
+        background-color: white;
+        height: 245px;
+        display: block;
+        padding-left: 15px;
+        padding-right: 15px;
+        // position: relative;
+        width: 100%;
+        // margin-bottom: 10px;
+    }
+
+    .input-group i {
+        padding: 10px;
+        position: absolute;
+        text-align: center;
+        display: block;
+        // background-color: #4CB147;
+    }
+
+    .contain-img {
+        background-image: none;
+        background-color: #F5FFF5;
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .profession-container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .title-txt {
+        font-size: 26px;
+        padding-left: 10px;
+    }
+
+    .profession-title {
+        font-size: 22px;
+        margin-bottom: 0;
+
+    }
+
+    .professions-box {
+        border: 1px solid #4CB147;
+        border-radius: 10px;
+        height: 150px;
+        width: 150px;
+        background-color: #F2FFF2A1;
+        text-align: center;
+        transition: box-shadow .3s;
+
+    }
+
+    .profession-photo {
+        height: 70px;
+        border: none;
+        background-color: #4CB147;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .professions-txt {
+        text-decoration: none;
+        font-weight: 500;
+        color: #01234B;
+        font-weight: bold;
+        font-size: 14px;
+
     }
 }
 </style>
