@@ -157,7 +157,7 @@
               <div class="col-7">
                 <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example"
                   tabindex="0">
-                  <h5 class="mb-4" id="scrollspyHeading2"> Haqqında</h5>
+                  <h2 class="mb-4 head" id="scrollspyHeading2"> Haqqında</h2>
 
                   <!-- <p class="number">{{ doctor.phone }}</p> -->
 
@@ -206,7 +206,10 @@
               <!-- <div class="col-1"><img src="../assets/more.png" alt=""></div> -->
             </div>
 
-            <h2 class="mb-4 mt-3 head">İş təcrübəsi</h2>
+            <div>
+              <h2 class="mb-4 mt-3 head">İş təcrübəsi</h2>
+
+            </div>
             <div>
               <p class="text-experience">{{ doctor.experiences }}</p>
             </div>
@@ -231,10 +234,10 @@
         </div>
         <div class="col-md-5 shadow p-3 mb-5 bg-body rounded h-50 d-none d-md-flex  ">
           <div class="container">
-            <h2>Randevu al</h2>
-            <p>Randevu tipini və tarixi seçərək davam edin</p>
+            <h2 class="randevu-title">Pulsuz randevu təyin et</h2>
+            <p class="randevu-type">Randevu tipini seçin</p>
 
-            <div class="row justify-content-start ms-1">
+            <!-- <div class="row justify-content-start ms-1">
 
               <div class="col-6">
                 <div @click="selectedBox = 'clinic'"
@@ -262,14 +265,34 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+
+
+            <div class="row text-center ms-1 ">
+
+              <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
+                :class="{ 'clinic-border': selectedBox === 'clinic' }">
+
+                <div class="hold-on">
+                  <i class="icon-clinic bi bi-person-fill "></i>
+                  <span class="clinic-video-txt">Klinikada</span>
+                </div>
+              </div>
+              <div @click="selectedBox = 'video'" class=" col-6 rounded-end b-default"
+                :class="{ 'clinic-border': selectedBox === 'video' }">
+                <div class="hold-on">
+                  <font-awesome-icon icon="fa-solid fa-video icon-clinic" />
+                  <!-- <i class="fa-solid fa-video"></i> -->
+                  <span class="clinic-video-txt">Video</span>
+                </div>
+
+              </div>
             </div>
 
 
             <div>
-              <div class="location my-3">
-                <p class="location-content my-3 text-nowrap"> <i class="bi bi-check-circle-fill mx-3 location-icon"></i>
-                  {{ doctor.clinic }}</p>
-              </div>
+              <p class="location-content my-3">
+                {{ doctor.clinic }}</p>
             </div>
             <div class="d-none d-md-block">
               <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
@@ -427,8 +450,27 @@
 </style>
 <style lang="scss">
 .icon-clinic {
-  background-color: #0F42B0;
-  color: white;
+  // background-color: #0F42B0;
+  color: #01234B;
+  padding-right: 10px;
+}
+
+.randevu-title {
+  font-size: 24px;
+  color: #01234B;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.randevu-type {
+  font-size: 14px;
+  color: #01234B;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.hold-on {
+  padding-top: 7px;
 }
 
 .icon-video {
@@ -439,11 +481,19 @@
 .b-default {
   border: 1px solid #EDF0F4;
   cursor: pointer;
+  height: 40px;
+}
+
+.clinic-video-txt {
+  font-size: 14px;
+  font-weight: 400;
+  color: #01234B;
+  line-height: 12px;
 }
 
 .clinic-border {
-  border: 2px solid #1FC117A1;
-  background-color: #F2FFF2A1;
+  border: 1.5px solid #0F42B0;
+  background-color: #DBE3F4;
   cursor: pointer;
 }
 
@@ -477,21 +527,21 @@
 }
 
 .location-content {
-  width: auto;
-  font-size: 16px;
-  line-height: 24px;
-  color: #273142;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #01234B;
 }
 
-.location {
-  height: 56px;
-  border-radius: 8px;
-  padding: 0 10 px;
-  margin: auto;
-  display: flex;
-  border: 1px solid #4CB147;
-  background-color: #f2faf2;
-}
+// .location {
+//   height: 56px;
+//   border-radius: 8px;
+//   padding: 0 10 px;
+//   margin: auto;
+//   display: flex;
+//   border: 1px solid #4CB147;
+//   background-color: #f2faf2;
+// }
 
 .location-icon {
   // font-size: 12px;
@@ -507,17 +557,19 @@
   line-height: 20px;
   text-decoration: none;
   margin-right: 20px;
-  color: black;
+  color: #01234B;
   padding-bottom: 18px;
 
   &.text-header-bottom-line {
-    border-bottom: 2px solid #4CB147;
+    border-bottom: 2px solid #01234B;
   }
 }
 
 .head {
-  font-size: 24px;
+  font-size: 20px;
   line-height: 32px;
+  font-weight: 600;
+  color: #01234B;
 }
 
 .head-ege {
@@ -545,6 +597,7 @@
 .text {
   font-size: 16px;
   line-height: 24px;
+  color: #01234B;
 }
 
 .txt-light {

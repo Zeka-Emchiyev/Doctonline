@@ -1,6 +1,6 @@
 <template>
   <div class="my-5">
-    <h5 class="text-faq">ÇSS</h5>
+    <h5 class="text-faq">Çox soruşulan suallar</h5>
 
     <div class="accordion" id="accordionExample">
       <div class="accordion-item border-0">
@@ -44,6 +44,7 @@ export default {
 .text-faq {
   font-size: 24px;
   line-height: 32px;
+  color: #01234B;
 }
 
 .accordion-button {

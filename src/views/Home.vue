@@ -282,15 +282,16 @@ export default {
     font-size: 11px;
     line-height: 20px;
     font-weight: 500;
+    margin: 0;
 }
 
 .link {
     text-decoration: none;
     font-weight: 400;
-    color: #101825;
+    color: #01234B;
     cursor: pointer;
-    padding: 5px 12px;
-    margin: 5px;
+    padding: 1px 12px;
+    // margin: 5px;
     border-radius: 8px;
     font-size: 13px;
 
@@ -300,22 +301,6 @@ export default {
 }
 
 @media screen and (max-width: 576px) {
-    // .icon-search {
-    //     font-size: 15px;
-    //     color: #01234B;
-    // }
-
-    // .icon-insurance {
-    //     padding-top: 10px;
-    //     font-size: 18px;
-    //     color: #01234B;
-    // }
-
-    // .icon-location {
-    //     padding-top: 10px;
-    //     font-size: 18px;
-    //     color: #01234B;
-    // }
 
     .span-line {
         // border-bottom: 1px solid #A1A1A1;
@@ -380,6 +365,7 @@ export default {
         position: absolute;
         text-align: center;
         display: block;
+        z-index: 1;
         // background-color: #4CB147;
     }
 
