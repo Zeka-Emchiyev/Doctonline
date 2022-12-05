@@ -82,27 +82,27 @@
                           <small>Randevu saatını seçin</small>
                         </div>
 
-<!--                        <div>
-                          <Carousel :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
-                            navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4"
-                            :scrollPerPage="false">
-                            <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
-                              <div @click="setDay(day)" class="day-container"
-                                :class="{ 'bg-success text-white': selectedDay === day }">
-                                {{ moment(day).format('MMM DD') }}
+                        <div>
+                          <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
+                                    navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
+                            <slide v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')">
+                              <div @click="setDay(day.date)" class="day-container"
+                                   :class="{ 'bg-success text-white': selectedDay === day.date }">
+                                {{ moment(day.date).format('MMM DD') }}
+                              </div>
+                              <div class="time-slots mt-4">
+                                <div v-for="(timeSlot, index) in day.timeSlots">
+                                  <div v-if="index < 4" class="time-slot"
+                                       :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                                       @click="setSelectedTime(day, timeSlot)">
+                                    {{ timeSlot.timeFormatted }}
+                                  </div>
+                                </div>
+                                <div class="time-slot slot-more">daha çox</div>
                               </div>
                             </slide>
                           </Carousel>
-                          <div class="time-slots mt-4">
-                            <div class="row">
-                              <div v-for="timeSlot in timeSlots" class="col-3">
-                                <div class="time-slot"
-                                  :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
-                                  @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>-->
+                        </div>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -291,14 +291,6 @@
                   </div>
                 </slide>
               </Carousel>
-<!--              <div class="time-slots mt-4">
-                <div class="row">
-                  <div v-for="timeSlot in timeSlots" class="col-3">
-                    <div class="time-slot" :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
-                      @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
-                  </div>
-                </div>
-              </div>-->
             </div>
             <div class="text-center mt-2">
               <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
