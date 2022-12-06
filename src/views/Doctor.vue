@@ -303,13 +303,19 @@
                   </div>
                   <div class="time-slots mt-4">
                     <div v-for="(timeSlot, index) in day.timeSlots">
-                      <div v-if="index < 4" class="time-slot"
+                      <div v-if="index < 4 && !day.showMore" class="time-slot"
+                           :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                           @click="setSelectedTime(day, timeSlot)">
+                        {{ timeSlot.timeFormatted }}
+                      </div>
+                      <div v-if="day.showMore" class="time-slot"
                            :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
                            @click="setSelectedTime(day, timeSlot)">
                         {{ timeSlot.timeFormatted }}
                       </div>
                     </div>
-                    <div class="time-slot slot-more">daha çox</div>
+                    <div v-show="!day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day)">daha çox</div>
+                    <div v-show="day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day, false)">daha az</div>
                   </div>
                 </slide>
               </Carousel>
@@ -797,9 +803,12 @@ export default {
       const monthLater = moment().add(1, 'month')
       let enumerateDaysBetweenDates = (startDate, endDate) => {
         let now = startDate.clone(), dates = [];
+        let i = 0;
         while (now.isSameOrBefore(endDate)) {
           dates.push({
-            date: now.toDate()
+            id: i++,
+            date: now.toDate(),
+            showMore: false
           });
           now.add(1, 'days');
         }
@@ -843,6 +852,10 @@ export default {
       this.setDay(day)
       this.selectedTime = time.timeFormatted
       console.log(this.selectedDay)
+    },
+    showMoreTimeSlots(day, showState = true) {
+      const dayIndex = this.monthlyDates.findIndex(date => date.id === day.id)
+      this.monthlyDates[dayIndex].showMore = showState
     }
   },
 }
