@@ -83,25 +83,25 @@
                         </div>
 
                         <div>
-                          <Carousel :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
-                            navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4"
-                            :scrollPerPage="false">
-                            <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
-                              <div @click="setDay(day)" class="day-container"
-                                :class="{ 'bg-success text-white': selectedDay === day }">
-                                {{ moment(day).format('MMM DD') }}
+                          <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
+                                    navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
+                            <slide v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')">
+                              <div @click="setDay(day.date)" class="day-container"
+                                   :class="{ 'bg-success text-white': selectedDay === day.date }">
+                                {{ moment(day.date).format('MMM DD') }}
+                              </div>
+                              <div class="time-slots mt-4">
+                                <div v-for="(timeSlot, index) in day.timeSlots">
+                                  <div v-if="index < 4" class="time-slot"
+                                       :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                                       @click="setSelectedTime(day, timeSlot)">
+                                    {{ timeSlot.timeFormatted }}
+                                  </div>
+                                </div>
+                                <div class="time-slot slot-more">daha çox</div>
                               </div>
                             </slide>
                           </Carousel>
-                          <div class="time-slots mt-4">
-                            <div class="row">
-                              <div v-for="timeSlot in timeSlots" class="col-3">
-                                <div class="time-slot"
-                                  :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
-                                  @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -296,21 +296,23 @@
             <div class="d-none d-md-block">
               <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
                 navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
-                <slide v-for="day in monthlyDates" :key="moment(day).format('MMM DD')">
-                  <div @click="setDay(day)" class="day-container"
-                    :class="{ 'bg-success text-white': selectedDay === day }">
-                    {{ moment(day).format('MMM DD') }}
+                <slide v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')">
+                  <div @click="setDay(day.date)" class="day-container"
+                    :class="{ 'bg-success text-white': selectedDay === day.date }">
+                    {{ moment(day.date).format('MMM DD') }}
+                  </div>
+                  <div class="time-slots mt-4">
+                    <div v-for="(timeSlot, index) in day.timeSlots">
+                      <div v-if="index < 4" class="time-slot"
+                           :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                           @click="setSelectedTime(day, timeSlot)">
+                        {{ timeSlot.timeFormatted }}
+                      </div>
+                    </div>
+                    <div class="time-slot slot-more">daha çox</div>
                   </div>
                 </slide>
               </Carousel>
-              <div class="time-slots mt-4">
-                <div class="row">
-                  <div v-for="timeSlot in timeSlots" class="col-3">
-                    <div class="time-slot" :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted }"
-                      @click="setSelectedTime(timeSlot)">{{ timeSlot.timeFormatted }}</div>
-                  </div>
-                </div>
-              </div>
             </div>
             <div class="text-center mt-2">
               <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
@@ -336,8 +338,12 @@
               <div class="container d-flex align-items-center justify-content-center my-5 ">
                 <div class="row">
                   <div class="col-4">
-                    <img :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile image" width="100%"
-                      class="rounded-circle">
+                    <div class="profile-image rounded-circle"
+                         :style="{
+                           'background-image': 'url('+ `${$apiUrl}/${doctor.profile_photo}` + ')'
+                         }"></div>
+<!--                    <img :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile image" width="100%"-->
+<!--                      class="rounded-circle">-->
                     <!--                    <img :src="$apiUrl + '/' + doctor.profile_photo" alt="profile image">-->
                   </div>
                   <div class="col-8">
@@ -390,22 +396,36 @@
   </div>
 </template>
 <style lang="scss">
+#takeAppointmentModal {
+  .profile-image {
+    height: 100px;
+    width: 100px;
+    background-size: cover;
+  }
+}
 .day-container {
-  height: 46px;
+  margin: 0 auto;
+  width: 64px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   border-radius: 8px;
-  border: 1px solid #edf0f4;
+  //border: 1px solid #edf0f4;
   cursor: pointer;
   transition: border-color .15s linear, background-color .15s linear;
-  margin-left: 5px;
-  margin-right: 5px;
+  //margin-left: 5px;
+  //margin-right: 5px;
 }
 
 .time-slots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .time-slot {
+    width: 64px;
+    height: 36px;
     cursor: pointer;
     text-align: center;
     display: block;
@@ -418,8 +438,11 @@
     letter-spacing: -.1px;
     font-weight: 500;
     transition: background-color .15s linear, color .15s linear, border-color .15s linear;
-    padding: 10px 3px;
+    padding: 9px 3px;
     margin-bottom: 10px;
+    &.slot-more {
+      font-size: 10px;
+    }
   }
 }
 
@@ -431,6 +454,12 @@
 //   height: auto !important;
 // }
 
+.VueCarousel-slide {
+  border-right: 1px solid #EDF1F7;
+}
+.VueCarousel-navigation-button {
+  top: 20px;
+}
 .VueCarousel-navigation-prev {
   &:before {
     content: url(@/assets/icons/arrow-ios-left.svg);
@@ -741,6 +770,7 @@ export default {
   mounted() {
     this.moment.locale('az')
     this.user()
+    this.generateTimeSlots()
     this.generateDays()
     this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
     this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'))
@@ -765,11 +795,12 @@ export default {
       // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
       const today = moment()
       const monthLater = moment().add(1, 'month')
-      var enumerateDaysBetweenDates = function (startDate, endDate) {
-        var now = startDate.clone(), dates = [];
-
+      let enumerateDaysBetweenDates = (startDate, endDate) => {
+        let now = startDate.clone(), dates = [];
         while (now.isSameOrBefore(endDate)) {
-          dates.push(now.toDate());
+          dates.push({
+            date: now.toDate()
+          });
           now.add(1, 'days');
         }
         return dates;
@@ -793,17 +824,25 @@ export default {
     user() {
       axios.get(this.$apiUrl + "/api-doctors/" + this.$route.params.id)
         .then(response => {
-          console.log(response)
           this.doctor = response.data
           this.generateTimeSlots()
+          this.monthlyDates = this.monthlyDates.map(day => {
+            return {
+              ...day,
+              timeSlots: JSON.parse(JSON.stringify(this.timeSlots))
+            }
+          })
+          console.log(this.monthlyDates)
         })
         .catch(e => console.log(e))
     },
     setDay(day) {
-      this.selectedDay = day
+      this.selectedDay = day.date
     },
-    setSelectedTime(time) {
+    setSelectedTime(day, time) {
+      this.setDay(day)
       this.selectedTime = time.timeFormatted
+      console.log(this.selectedDay)
     }
   },
 }
