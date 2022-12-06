@@ -281,8 +281,7 @@
               <div @click="selectedBox = 'video'" class=" col-6 rounded-end b-default"
                 :class="{ 'clinic-border': selectedBox === 'video' }">
                 <div class="hold-on">
-                  <font-awesome-icon icon="fa-solid fa-video icon-clinic" />
-                  <!-- <i class="fa-solid fa-video"></i> -->
+                  <img class="icon-clinic" src="../assets/Group 432.svg" alt="">
                   <span class="clinic-video-txt">Video</span>
                 </div>
 

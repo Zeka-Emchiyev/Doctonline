@@ -14,7 +14,7 @@
                             <div class="input-group dropdown">
                                 <i class="bi bi-search icon-search"></i>
                                 <input v-model="searchProfession"
-                                    class="icon dropdown-toggle form-control border-0 input-all" type="text"
+                                    class="icon dropdown-toggle form-control border-0 input-search" type="text"
                                     id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
                                     aria-label="First name" placeholder="Xidmət,şikayət,həkim axtarin...">
 
@@ -33,16 +33,15 @@
 
                                 <span class="span-line"></span>
                                 <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
-                                <input type="text" aria-label="Last name" class="form-control border-0 input-all"
+                                <input type="text" aria-label="Last name" class="form-control border-0 input-location"
                                     placeholder="Rayon">
                                 <span class="span-line"></span>
                                 <i class="bi bi-shield-check icon-insurance ms-2"></i>
-                                <input type="text" aria-label="Insurance" class="form-control border-0 input-all"
+                                <input type="text" aria-label="Insurance" class="form-control border-0 input-insurance"
                                     placeholder="Paşa sığorta" disabled>
 
-                                <button @click="searchProfessions()"
-                                    class="icon-button btn btn-success bg-success rounded-start ms-1">
-                                    <span class="d-block d-md-none">Axtar</span>
+                                <button @click="searchProfessions()" class="icon-button btn btn-success rounded-start">
+                                    <span class="d-block d-md-none" style="color: #01234B;">Axtar</span>
                                 </button>
 
                             </div>
@@ -178,6 +177,10 @@ export default {
     padding-bottom: 40px;
 }
 
+.btn-success {
+    background-color: rgba(31, 193, 23, 0.63) !important;
+}
+
 .profession-container {
     margin-top: 40px;
     margin-bottom: 40px;
@@ -244,7 +247,23 @@ export default {
     }
 }
 
-.input-all {
+.input-search {
+    background-color: #fff !important;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.input-location {
+    background-color: #fff !important;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.input-insurance {
     background-color: #fff !important;
 
     &:focus {
@@ -301,6 +320,31 @@ export default {
 }
 
 @media screen and (max-width: 576px) {
+    .icon-search {
+        display: none !important;
+        padding-top: 12px;
+        padding-left: 17px;
+        font-size: 15px;
+        color: #01234B;
+    }
+
+    .btn-success {
+        background-color: #8DEB8B !important;
+    }
+
+    .icon-insurance {
+        display: none !important;
+        padding-top: 10px;
+        font-size: 18px;
+        color: #01234B;
+    }
+
+    .icon-location {
+        display: none !important;
+        padding-top: 10px;
+        font-size: 18px;
+        color: #01234B;
+    }
 
     .span-line {
         // border-bottom: 1px solid #A1A1A1;
@@ -329,12 +373,44 @@ export default {
         }
     }
 
-    .input-all {
-        border-bottom: 1px solid !important;
+    .input-search {
+        border-bottom: 1px solid #D2D1D1 !important;
         background-color: #fff !important;
         width: 100% !important;
-        padding: 10px !important;
+        // padding: 10px !important;
         // text-align: center;
+        background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 12px;
+        padding-left: 30px;
+
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .input-location {
+        border-bottom: 1px solid #D2D1D1 !important;
+        background-color: #fff !important;
+        width: 100% !important;
+        // padding: 10px !important;
+        // text-align: center;
+        background: url(../assets/icons/Vector-location.svg) no-repeat scroll 1px 12px;
+        padding-left: 30px;
+
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .input-insurance {
+        border-bottom: 1px solid #D2D1D1 !important;
+        background-color: #fff !important;
+        width: 100% !important;
+        // padding: 10px !important;
+        // text-align: center;
+        background: url(../assets/icons/Group.svg) no-repeat scroll 1px 12px;
+        padding-left: 30px;
 
 
         &:focus {
@@ -355,6 +431,7 @@ export default {
         display: block;
         padding-left: 15px;
         padding-right: 15px;
+        padding-top: 30px;
         // position: relative;
         width: 100%;
         // margin-bottom: 10px;
