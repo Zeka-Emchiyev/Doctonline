@@ -83,18 +83,19 @@
                         </div>
 
                         <div>
-                          <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
-                                    navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
+                          <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true"
+                            :pagination-enabled="false" navigationPrevLabel="" navigationNextLabel=""
+                            :navigationClickTargetSize="4" :scrollPerPage="false">
                             <slide v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')">
                               <div @click="setDay(day.date)" class="day-container"
-                                   :class="{ 'bg-success text-white': selectedDay === day.date }">
+                                :class="{ 'bg-success text-white': selectedDay === day.date }">
                                 {{ moment(day.date).format('MMM DD') }}
                               </div>
                               <div class="time-slots mt-4">
                                 <div v-for="(timeSlot, index) in day.timeSlots">
                                   <div v-if="index < 4" class="time-slot"
-                                       :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
-                                       @click="setSelectedTime(day, timeSlot)">
+                                    :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                                    @click="setSelectedTime(day, timeSlot)">
                                     {{ timeSlot.timeFormatted }}
                                   </div>
                                 </div>
@@ -304,18 +305,20 @@
                   <div class="time-slots mt-4">
                     <div v-for="(timeSlot, index) in day.timeSlots">
                       <div v-if="index < 4 && !day.showMore" class="time-slot"
-                           :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
-                           @click="setSelectedTime(day, timeSlot)">
+                        :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                        @click="setSelectedTime(day, timeSlot)">
                         {{ timeSlot.timeFormatted }}
                       </div>
                       <div v-if="day.showMore" class="time-slot"
-                           :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
-                           @click="setSelectedTime(day, timeSlot)">
+                        :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                        @click="setSelectedTime(day, timeSlot)">
                         {{ timeSlot.timeFormatted }}
                       </div>
                     </div>
-                    <div v-show="!day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day)">daha çox</div>
-                    <div v-show="day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day, false)">daha az</div>
+                    <div v-show="!day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day)">daha çox
+                    </div>
+                    <div v-show="day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day, false)">daha
+                      az</div>
                   </div>
                 </slide>
               </Carousel>
@@ -344,12 +347,11 @@
               <div class="container d-flex align-items-center justify-content-center my-5 ">
                 <div class="row">
                   <div class="col-4">
-                    <div class="profile-image rounded-circle"
-                         :style="{
-                           'background-image': 'url('+ `${$apiUrl}/${doctor.profile_photo}` + ')'
-                         }"></div>
-<!--                    <img :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile image" width="100%"-->
-<!--                      class="rounded-circle">-->
+                    <div class="profile-image rounded-circle" :style="{
+                      'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+                    }"></div>
+                    <!--                    <img :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile image" width="100%"-->
+                    <!--                      class="rounded-circle">-->
                     <!--                    <img :src="$apiUrl + '/' + doctor.profile_photo" alt="profile image">-->
                   </div>
                   <div class="col-8">
@@ -409,6 +411,7 @@
     background-size: cover;
   }
 }
+
 .day-container {
   margin: 0 auto;
   width: 64px;
@@ -418,6 +421,8 @@
   justify-content: center;
   flex-direction: column;
   border-radius: 8px;
+  color: #01234B;
+  font-weight: bold;
   //border: 1px solid #edf0f4;
   cursor: pointer;
   transition: border-color .15s linear, background-color .15s linear;
@@ -429,6 +434,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .time-slot {
     width: 64px;
     height: 36px;
@@ -442,10 +448,12 @@
     font-size: 14px;
     line-height: 20px;
     letter-spacing: -.1px;
-    font-weight: 500;
     transition: background-color .15s linear, color .15s linear, border-color .15s linear;
     padding: 9px 3px;
     margin-bottom: 10px;
+    color: #01234B;
+    font-weight: bold;
+
     &.slot-more {
       font-size: 10px;
     }
@@ -463,9 +471,11 @@
 .VueCarousel-slide {
   border-right: 1px solid #EDF1F7;
 }
+
 .VueCarousel-navigation-button {
   top: 20px;
 }
+
 .VueCarousel-navigation-prev {
   &:before {
     content: url(@/assets/icons/arrow-ios-left.svg);
@@ -799,7 +809,8 @@ export default {
     },
     generateDays() {
       // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
-      const today = moment()
+      // const today = moment()
+      const tomorrow = moment().add(1, 'days');
       const monthLater = moment().add(1, 'month')
       let enumerateDaysBetweenDates = (startDate, endDate) => {
         let now = startDate.clone(), dates = [];
@@ -814,7 +825,7 @@ export default {
         }
         return dates;
       };
-      this.monthlyDates = enumerateDaysBetweenDates(today, monthLater)
+      this.monthlyDates = enumerateDaysBetweenDates(tomorrow, monthLater)
     },
     generateTimeSlots() {
       const startTime = moment(this.doctor.start_time, "HH:mm")

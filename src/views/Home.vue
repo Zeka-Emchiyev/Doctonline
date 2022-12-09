@@ -292,7 +292,7 @@ export default {
 
 .contain-img {
     background-image: url('../assets/home.svg');
-    height: 60vh;
+    height: 80vh;
     width: 100%;
 }
 

@@ -4,7 +4,7 @@
         <div class="container mt-3">
             <div class="row my-4">
 
-                <div class="col-md-8">
+                <div class="d-none d-md-block col-md-8">
                     <h1 class="animate__animated animate__bounce animate__zoomInDown">
                         Digər axtarışı edin
                     </h1>
@@ -64,10 +64,10 @@
             </div>
 
 
-            <div v-for="doctor in doctors" class="border rounded mb-3">
+            <div v-for="doctor in doctors" class="hold-doctor">
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="row mt-4 p-3">
+                        <div class="row mt-4">
                             <div class="col-3 col-lg-2">
                                 <div class="rounded-circle border img-profile">
                                     <img class="rounded-circle" style="height: 100%; width: 100%;"
@@ -103,10 +103,13 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        Calendar
+                        <Calendar :profession="doctor" :key="doctor.id"></Calendar>
                     </div>
                 </div>
             </div>
+
+
+
 
         </div>
     </div>
@@ -116,6 +119,8 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import axios from 'axios'
+import Calendar from "@/components/Calendar"
+
 export default {
     name: 'ProjectsSearch',
 
@@ -129,7 +134,7 @@ export default {
         };
     },
     components: {
-        Navbar
+        Navbar, Calendar
     },
     computed: {
         filterProfessions() {
@@ -186,6 +191,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-success {
+    background-color: rgba(31, 193, 23, 0.63) !important;
+}
+
+.hold-doctor {
+    // border-top: 1px solid #EDF0F4;
+    border-bottom: 1.5px solid #EDF0F4;
+    // padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.text-position {
+    color: #535F72;
+    font-size: 11px;
+    line-height: 20px;
+    font-weight: 500;
+    margin: 0;
+}
+
 .profile-link {
     color: #0072DB;
     font-size: 14px;
@@ -272,10 +296,10 @@ export default {
 .link {
     text-decoration: none;
     font-weight: 400;
-    color: #101825;
+    color: #01234B;
     cursor: pointer;
-    padding: 5px 12px;
-    margin: 5px;
+    padding: 1px 12px;
+    // margin: 5px;
     border-radius: 8px;
     font-size: 13px;
 
@@ -336,17 +360,19 @@ export default {
 
 @media screen and (max-width: 576px) {
     .img-profile {
-        width: 78px;
-        height: 78px;
+        width: 75px;
+        height: 75px;
+        font-weight: 400;
+        line-height: 17px;
     }
 
     .text-profession {
         color: #848b98;
-        font-size: 14px;
+        font-size: 15px;
     }
 
     .rout-link {
-        color: black;
+        color: #01234B;
         font-size: 16px;
     }
 
@@ -372,6 +398,14 @@ export default {
     .city {
         font-size: 12px;
         line-height: 24px;
+    }
+
+    .profile-link {
+        color: #0072DB;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 15px;
+        padding-left: 13px;
     }
 }
 </style>
