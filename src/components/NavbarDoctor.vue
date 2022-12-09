@@ -39,6 +39,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bg-success {
+    background: rgba(31, 193, 23, 0.63) !important;
+
+}
+
 .call {
     font-size: 16px;
     line-height: 24px;
