@@ -46,33 +46,24 @@
                         <p>Görüş növü</p>
                         <div class="row ms-2">
 
-                          <div class="col-5 me-2">
-                            <div @click="selectedBox = 'clinic'"
-                              class="row justify-content-center align-items-center rounded b-default"
-                              :class="{ 'clinic-border': selectedBox === 'clinic' }">
-                              <div class="col-3">
-                                <i class="icon-clinic bi bi-person-fill border rounded-circle p-1"></i>
-                              </div>
-                              <div class="col-9 pt-3 ">
-                                <p class="mb-0">Klinikada</p>
-                                <p>{{ doctor.online_service_price }} AZN</p>
-                              </div>
+                          <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
+                            :class="{ 'clinic-border': selectedBox === 'clinic' }">
+
+                            <div class="hold-on">
+                              <i class="icon-clinic bi bi-person-fill "></i>
+                              <span class="clinic-video-txt">Klinikada</span>
                             </div>
                           </div>
-                          <div class="col-5">
-                            <div @click="selectedBox = 'video'"
-                              class="row justify-content-center align-items-center rounded b-default"
-                              :class="{ 'clinic-border': selectedBox === 'video' }">
-                              <div class="col-3">
-                                <i class="icon-video bi bi-camera-video border rounded-circle p-1"></i>
-                              </div>
-                              <div class="col-9 pt-3 ">
-                                <p class="mb-0">Video</p>
-                                <p>{{ doctor.online_service_price }} AZN</p>
-                              </div>
+                          <div @click="selectedBox = 'video'" class=" col-6 rounded-end b-default"
+                            :class="{ 'clinic-border': selectedBox === 'video' }">
+                            <div class="hold-on">
+                              <img class="icon-clinic" src="../assets/Group 432.svg" alt="">
+                              <span class="clinic-video-txt">Video</span>
                             </div>
+
                           </div>
                         </div>
+
                         <div class="location my-3">
                           <p class="location-content my-3"> <i class="bi bi-check-circle-fill mx-3 location-icon"></i>
                             {{ doctor.clinic }}</p>
@@ -93,13 +84,23 @@
                               </div>
                               <div class="time-slots mt-4">
                                 <div v-for="(timeSlot, index) in day.timeSlots">
-                                  <div v-if="index < 4" class="time-slot"
+                                  <div v-if="index < 4 && !day.showMore" class="time-slot"
+                                    :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
+                                    @click="setSelectedTime(day, timeSlot)">
+                                    {{ timeSlot.timeFormatted }}
+                                  </div>
+                                  <div v-if="day.showMore" class="time-slot"
                                     :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
                                     @click="setSelectedTime(day, timeSlot)">
                                     {{ timeSlot.timeFormatted }}
                                   </div>
                                 </div>
-                                <div class="time-slot slot-more">daha çox</div>
+                                <div v-show="!day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day)">
+                                  daha çox
+                                </div>
+                                <div v-show="day.showMore" class="time-slot slot-more"
+                                  @click="showMoreTimeSlots(day, false)">daha
+                                  az</div>
                               </div>
                             </slide>
                           </Carousel>

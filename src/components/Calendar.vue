@@ -28,10 +28,10 @@
             </slide>
 
         </Carousel>
-        <div class="text-center mt-2">
+        <div class="text-center mt-2 randevu-take">
             <button data-bs-toggle="modal" :data-bs-target="'#takeAppointmentModal' + doctor.id"
-                :class="{ 'text-white': !dateTimeSelected }"
-                class="btn btn-success d-none d-md-block col-11 my-3 mx-auto" :disabled="!dateTimeSelected">
+                :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success d-md-block col-11 my-3 mx-auto"
+                :disabled="!dateTimeSelected">
                 Randevu al
             </button>
         </div>
@@ -50,7 +50,7 @@
                         <div class="container d-flex align-items-center justify-content-center my-5 ">
                             <div class="row">
                                 <div class="col-4">
-                                    <img class="rounded" style="height: 100%; width: 100%;"
+                                    <img class="rounded-circle" style="height: 100px; width: 100px"
                                         :src="`${$apiUrl}/${doctor.profile_photo}`" alt="">
                                 </div>
                                 <div class="col-8">
@@ -325,5 +325,68 @@ export default {
         height: 20px;
         width: 20px;
     }
+}
+
+@media screen and (max-width: 576px) {
+    .slide-content {
+        height: 181px;
+        overflow-y: auto;
+    }
+
+    .randevu-take {
+        margin-top: 0 !important;
+
+    }
+
+    .btn-success {
+        margin-top: 7px !important;
+    }
+
+    .time-slots {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0 !important;
+
+        .time-slot {
+            width: 56px;
+            height: 26px;
+            cursor: pointer;
+            text-align: center;
+            // display: block;
+            border-radius: 6px;
+            background-color: #edf0f4;
+            border: 1px solid #edf0f4;
+            color: #01234B;
+            font-size: 12px;
+            line-height: 18px;
+            letter-spacing: -.1px;
+            font-weight: bold;
+            transition: background-color .15s linear, color .15s linear, border-color .15s linear;
+            padding: 3px 3px;
+            margin-bottom: 3px;
+
+            &.slot-more {
+                font-size: 10px;
+            }
+        }
+    }
+
+    .day-container {
+        margin-bottom: 4px;
+        width: 56px;
+        height: 24px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border-radius: 6px;
+        color: #01234B;
+        font-weight: bold;
+        cursor: pointer;
+        transition: border-color 0.15s linear, background-color 0.15s linear;
+    }
+
 }
 </style>
