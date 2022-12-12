@@ -107,11 +107,10 @@ import { Carousel, Slide } from 'vue-carousel';
 import 'moment/locale/az';
 import axios from 'axios'
 import moment from 'moment'
-import Calendar from "@/components/Calendar";
 
 export default {
     name: 'Calendar',
-    components: { Carousel, Slide, Calendar },
+    components: { Carousel, Slide },
     props: {
         profession: {
             type: Object
