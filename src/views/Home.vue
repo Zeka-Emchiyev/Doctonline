@@ -55,7 +55,8 @@
             <h1 class="profession-title">Ən çox axtarılan ixtisaslar</h1>
             <div class="row">
                 <div class="col-6 col-md-2 my-2" v-for="profession in frequentlyUsedProfessions">
-                    <router-link :to="{ name: 'search', params: { id: profession.id } }"
+                    <router-link
+                        :to="{ name: 'search', query: { 'prof-id': profession.id }, params: { id: profession.id } }"
                         class="professions-box d-block text-decoration-none">
                         <img class="rounded-circle profession-photo" :src="profession.photo" alt="image">
                         <p class="professions-txt ">{{ profession.name }}</p>
@@ -136,6 +137,7 @@ export default {
 
     mounted() {
         this.professionsApi()
+        // console.log(this.$route.query)
     },
 
     methods: {
@@ -163,7 +165,9 @@ export default {
 
         searchProfessions() {
             if (this.selectedProfession != '') {
-                this.$router.push('/search/' + this.selectedProfession)
+                // this.$router.push('/search/' + this.selectedProfession)
+                this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, } })
+
             }
         }
 

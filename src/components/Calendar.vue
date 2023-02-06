@@ -29,91 +29,31 @@
 
         </Carousel>
         <div class="text-center mt-2 randevu-take">
-            <button data-bs-toggle="modal" :data-bs-target="'#takeAppointmentModal' + doctor.id"
-                :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success d-md-block col-11 my-3 mx-auto"
-                :disabled="!dateTimeSelected">
+            <button data-bs-toggle="modal" data-bs-keyboard="false" data-bs-backdrop="static"
+                :data-bs-target="'#takeAppointmentModal' + doctor.id" :class="{ 'text-white': !dateTimeSelected }"
+                class="btn btn-success d-md-block col-11 my-3 mx-auto" :disabled="!dateTimeSelected"
+                @click="$emit('dateSelected', { date: selectedDay, time: selectedTime, doctor: doctor })">
                 Randevu al
             </button>
         </div>
 
-
-        <!-- Modal -->
-        <div class="modal fade" :id="'takeAppointmentModal' + doctor.id" tabindex="-1"
-            aria-labelledby="takeAppointmentModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="takeAppointmentModalLabel">Randevu detallari</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container d-flex align-items-center justify-content-center my-5 ">
-                            <div class="row">
-                                <div class="col-4">
-                                    <img class="rounded-circle" style="height: 100px; width: 100px"
-                                        :src="`${$apiUrl}/${doctor.profile_photo}`" alt="">
-                                </div>
-                                <div class="col-8">
-                                    <h6>{{ doctor.fullname }}, {{ doctor.profession }} </h6>
-                                    <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
-                                    <p>{{ doctor.clinic }}</p>
-                                </div>
-
-                                <div class="col-8 mt-3">
-                                    <label for="">Ad, Soyad</label>
-                                    <input v-model="form.fullname" class="form-control" type="text">
-                                </div>
-                                <div class="col-8 mt-2" width="100%">
-                                    <label for="">Mobil nömrə</label>
-                                    <input v-model="form.phone" class="form-control" type="text">
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-success" @click="createAppointment" data-bs-toggle="modal"
-                            data-bs-target="#successModal">
-                            Təsdiqlə
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="clinic-border text-center"> <i style="color: #4CB147; "
-                                class="bi bi-check-circle-fill d-block fs-1 "></i>
-                            {{ result.message }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 
 <script>
 import { Carousel, Slide } from 'vue-carousel';
 import 'moment/locale/az';
-import axios from 'axios'
+// import axios from 'axios'
 import moment from 'moment'
 
 export default {
     name: 'Calendar',
-    components: { Carousel, Slide },
+    components: { Carousel, Slide, },
+    emit: ['day', 'time',],
     props: {
-        profession: {
-            type: Object
+        doctor: {
+            type: Object,
+            default: () => { }
         }
     },
     data() {
@@ -124,18 +64,9 @@ export default {
             selectedBox: 'clinic',
             monthlyDates: [],
             timeSlots: [],
-            form: {
-                date: null,
-                doctor_id: null,
-                email: null,
-                fullname: null,
-                phone: null,
-                time: null,
-            },
             appointmentDate: null,
             selectedDate: null,
             moment,
-            doctor: '',
             result: '',
         };
     },
@@ -149,23 +80,23 @@ export default {
         this.user()
         // this.generateTimeSlots()
         this.generateDays()
-        this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
+        // this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
         // console.log(this.profession)
     },
 
     methods: {
-        createAppointment() {
-            this.form.doctor_id = this.doctor.id
-            this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-            this.form.time = this.selectedTime
-            axios.post(this.$apiUrl + "/api-appointments/create", this.form)
-                .then((resp) => {
-                    // console.log(resp)
-                    this.result = resp.data
-                    this.myModal.hide()
-                })
-                .catch(e => console.log(e))
-        },
+        // createAppointment() {
+        //     this.form.doctor_id = this.doctor.id
+        //     this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+        //     this.form.time = this.selectedTime
+        //     axios.post(this.$apiUrl + "/api-appointments/create", this.form)
+        //         .then((resp) => {
+        //             // console.log(resp)
+        //             this.result = resp.data
+        //             // this.myModal.hide()
+        //         })
+        //         .catch(e => console.log(e))
+        // },
         generateDays() {
             // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
             // const today = moment()
@@ -191,7 +122,7 @@ export default {
             const endTime = moment(this.doctor.end_time, "HH:mm")
             const diffInMinutes = endTime.diff(startTime, 'minutes')
             const slotMinute = 30
-            for (let i = 0; i <= diffInMinutes; i += slotMinute) {
+            for (let i = 0;i <= diffInMinutes;i += slotMinute) {
                 const time = startTime.add(slotMinute, 'minutes')
                 this.timeSlots.push({
                     id: i,
@@ -201,28 +132,26 @@ export default {
             }
         },
         async user() {
-
-            this.doctor = this.profession
-            console.log(this.doctor)
             await this.generateTimeSlots()
-
             this.monthlyDates = this.monthlyDates.map(day => {
                 return {
                     ...day,
                     timeSlots: JSON.parse(JSON.stringify(this.timeSlots))
                 }
             })
-            // console.log(this.monthlyDates)
-
         },
 
         setDay(day) {
             this.selectedDay = day.date
+            console.log(day.date)
         },
         setSelectedTime(day, time) {
+
             this.setDay(day)
             this.selectedTime = time.timeFormatted
             // console.log(this.selectedDay)
+            // this.$emit('day')
+            // this.$emit('time')
         },
         showMoreTimeSlots(day, showState = true) {
             const dayIndex = this.monthlyDates.findIndex(date => date.id === day.id)

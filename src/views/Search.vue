@@ -86,10 +86,11 @@
                                     :to="{ name: 'doctor', params: { id: doctor.id } }">
                                     {{ doctor.fullname }}
                                 </router-link>
-                                <span class="text-profession" style="display: block;">{{ doctor.profession
+                                <span class="text-profession" style="display: block;">{{
+                                    doctor.profession
                                 }}</span>
 
-                                <span class="city mb-1">{{ doctor.address }} {{ doctor.city }}</span>
+                                <span class="city mb-1">{{ doctor.address }} </span>
                                 <span class="city fw-bold">{{ doctor.clinic }}</span>
                                 <i class="bi bi-shield-check icon-ins pe-1"></i>
                                 <p class="insurance">Paşa siğorta</p>
@@ -103,14 +104,76 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <Calendar :profession="doctor" :key="doctor.id"></Calendar>
+                        <Calendar @dateSelected="showSelectedAppointmentModal" :doctor="doctor"></Calendar>
+
                     </div>
                 </div>
             </div>
 
+        </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
+            aria-hidden="hidden">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="takeAppointmentModalLabel">Randevu detallari</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container d-flex align-items-center justify-content-center my-5 ">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img class="rounded-circle" style="height: 100px; width: 100px"
+                                        :src="`${$apiUrl}/${selectedDoctor.profile_photo}`" alt="">
+                                </div>
+                                <div class="col-8">
+                                    <h6>{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
+                                    <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{
+                                        selectedTime
+                                    }}</p>
+                                    <p>{{ selectedDoctor.clinic }}</p>
+                                </div>
 
+                                <div class="col-8 mt-3">
+                                    <label for="">Ad, Soyad</label>
+                                    <input v-model="form.fullname" class="form-control" type="text">
+                                </div>
+                                <div class="col-8 mt-2" width="100%">
+                                    <label for="">Mobil nömrə</label>
+                                    <input v-model="form.phone" class="form-control" type="text">
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-success" @click="createAppointment" data-bs-toggle="modal"
+                            data-bs-target="#successModal">
+                            Təsdiqlə
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal result -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="clinic-border text-center"> <i style="color: #4CB147; "
+                                class="bi bi-check-circle-fill d-block fs-1 "></i>
+                            {{ result.message }}
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -120,6 +183,9 @@
 import Navbar from '@/components/Navbar.vue';
 import axios from 'axios'
 import Calendar from "@/components/Calendar"
+import 'moment/locale/az';
+import moment from 'moment'
+
 
 export default {
     name: 'ProjectsSearch',
@@ -130,7 +196,22 @@ export default {
             active: true,
             professions: '',
             doctors: '',
-            searchProfession: ''
+            searchProfession: '',
+            selectedDay: null,//moment().toDate().toISOString(),
+            selectedTime: '',
+            form: {
+                date: null,
+                doctor_id: null,
+                email: null,
+                fullname: null,
+                phone: null,
+                time: null,
+            },
+            selectedDoctor: {},
+            appointmentDate: null,
+            selectedDate: null,
+            moment,
+            result: '',
         };
     },
     components: {
@@ -153,9 +234,13 @@ export default {
     mounted() {
         this.professionApi()
         this.getDoctorsForProfession()
+        this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
+        this.successModal = new bootstrap.Modal(document.getElementById('successModal'), { backdrop: 'static', keyboard: false })
+        // console.log(this.$route.query)
     },
 
     methods: {
+
         professionApi() {
             axios.get(this.$apiUrl + "/api-professions")
                 .then(response => {
@@ -166,10 +251,11 @@ export default {
         },
 
         getDoctorsForProfession() {
-            axios.get(this.$apiUrl + "/api-doctors/profession/" + this.$route.params.id)
+            axios.get(this.$apiUrl + '/api-doctors' + '?prof-id=' + this.$route.query['prof-id'])
                 .then(response => {
                     this.doctors = response.data
                     // console.log(this.doctors)
+
                 })
                 .catch(e => console.log(e))
         },
@@ -181,20 +267,48 @@ export default {
         },
         searchProfessions() {
             if (this.selectedProfession != '') {
-                this.$router.push('/search/' + this.selectedProfession)
+                this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession } })
                 this.getDoctorsForProfession()
 
             }
-        }
+        },
+        setDay() {
+            console.log('day')
+        },
+        setTime() {
+            console.log('time')
+        },
+        showSelectedAppointmentModal(data) {
+            this.selectedDoctor = data.doctor
+            this.selectedDate = data.time
+            this.selectedDay = data.date
+            this.myModal.show()
+            // console.log(data)
+        },
+        createAppointment() {
+            this.form.doctor_id = this.selectedDoctor.id
+            this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+            this.form.time = this.selectedTime
+            if (this.form.fullname !== '' && this.form.phone !== '') {
+                axios.post(this.$apiUrl + "/api-appointments/create", this.form)
+                    .then((resp) => {
+                        // console.log(resp)
+                        this.result = resp.data
+                        this.myModal.hide()
+                        this.successModal.show()
+                    })
+                    .catch(e => console.log(e))
+            }
+            this.form.fullname = ''
+            this.form.phone = ''
+
+        },
+
     },
 };
 </script>
 
 <style lang="scss" scoped>
-.btn-success {
-    background-color: rgba(31, 193, 23, 0.63) !important;
-}
-
 .hold-doctor {
     // border-top: 1px solid #EDF0F4;
     border-bottom: 1.5px solid #EDF0F4;
@@ -273,6 +387,7 @@ export default {
 }
 
 .icon-button {
+    background-color: rgba(31, 193, 23, 0.63) !important;
     padding-left: 33px;
     background: url("../assets/Vector.svg") no-repeat left;
     ;

@@ -25,7 +25,8 @@
                                 <router-link class="professions-text"
                                     :to="{ name: 'search', params: { id: profession.id } }"
                                     @click.native="getDoctorsForProfession()">
-                                    {{ profession.name
+                                    {{
+    profession.name
                                     }}
                                 </router-link>
                             </div>
@@ -61,7 +62,7 @@
                         <a class="me-5" href="https://www.telegram.com/"><img src="../assets/telegram.png" alt=""></a>
                     </div>
                     <div class="col-12 col-md-3">
-                        <p class="text-footer">© 2022 Doctonline - Bütün hüquqlar qorunur.</p>
+                        <p class="text-footer">© 2023 Doctonline - Bütün hüquqlar qorunur.</p>
                     </div>
                 </div>
             </div>
