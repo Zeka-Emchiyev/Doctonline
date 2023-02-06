@@ -19,11 +19,10 @@
                             <p class="dropdown-item text-position">Ixtisaslar</p>
 
                             <div class="flex-row flex-wrap ">
-                                <option :v-model="selectedProfession" @click="selected(profession)"
-                                    class="dropdown-item link" v-for="profession in filterProfessions"
-                                    v-bind:value="profession.id">
+                                <div @click="selected(profession)"
+                                    class="dropdown-item link" v-for="profession in filterProfessions">
                                     {{ profession.name }}
-                                </option>
+                                </div>
                             </div>
                         </div>
 
@@ -245,7 +244,15 @@ export default {
             axios.get(this.$apiUrl + "/api-professions")
                 .then(response => {
                     this.professions = response.data
-                    // console.log(this.professions)
+                    // check if prof id exist. if so then set.
+                    // Region and insurance selection also should be added like this way
+                    if (this.$route.query['prof-id']) {
+                      const selectedProfession = this.professions.find(profession => this.$route.query['prof-id'])
+                      if (selectedProfession) {
+                        this.selected(selectedProfession)
+                      }
+                    }
+                  // console.log(this.professions)
                 })
                 .catch(e => console.log(e))
         },

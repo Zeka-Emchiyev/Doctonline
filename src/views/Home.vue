@@ -22,12 +22,11 @@
                                     aria-labelledby="dropdownMenuButton1" style="max-height:265px; min-width:230px">
                                     <p class="dropdown-item text-position">Ixtisaslar</p>
 
-                                    <div class="flex-row flex-wrap ">
-                                        <option :v-model="selectedProfession" @click="selected(profession)"
-                                            class="dropdown-item link" v-for="profession in filterProfessions"
-                                            v-bind:value="profession.id">
-                                            {{ profession.name }}
-                                        </option>
+                                    <div class="flex-row flex-wrap">
+                                      <div @click="selected(profession)"
+                                          class="dropdown-item link" v-for="profession in filterProfessions">
+                                          {{ profession.name }}
+                                      </div>
                                     </div>
                                 </div>
 
@@ -157,7 +156,6 @@ export default {
         },
 
         selected(selected) {
-
             this.searchProfession = selected.name
             this.selectedProfession = selected.id
             console.log(this.selectedProfession)
