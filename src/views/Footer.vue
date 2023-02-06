@@ -25,9 +25,7 @@
                                 <router-link class="professions-text"
                                     :to="{ name: 'search', params: { id: profession.id } }"
                                     @click.native="getDoctorsForProfession()">
-                                    {{
-    profession.name
-                                    }}
+                                    {{ profession.name }}
                                 </router-link>
                             </div>
                         </div>

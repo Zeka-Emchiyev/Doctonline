@@ -31,5 +31,12 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+router.beforeEach((to, from, next) => {
+  // page title generator.
+  if (to.name) {
+    document.title = to.name.charAt(0).toUpperCase() + to.name.slice(1);
+  }
+  next();
+});
 
 export default router
