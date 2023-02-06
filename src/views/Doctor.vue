@@ -202,7 +202,8 @@
 
             <div class="row">
               <div class="col mb-3">
-                <button class="text-kanal text-nowrap border-0" v-for="service in doctor.services">{{ service
+                <button class="text-kanal text-nowrap border-0" v-for="service in doctor.services">{{
+                  service
                 }}</button>
               </div>
               <!-- <div class="col-1"><img src="../assets/more.png" alt=""></div> -->
@@ -216,9 +217,8 @@
               <p class="text-experience">{{ doctor.experiences }}</p>
             </div>
 
-
             <h2 class="mb-4 head">Təhsil</h2>
-            <p class="text" v-for="education in doctor.educations"> {{ education }}</p>
+            <p class="text">{{ doctor.educations }}</p>
             <p class="txt-light">Kurs</p>
             <p class="text">{{ doctor.courses }}</p>
 
@@ -833,7 +833,7 @@ export default {
       const endTime = moment(this.doctor.end_time, "HH:mm")
       const diffInMinutes = endTime.diff(startTime, 'minutes')
       const slotMinute = 30
-      for (let i = 0; i <= diffInMinutes; i += slotMinute) {
+      for (let i = 0;i <= diffInMinutes;i += slotMinute) {
         const time = startTime.add(slotMinute, 'minutes')
         this.timeSlots.push({
           id: i,
@@ -843,7 +843,7 @@ export default {
       }
     },
     user() {
-      axios.get(this.$apiUrl + "/api-doctors/" + this.$route.params.id)
+      axios.get(this.$apiUrl + "/api-doctors?doctor-id=" + this.$route.params.id)
         .then(response => {
           this.doctor = response.data
           this.generateTimeSlots()

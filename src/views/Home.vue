@@ -136,6 +136,7 @@ export default {
 
     mounted() {
         this.professionsApi()
+        // console.log(this.$route.query)
     },
 
     methods: {
@@ -163,7 +164,9 @@ export default {
 
         searchProfessions() {
             if (this.selectedProfession != '') {
-                this.$router.push('/search/' + this.selectedProfession)
+                // this.$router.push('/search/' + this.selectedProfession)
+                this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, } })
+
             }
         }
 

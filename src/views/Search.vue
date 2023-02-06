@@ -86,7 +86,8 @@
                                     :to="{ name: 'doctor', params: { id: doctor.id } }">
                                     {{ doctor.fullname }}
                                 </router-link>
-                                <span class="text-profession" style="display: block;">{{ doctor.profession
+                                <span class="text-profession" style="display: block;">{{
+                                    doctor.profession
                                 }}</span>
 
                                 <span class="city mb-1">{{ doctor.address }} </span>
@@ -130,7 +131,11 @@
                                 <div class="col-8">
                                     <h6>{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
                                     <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{
+<<<<<<< HEAD
                                             selectedTime
+=======
+                                        selectedTime
+>>>>>>> 721f684 (Update Api)
                                     }}</p>
                                     <p>{{ selectedDoctor.clinic }}</p>
                                 </div>
@@ -149,8 +154,12 @@
                     </div>
                     <div class="modal-footer">
                         <!-- Button trigger modal -->
+<<<<<<< HEAD
                         <button type="button" class="btn btn-success" @click="createAppointment" data-bs-toggle="modal"
                             data-bs-target="#successModal">
+=======
+                        <button type="button" class="btn btn-success" @click="createAppointment">
+>>>>>>> 721f684 (Update Api)
                             Təsdiqlə
                         </button>
                     </div>
@@ -233,8 +242,14 @@ export default {
     mounted() {
         this.professionApi()
         this.getDoctorsForProfession()
+<<<<<<< HEAD
         this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
         this.successModal = new bootstrap.Modal(document.getElementById('successModal'))
+=======
+        this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
+        this.successModal = new bootstrap.Modal(document.getElementById('successModal'), { backdrop: 'static', keyboard: false })
+        // console.log(this.$route.query)
+>>>>>>> 721f684 (Update Api)
     },
 
     methods: {
@@ -249,10 +264,11 @@ export default {
         },
 
         getDoctorsForProfession() {
-            axios.get(this.$apiUrl + "/api-doctors/profession/" + this.$route.params.id)
+            axios.get(this.$apiUrl + '/api-doctors' + '?prof-id=' + this.$route.query['prof-id'])
                 .then(response => {
                     this.doctors = response.data
                     // console.log(this.doctors)
+
                 })
                 .catch(e => console.log(e))
         },
@@ -291,7 +307,12 @@ export default {
                     .then((resp) => {
                         // console.log(resp)
                         this.result = resp.data
+<<<<<<< HEAD
                         // this.myModal.show()
+=======
+                        this.myModal.hide()
+                        this.successModal.show()
+>>>>>>> 721f684 (Update Api)
                     })
                     .catch(e => console.log(e))
             }

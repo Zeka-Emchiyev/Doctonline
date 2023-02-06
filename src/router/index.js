@@ -13,8 +13,9 @@ const routes = [
     component: Doctor
   },
   {
-    path: '/search/:id',
+    path: '/search',
     name: 'search',
+    query: {},
     component: Search
   },
 

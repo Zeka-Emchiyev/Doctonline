@@ -29,9 +29,15 @@
 
         </Carousel>
         <div class="text-center mt-2 randevu-take">
+<<<<<<< HEAD
             <button data-bs-toggle="modal" :data-bs-target="'#takeAppointmentModal' + doctor.id"
                 :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success d-md-block col-11 my-3 mx-auto"
                 :disabled="!dateTimeSelected"
+=======
+            <button data-bs-toggle="modal" data-bs-keyboard="false" data-bs-backdrop="static"
+                :data-bs-target="'#takeAppointmentModal' + doctor.id" :class="{ 'text-white': !dateTimeSelected }"
+                class="btn btn-success d-md-block col-11 my-3 mx-auto" :disabled="!dateTimeSelected"
+>>>>>>> 721f684 (Update Api)
                 @click="$emit('dateSelected', { date: selectedDay, time: selectedTime, doctor: doctor })">
                 Randevu al
             </button>
