@@ -4,7 +4,7 @@
         <div class="container mt-3">
             <div class="row my-4">
 
-                <div class="d-none d-md-block col-md-8">
+                <div class="d-none d-md-block col-md-9">
                     <h1 class="animate__animated animate__bounce animate__zoomInDown">
                         Digər axtarışı edin
                     </h1>
@@ -15,12 +15,12 @@
                             aria-label="First name" placeholder="Xidmət,şikayət,həkim axtarin...">
 
                         <div class="dropdown-menu form-control  border overflow-auto"
-                            aria-labelledby="dropdownMenuButton1" style="max-height:265px; min-width:230px">
+                            aria-labelledby="dropdownMenuButton1" style="max-height:360px; min-width:280px">
                             <p class="dropdown-item text-position">Ixtisaslar</p>
 
                             <div class="flex-row flex-wrap ">
-                                <div @click="selected(profession)"
-                                    class="dropdown-item link" v-for="profession in filterProfessions">
+                                <div @click="selected(profession)" class="dropdown-item link"
+                                    v-for="profession in filterProfessions">
                                     {{ profession.name }}
                                 </div>
                             </div>
@@ -28,12 +28,39 @@
 
                         <span class="span-line"></span>
                         <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
-                        <input type="text" aria-label="Last name" class="form-control border-0 input-all"
-                            placeholder="Rayon">
+                        <input v-model="searchRegion" class="icon dropdown-toggle form-control border-0 input-location"
+                            type="text" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
+                            aria-label="First name" placeholder="Rayonlar">
+
+                        <div class="dropdown-menu form-control  border overflow-auto"
+                            aria-labelledby="dropdownMenuButton2" style="max-height:360px; min-width:280px">
+                            <p class="dropdown-item text-position">Rayonlar</p>
+
+                            <div class="flex-row flex-wrap">
+                                <div @click="select(region)" class="dropdown-item link" v-for="region in filterRegions">
+                                    {{ region.name }}
+                                </div>
+                            </div>
+                        </div>
+
                         <span class="span-line"></span>
                         <i class="bi bi-shield-check icon-insurance ms-2"></i>
-                        <input type="text" aria-label="Insurance" class="form-control border-0 input-all"
-                            placeholder="Paşa sığorta" disabled>
+
+                        <input v-model="searchClinic" class="icon dropdown-toggle form-control border-0 input-insurance"
+                            type="text" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
+                            aria-label="First name" placeholder="Klinikalar">
+
+                        <div class="dropdown-menu form-control  border overflow-auto"
+                            aria-labelledby="dropdownMenuButton3" style="max-height:365px; min-width:280px">
+                            <p class="dropdown-item text-position">Klinikalar</p>
+
+                            <div class="flex-row flex-wrap">
+                                <div @click="selectClinic(clinic)" class="dropdown-item link"
+                                    v-for="clinic in filterClinics">
+                                    {{ clinic.name }}
+                                </div>
+                            </div>
+                        </div>
 
                         <button @click="searchProfessions()"
                             class="icon-button btn btn-success bg-success rounded-start ms-1"></button>
@@ -63,7 +90,7 @@
             </div>
 
 
-            <div v-for="doctor in doctors" class="hold-doctor">
+            <div v-for="doctor in selectedDoctors" class="hold-doctor">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="row mt-4">
@@ -192,12 +219,21 @@ export default {
     data() {
         return {
             selectedProfession: '',
+            selectedDoctors: null,
             active: true,
             professions: '',
-            doctors: '',
+            doctors: null,
             searchProfession: '',
+            searchRegion: '',
+            selectedRegion: '',
+            clinics: '',
+            searchClinic: '',
+            selectedClinic: '',
+            regionsDoctors: null,
+            regions: '',
             selectedDay: null,//moment().toDate().toISOString(),
             selectedTime: '',
+
             form: {
                 date: null,
                 doctor_id: null,
@@ -227,12 +263,37 @@ export default {
                 })
             }
             return filtered
+        },
+        filterRegions() {
+            let filtered = this.regions
+            if (this.searchRegion != '') {
+                filtered = this.regions.filter(region => {
+                    let regionNameLowerCase = region.name.toLowerCase()
+                    let searchRegionLowerCase = this.searchRegion.toLowerCase()
+                    return regionNameLowerCase.includes(searchRegionLowerCase)
+                })
+            }
+            return filtered
+        },
+        filterClinics() {
+            let filtered = this.clinics
+            if (this.searchClinic != '') {
+                filtered = this.clinics.filter(clinic => {
+                    let clinicNameLowerCase = clinic.name.toLowerCase()
+                    let searchClinicLowerCase = this.searchClinic.toLowerCase()
+                    return clinicNameLowerCase.includes(searchClinicLowerCase)
+                })
+            }
+            return filtered
         }
     },
 
     mounted() {
         this.professionApi()
-        this.getDoctorsForProfession()
+        this.regonsApi()
+        this.clinicsApi()
+        this.getDoctorsForProfessionAndRegion()
+
         this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
         this.successModal = new bootstrap.Modal(document.getElementById('successModal'), { backdrop: 'static', keyboard: false })
         // console.log(this.$route.query)
@@ -247,21 +308,45 @@ export default {
                     // check if prof id exist. if so then set.
                     // Region and insurance selection also should be added like this way
                     if (this.$route.query['prof-id']) {
-                      const selectedProfession = this.professions.find(profession => this.$route.query['prof-id'])
-                      if (selectedProfession) {
-                        this.selected(selectedProfession)
-                      }
+                        const selectedProfession = this.professions.find(profession => this.$route.query['prof-id'])
+                        if (selectedProfession) {
+                            this.selected(selectedProfession)
+                        }
                     }
-                  // console.log(this.professions)
+                    // console.log(this.professions)
                 })
                 .catch(e => console.log(e))
         },
+        regonsApi() {
+            axios.get(this.$apiUrl + '/api-regions')
+                .then(resp => {
+                    this.regions = resp.data
 
-        getDoctorsForProfession() {
-            axios.get(this.$apiUrl + '/api-doctors' + '?prof-id=' + this.$route.query['prof-id'])
+                    if (this.$route.query['region-id']) {
+                        const selectedRegion = this.regions.find(region => this.$route.query['region-id'])
+                        if (selectedRegion) {
+                            this.select(selectedRegion)
+                        }
+                    }
+                })
+                .catch(e => console.log(e))
+        },
+        clinicsApi() {
+            axios.get(this.$apiUrl + '/api-clinics')
+                .then(resp => {
+                    this.clinics = resp.data
+                    // console.log(this.clinics)
+                })
+        },
+        getDoctorsForProfessionAndRegion() {
+            axios.get(this.$apiUrl + '/api-doctors' + '?prof-id=' + this.$route.query['prof-id'] + '&' + 'region-id=' + this.$route.query['region-id'] + '&' + 'clinic-id=' + this.$route.query['clinic-id'])
                 .then(response => {
-                    this.doctors = response.data
-                    // console.log(this.doctors)
+                    // this.doctors = response.data
+                    if (response.data != null) {
+                        this.selectedDoctors = response.data
+                    }
+
+                    console.log(this.selectedDoctors)
 
                 })
                 .catch(e => console.log(e))
@@ -272,12 +357,20 @@ export default {
             this.selectedProfession = selected.id
             // console.log(this.selectedProfession)
         },
-        searchProfessions() {
-            if (this.selectedProfession != '') {
-                this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession } })
-                this.getDoctorsForProfession()
+        select(selected) {
+            this.searchRegion = selected.name
+            this.selectedRegion = selected.id
+            // console.log(this.selectedRegion)
+        },
+        selectClinic(selected) {
+            this.searchClinic = selected.name
+            this.selectedClinic = selected.id
+            // console.log(this.selectedClinic)
+        },
 
-            }
+        searchProfessions() {
+            this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
+            window.location.reload()
         },
         setDay() {
             console.log('day')

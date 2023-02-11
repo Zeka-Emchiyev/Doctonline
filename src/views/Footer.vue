@@ -22,11 +22,9 @@
                         <div class="row overflow-hidden" style="max-height:404px ;">
                             <div class="col-md-4" v-for="profession in professions">
                                 <!-- <p @click="submit()" class="professions-text">{{ profession.name }}</p> -->
-                                <router-link class="professions-text"
-                                    :to="{ name: 'search', params: { id: profession.id } }"
-                                    @click.native="getDoctorsForProfession()">
+                                <div class="professions-text" @click="getDoctorsForProfession(profession.id)">
                                     {{ profession.name }}
-                                </router-link>
+                                </div>
                             </div>
                         </div>
 
@@ -80,7 +78,10 @@ export default {
     data() {
         return {
             professions: '',
-            doctors: ''
+            doctors: '',
+            selectedClinic: '',
+            selectedRegion: '',
+
         };
     },
 
@@ -104,19 +105,9 @@ export default {
                 .catch(e => console.log(e))
         },
 
-        getDoctorsForProfession() {
-
-            axios.get(this.$apiUrl + "/api-doctors/profession/" + this.$route.params.id)
-                .then(response => {
-                    this.doctors = response.data
-                    // profession = this.doctors
-                    // console.log(profession)
-                    window.location.reload()
-                    console.log(this.doctors)
-
-                })
-                .catch(e => console.log(e))
-
+        getDoctorsForProfession(professionId) {
+            this.$router.push({ path: '/search', query: { 'prof-id': professionId, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
+            window.location.reload()
         },
 
 
@@ -131,6 +122,7 @@ export default {
     font-size: 14px;
     font-weight: 400;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
         color: #4CB147;

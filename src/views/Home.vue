@@ -7,7 +7,7 @@
 
                 <div class="container">
                     <div class="row justify-content-md-center">
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
                                 Sizə uyğun həkim <br /> seçin və randevu götürün
                             </h1>
@@ -19,25 +19,59 @@
                                     aria-label="First name" placeholder="Xidmət,şikayət,həkim axtarin...">
 
                                 <div class="dropdown-menu form-control  border overflow-auto"
-                                    aria-labelledby="dropdownMenuButton1" style="max-height:265px; min-width:230px">
+                                    aria-labelledby="dropdownMenuButton1" style="max-height:360px; min-width:280px">
                                     <p class="dropdown-item text-position">Ixtisaslar</p>
 
                                     <div class="flex-row flex-wrap">
-                                      <div @click="selected(profession)"
-                                          class="dropdown-item link" v-for="profession in filterProfessions">
-                                          {{ profession.name }}
-                                      </div>
+                                        <div @click="selected(profession)" class="dropdown-item link"
+                                            v-for="profession in filterProfessions">
+                                            {{ profession.name }}
+                                        </div>
                                     </div>
                                 </div>
 
                                 <span class="span-line"></span>
                                 <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
-                                <input type="text" aria-label="Last name" class="form-control border-0 input-location"
-                                    placeholder="Rayon">
+
+                                <input v-model="searchRegion"
+                                    class="icon dropdown-toggle form-control border-0 input-location" type="text"
+                                    id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
+                                    aria-label="First name" placeholder="Rayonlar">
+
+                                <div class="dropdown-menu form-control  border overflow-auto"
+                                    aria-labelledby="dropdownMenuButton2" style="max-height:365px; min-width:280px">
+                                    <p class="dropdown-item text-position">Rayonlar</p>
+
+                                    <div class="flex-row flex-wrap">
+                                        <div @click="select(region)" class="dropdown-item link"
+                                            v-for="region in filterRegions">
+                                            {{ region.name }}
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <span class="span-line"></span>
                                 <i class="bi bi-shield-check icon-insurance ms-2"></i>
-                                <input type="text" aria-label="Insurance" class="form-control border-0 input-insurance"
-                                    placeholder="Paşa sığorta" disabled>
+
+                                <!-- <input type="text" aria-label="Insurance" class="form-control border-0 input-insurance"
+                                    placeholder="Paşa sığorta" disabled> -->
+
+                                <input v-model="searchClinic"
+                                    class="icon dropdown-toggle form-control border-0 input-insurance" type="text"
+                                    id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
+                                    aria-label="First name" placeholder="Klinikalar">
+
+                                <div class="dropdown-menu form-control  border overflow-auto"
+                                    aria-labelledby="dropdownMenuButton3" style="max-height:365px; min-width:280px">
+                                    <p class="dropdown-item text-position">Klinikalar</p>
+
+                                    <div class="flex-row flex-wrap">
+                                        <div @click="selectClinic(clinic)" class="dropdown-item link"
+                                            v-for="clinic in filterClinics">
+                                            {{ clinic.name }}
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <button @click="searchProfessions()" class="icon-button btn btn-success rounded-start">
                                     <span class="d-block d-md-none" style="color: #01234B;">Axtar</span>
@@ -81,6 +115,12 @@ export default {
             active: true,
             professions: '',
             searchProfession: '',
+            searchRegion: '',
+            selectedRegion: '',
+            regions: '',
+            clinics: '',
+            searchClinic: '',
+            selectedClinic: '',
             frequentlyUsedProfessions: [
                 {
                     id: 23,
@@ -131,12 +171,36 @@ export default {
                 })
             }
             return filtered
+        },
+        filterRegions() {
+            let filtered = this.regions
+            if (this.searchRegion != '') {
+                filtered = this.regions.filter(region => {
+                    let regionNameLowerCase = region.name.toLowerCase()
+                    let searchRegionLowerCase = this.searchRegion.toLowerCase()
+                    return regionNameLowerCase.includes(searchRegionLowerCase)
+                })
+            }
+            return filtered
+        },
+        filterClinics() {
+            let filtered = this.clinics
+            if (this.searchClinic != '') {
+                filtered = this.clinics.filter(clinic => {
+                    let clinicNameLowerCase = clinic.name.toLowerCase()
+                    let searchClinicLowerCase = this.searchClinic.toLowerCase()
+                    return clinicNameLowerCase.includes(searchClinicLowerCase)
+                })
+            }
+            return filtered
         }
     },
 
     mounted() {
         this.professionsApi()
         // console.log(this.$route.query)
+        this.regonsApi()
+        this.clinicsApi()
     },
 
     methods: {
@@ -145,7 +209,7 @@ export default {
             axios.get(this.$apiUrl + "/api-professions")
                 .then(response => {
                     this.professions = response.data
-                    console.log(this.professions)
+                    // console.log(this.professions)
                     this.professions === this.frequentlyUsedProfessions
 
                     // console.log(this.frequentlyUsedProfessions)
@@ -154,19 +218,51 @@ export default {
                 })
                 .catch(e => console.log(e))
         },
+        regonsApi() {
+            axios.get(this.$apiUrl + '/api-regions')
+                .then(resp => {
+                    // console.log(resp)
+                    this.regions = resp.data
+                })
+                .catch(e => console.log(e))
+        },
+        clinicsApi() {
+            axios.get(this.$apiUrl + '/api-clinics')
+                .then(resp => {
+                    this.clinics = resp.data
+                    console.log(this.clinics)
+                })
+        },
+        select(selected) {
+            this.searchRegion = selected.name
+            this.selectedRegion = selected.id
+            console.log(this.selectedRegion)
+        },
 
         selected(selected) {
             this.searchProfession = selected.name
             this.selectedProfession = selected.id
             console.log(this.selectedProfession)
         },
+        selectClinic(selected) {
+            this.searchClinic = selected.name
+            this.selectedClinic = selected.id
+            console.log(this.selectedClinic)
+        },
 
         searchProfessions() {
-            if (this.selectedProfession != '') {
-                // this.$router.push('/search/' + this.selectedProfession)
-                this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, } })
+            // this.$router.push('/search/' + this.selectedProfession)
+            this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
 
-            }
+            // else if (this.selectedProfession != '') {    
+            //     // this.$router.push('/search/' + this.selectedProfession)
+            //     this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession } })
+            // }
+            // else if (this.selectedRegion != '') {
+            //     // this.$router.push('/search/' + this.selectedProfession)
+            //     this.$router.push({ path: '/search', query: { 'region-id': this.selectedRegion } })
+            // }
+
         }
 
     },
