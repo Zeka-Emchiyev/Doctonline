@@ -6,7 +6,10 @@
         <div class="col-md-7">
           <div class="row">
             <div class="col-3 col-sm-4 col-md-5 col-lg-4 col-xl-3 ">
-              <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture">
+              <div class="profile-image-main" :style="{
+                'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+              }"></div>
+<!--              <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture">-->
             </div>
 
             <div class="col-9 col-sm-8 col-md-7 col-lg-8 col-xl-9 ">
@@ -405,6 +408,12 @@
   </div>
 </template>
 <style lang="scss">
+.profile-image-main {
+  height: 150px;
+  width: 150px;
+  background-size: cover;
+  border-radius: 50%;
+}
 #takeAppointmentModal {
   .profile-image {
     height: 100px;
