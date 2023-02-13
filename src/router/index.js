@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Doctor from '../views/Doctor.vue'
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
-
+import PageNotFound from '../views/PageNotFound.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -24,6 +24,7 @@ const routes = [
     name: 'home',
     component: Home
   },
+  { path: "/:pathMatch(.*)*", component: PageNotFound }
 ]
 
 const router = new VueRouter({

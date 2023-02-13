@@ -194,6 +194,10 @@ export default {
 
 }
 
+// .btn-success {
+//     --bs-btn-disabled-bg: #08a500;
+// }
+
 .time-slots {
     display: flex;
     flex-direction: column;
@@ -206,7 +210,7 @@ export default {
         text-align: center;
         // display: block;
         border-radius: 8px;
-        background-color: #edf0f4;
+        background-color: #72D86D;
         border: 1px solid #edf0f4;
         color: #01234B;
         font-size: 14px;

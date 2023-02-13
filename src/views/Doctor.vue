@@ -443,7 +443,7 @@
     text-align: center;
     display: block;
     border-radius: 8px;
-    background-color: #edf0f4;
+    background-color: #72D86D;
     border: 1px solid #edf0f4;
     color: #101825;
     font-size: 14px;

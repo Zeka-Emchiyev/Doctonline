@@ -89,7 +89,7 @@
             <div class="row">
                 <div class="col-6 col-md-2 my-2" v-for="profession in frequentlyUsedProfessions">
                     <router-link
-                        :to="{ name: 'search', query: { 'prof-id': profession.id }, params: { id: profession.id } }"
+                        :to="{ name: 'search', query: { 'prof-id': profession.id, 'region-id': '', 'clinic-id': '' }, params: { id: profession.id } }"
                         class="professions-box d-block text-decoration-none">
                         <img class="rounded-circle profession-photo" :src="profession.photo" alt="image">
                         <p class="professions-txt ">{{ profession.name }}</p>
