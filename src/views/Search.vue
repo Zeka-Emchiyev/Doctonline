@@ -308,10 +308,10 @@ export default {
                     // check if prof id exist. if so then set.
                     // Region and insurance selection also should be added like this way
                     if (this.$route.query['prof-id']) {
-                        const selectedProfession = this.professions.find(profession => this.$route.query['prof-id'])
-                        if (selectedProfession) {
-                            this.selected(selectedProfession)
-                        }
+                      const selectedProfession = this.professions.find(pro => pro.id === Number(this.$route.query['prof-id']))
+                      if (selectedProfession) {
+                          this.selected(selectedProfession)
+                      }
                     }
                     // console.log(this.professions)
                 })
@@ -323,7 +323,7 @@ export default {
                     this.regions = resp.data
 
                     if (this.$route.query['region-id']) {
-                        const selectedRegion = this.regions.find(region => this.$route.query['region-id'])
+                        const selectedRegion = this.regions.find(region => region.id === Number(this.$route.query['region-id']))
                         if (selectedRegion) {
                             this.select(selectedRegion)
                         }
@@ -339,7 +339,11 @@ export default {
                 })
         },
         getDoctorsForProfessionAndRegion() {
-            axios.get(this.$apiUrl + '/api-doctors' + '?prof-id=' + this.$route.query['prof-id'] + '&' + 'region-id=' + this.$route.query['region-id'] + '&' + 'clinic-id=' + this.$route.query['clinic-id'])
+          const profId = this.$route.query['prof-id'] || ''
+          const regionId = this.$route.query['region-id'] || ''
+          const clinicId = this.$route.query['clinic-id'] || ''
+          const queryLink = `${this.$apiUrl}/api-doctors?prof-id=${profId}&region-id=${regionId}&clinic-id=${clinicId}`
+            axios.get(queryLink)
                 .then(response => {
                     // this.doctors = response.data
                     if (response.data != null) {
