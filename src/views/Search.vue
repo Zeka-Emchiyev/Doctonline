@@ -101,16 +101,14 @@
                     <div class="col-md-8">
                         <div class="row mt-4">
                             <div class="col-3 col-lg-2">
-                                <div class="rounded-circle border img-profile">
-                                    <img class="rounded-circle" style="height: 100%; width: 100%;"
-                                        :src="`${$apiUrl}/${doctor.profile_photo}`" alt="">
-                                    <router-link class="text-decoration-none profile-link"
-                                        :to="{ name: 'doctor', params: { id: doctor.id } }">
-                                        Profilə bax
-                                    </router-link>
+                                <div class="rounded-circle border profile-image" :style="{
+                                        'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+                                    }">
                                 </div>
-
-
+                                <router-link class="text-decoration-none profile-link"
+                                             :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                    Profilə bax
+                                </router-link>
                             </div>
                             <div class="col-9 col-lg-10">
 
@@ -581,13 +579,15 @@ export default {
 
 // }
 
-.img-profile {
+.profile-image {
     width: 104px;
     height: 104px;
+    background-size: cover;
+    background-position: center top;
 }
 
 @media screen and (max-width: 576px) {
-    .img-profile {
+    .profile-image {
         width: 75px;
         height: 75px;
         font-weight: 400;

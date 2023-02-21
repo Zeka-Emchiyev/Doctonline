@@ -413,6 +413,7 @@
   width: 150px;
   background-size: cover;
   border-radius: 50%;
+  background-position: center top;
 }
 #takeAppointmentModal {
   .profile-image {

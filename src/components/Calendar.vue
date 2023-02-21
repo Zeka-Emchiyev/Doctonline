@@ -167,6 +167,7 @@ export default {
         height: 100px;
         width: 100px;
         background-size: cover;
+        background-position: center top;
     }
 }
 
