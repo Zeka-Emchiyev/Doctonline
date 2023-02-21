@@ -9,6 +9,10 @@
 
 // @import url('../../public/fonts/Gilroy/Gilroy-Regular.otf');
 
+html {
+    scroll-behavior: auto !important;
+}
+
 body {
     // background-color: rgb(96, 212, 90);
     // font-family: HK Grotesk;
