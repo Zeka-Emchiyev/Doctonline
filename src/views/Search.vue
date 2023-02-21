@@ -96,7 +96,7 @@
             </div>
 
 
-            <div v-for="doctor in selectedDoctors" class="hold-doctor">
+            <div v-for="doctor in paginatedDoctors" class="hold-doctor">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="row mt-4">
@@ -138,6 +138,16 @@
 
                     </div>
                 </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+                <pagination
+                    v-model="pagination.page"
+                    :records="doctors.length"
+                    :per-page="pagination.perPage"
+                    @paginate="myCallback"
+                    :options="pagination.options"
+                />
             </div>
 
         </div>
@@ -210,6 +220,7 @@
 </template>
 
 <script>
+import Pagination from 'vue-pagination-2'
 import Navbar from '@/components/Navbar.vue';
 import axios from 'axios'
 import Calendar from "@/components/Calendar"
@@ -219,14 +230,15 @@ import moment from 'moment'
 
 export default {
     name: 'ProjectsSearch',
-
+    components: {
+        Navbar, Calendar, Pagination
+    },
     data() {
         return {
             selectedProfession: '',
-            selectedDoctors: null,
+            doctors: [],
             active: true,
             professions: '',
-            doctors: null,
             searchProfession: '',
             searchRegion: '',
             selectedRegion: '',
@@ -251,10 +263,18 @@ export default {
             selectedDate: null,
             moment,
             result: '',
+            pagination: {
+                perPage: 15,
+                page: 1,
+                options: {
+                    texts: {
+                        count: '',
+                        first: '',
+                        last: ''
+                    },
+                }
+            }
         };
-    },
-    components: {
-        Navbar, Calendar
     },
     computed: {
         filterProfessions() {
@@ -289,6 +309,11 @@ export default {
                 })
             }
             return filtered
+        },
+        paginatedDoctors() {
+            const startIndex = this.pagination.perPage * (this.pagination.page - 1);
+            const endIndex = startIndex + this.pagination.perPage;
+            return this.doctors.slice(startIndex, endIndex);
         }
     },
 
@@ -304,6 +329,10 @@ export default {
     },
 
     methods: {
+        myCallback (page) {
+            console.log(this.pagination.page)
+            window.scroll(0, 0)
+        },
 
         professionApi() {
             axios.get(this.$apiUrl + "/api-professions")
@@ -351,11 +380,8 @@ export default {
                 .then(response => {
                     // this.doctors = response.data
                     if (response.data != null) {
-                        this.selectedDoctors = response.data
+                        this.doctors = response.data
                     }
-
-                    console.log(this.selectedDoctors)
-
                 })
                 .catch(e => console.log(e))
         },
