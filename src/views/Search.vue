@@ -8,56 +8,62 @@
                     <h1 class="animate__animated animate__bounce animate__zoomInDown">
                         Digər axtarışı edin
                     </h1>
-                    <div class="input-group dropdown">
-                        <i class="bi bi-search icon-search"></i>
-                        <input v-model="searchProfession" class="icon dropdown-toggle form-control border-0 input-all"
-                            type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                            aria-label="First name" placeholder="Xidmət,şikayət,həkim axtarin...">
+                    <div class="input-group justify-content-between">
+                        <div class="input-holder dropdown">
+                            <i class="bi bi-search icon-search"></i>
+                            <input v-model="searchProfession" class="icon dropdown-toggle form-control border-0 input-all"
+                                   type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+                                   aria-label="First name" placeholder="Xidmət,şikayət,həkim axtarin...">
 
-                        <div class="dropdown-menu form-control  border overflow-auto"
-                            aria-labelledby="dropdownMenuButton1" style="max-height:360px; min-width:280px">
-                            <p class="dropdown-item text-position">Ixtisaslar</p>
+                            <div class="dropdown-menu form-control  border overflow-auto"
+                                 aria-labelledby="dropdownMenuButton1" style="max-height:360px; min-width:280px">
+                                <p class="dropdown-item text-position">Ixtisaslar</p>
 
-                            <div class="flex-row flex-wrap ">
-                                <div @click="selected(profession)" class="dropdown-item link"
-                                    v-for="profession in filterProfessions">
-                                    {{ profession.name }}
+                                <div class="flex-row flex-wrap ">
+                                    <div @click="selected(profession)" class="dropdown-item link"
+                                         v-for="profession in filterProfessions">
+                                        {{ profession.name }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <span class="span-line"></span>
-                        <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
-                        <input v-model="searchRegion" class="icon dropdown-toggle form-control border-0 input-location"
-                            type="text" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
-                            aria-label="First name" placeholder="Rayonlar">
+                        <div class="input-holder dropdown">
+                            <span class="span-line"></span>
+                            <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
+                            <input v-model="searchRegion" class="icon dropdown-toggle form-control border-0 input-location"
+                                   type="text" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
+                                   aria-label="First name" placeholder="Rayonlar">
 
-                        <div class="dropdown-menu form-control  border overflow-auto"
-                            aria-labelledby="dropdownMenuButton2" style="max-height:360px; min-width:280px">
-                            <p class="dropdown-item text-position">Rayonlar</p>
+                            <div class="dropdown-menu form-control  border overflow-auto"
+                                 aria-labelledby="dropdownMenuButton2" style="max-height:360px; min-width:280px">
+                                <p class="dropdown-item text-position">Rayonlar</p>
 
-                            <div class="flex-row flex-wrap">
-                                <div @click="select(region)" class="dropdown-item link" v-for="region in filterRegions">
-                                    {{ region.name }}
+                                <div class="flex-row flex-wrap">
+                                    <div @click="select(region)" class="dropdown-item link" v-for="region in filterRegions">
+                                        {{ region.name }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <span class="span-line"></span>
-                        <i class="bi bi-shield-check icon-insurance ms-2"></i>
+                        <div class="input-holder dropdown">
+                            <span class="span-line"></span>
+                            <i class="bi bi-shield-check icon-insurance ms-2"></i>
 
-                        <input v-model="searchClinic" class="icon dropdown-toggle form-control border-0 input-insurance"
-                            type="text" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
-                            aria-label="First name" placeholder="Klinikalar">
+                            <input v-model="searchClinic" class="icon dropdown-toggle form-control border-0 input-insurance"
+                                   type="text" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
+                                   aria-label="First name" placeholder="Klinikalar">
 
-                        <div class="dropdown-menu form-control  border overflow-auto"
-                            aria-labelledby="dropdownMenuButton3" style="max-height:365px; min-width:280px">
-                            <p class="dropdown-item text-position">Klinikalar</p>
+                            <div class="dropdown-menu form-control  border overflow-auto"
+                                 aria-labelledby="dropdownMenuButton3" style="max-height:365px; min-width:280px">
+                                <p class="dropdown-item text-position">Klinikalar</p>
 
-                            <div class="flex-row flex-wrap">
-                                <div @click="selectClinic(clinic)" class="dropdown-item link"
-                                    v-for="clinic in filterClinics">
-                                    {{ clinic.name }}
+                                <div class="flex-row flex-wrap">
+                                    <div @click="selectClinic(clinic)" class="dropdown-item link"
+                                         v-for="clinic in filterClinics">
+                                        {{ clinic.name }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -457,20 +463,17 @@ export default {
 }
 
 .icon-search {
-    padding-top: 12px;
     padding-left: 17px;
     font-size: 15px;
     color: #01234B;
 }
 
 .icon-insurance {
-    padding-top: 10px;
     font-size: 18px;
     color: #01234B;
 }
 
 .icon-location {
-    padding-top: 10px;
     font-size: 18px;
     color: #01234B;
 }
@@ -510,6 +513,12 @@ export default {
     border-radius: 8px;
     background-color: white;
     height: 48px;
+    flex-wrap: nowrap;
+    .input-holder {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
 }
 
 .link {
