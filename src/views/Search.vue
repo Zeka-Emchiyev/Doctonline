@@ -12,16 +12,16 @@
                         <div class="input-holder dropdown">
                             <i class="bi bi-search icon-search"></i>
                             <input v-model="searchProfession" class="icon dropdown-toggle form-control border-0 input-all"
-                                   type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                                   aria-label="First name" placeholder="Xidmət,şikayət,həkim axtarin...">
+                                type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+                                aria-label="First name" placeholder="Ixtisaslar">
 
                             <div class="dropdown-menu form-control  border overflow-auto"
-                                 aria-labelledby="dropdownMenuButton1" style="max-height:360px; min-width:280px">
+                                aria-labelledby="dropdownMenuButton1" style="max-height:360px; min-width:280px">
                                 <p class="dropdown-item text-position">Ixtisaslar</p>
 
                                 <div class="flex-row flex-wrap ">
                                     <div @click="selected(profession)" class="dropdown-item link"
-                                         v-for="profession in filterProfessions">
+                                        v-for="profession in filterProfessions">
                                         {{ profession.name }}
                                     </div>
                                 </div>
@@ -32,11 +32,11 @@
                             <span class="span-line"></span>
                             <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
                             <input v-model="searchRegion" class="icon dropdown-toggle form-control border-0 input-location"
-                                   type="text" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
-                                   aria-label="First name" placeholder="Rayonlar">
+                                type="text" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
+                                aria-label="First name" placeholder="Rayonlar">
 
                             <div class="dropdown-menu form-control  border overflow-auto"
-                                 aria-labelledby="dropdownMenuButton2" style="max-height:360px; min-width:280px">
+                                aria-labelledby="dropdownMenuButton2" style="max-height:360px; min-width:280px">
                                 <p class="dropdown-item text-position">Rayonlar</p>
 
                                 <div class="flex-row flex-wrap">
@@ -52,16 +52,16 @@
                             <i class="bi bi-shield-check icon-insurance ms-2"></i>
 
                             <input v-model="searchClinic" class="icon dropdown-toggle form-control border-0 input-insurance"
-                                   type="text" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
-                                   aria-label="First name" placeholder="Klinikalar">
+                                type="text" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
+                                aria-label="First name" placeholder="Klinikalar">
 
                             <div class="dropdown-menu form-control  border overflow-auto"
-                                 aria-labelledby="dropdownMenuButton3" style="max-height:365px; min-width:280px">
+                                aria-labelledby="dropdownMenuButton3" style="max-height:365px; min-width:280px">
                                 <p class="dropdown-item text-position">Klinikalar</p>
 
                                 <div class="flex-row flex-wrap">
                                     <div @click="selectClinic(clinic)" class="dropdown-item link"
-                                         v-for="clinic in filterClinics">
+                                        v-for="clinic in filterClinics">
                                         {{ clinic.name }}
                                     </div>
                                 </div>
@@ -74,25 +74,7 @@
                     </div>
                 </div>
 
-                <!-- <div class=" col-10 col-md-6 ">
-                    <div class="dropdown">
-                        <input v-model="searchProfession" class="icon dropdown-toggle form-control" type="text"
-                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
-                        <div class=" dropdown-menu form-control mt-2" aria-labelledby="dropdownMenuButton1">
-                            <p class="dropdown-item text-position">Ixtisaslar</p>
-
-                            <div class="d-flex flex-row flex-wrap">
-                                <div class="profession-title me-3" v-for="profession in filterProfessions">
-                                    <router-link :to="{ name: 'search', params: { id: profession.id } }"
-                                        @click.native="getDoctorsForProfession" class="dropdown-item link">
-                                        {{ profession.name }}
-                                    </router-link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
 
 
@@ -102,11 +84,11 @@
                         <div class="row mt-4">
                             <div class="col-3 col-lg-2">
                                 <div class="rounded-circle border profile-image" :style="{
-                                        'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
-                                    }">
+                                    'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+                                }">
                                 </div>
                                 <router-link class="text-decoration-none profile-link"
-                                             :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                    :to="{ name: 'doctor', params: { id: doctor.id } }">
                                     Profilə bax
                                 </router-link>
                             </div>
@@ -141,13 +123,8 @@
             </div>
 
             <div class="d-flex justify-content-center mt-5">
-                <pagination
-                    v-model="pagination.page"
-                    :records="doctors.length"
-                    :per-page="pagination.perPage"
-                    @paginate="myCallback"
-                    :options="pagination.options"
-                />
+                <pagination class="search-pagination" v-model="pagination.page" :records="doctors.length"
+                    :per-page="pagination.perPage" @paginate="myCallback" :options="pagination.options" />
             </div>
 
         </div>
@@ -216,7 +193,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -329,7 +305,7 @@ export default {
     },
 
     methods: {
-        myCallback (page) {
+        myCallback(page) {
             console.log(this.pagination.page)
             window.scroll(0, 0)
         },
@@ -341,10 +317,10 @@ export default {
                     // check if prof id exist. if so then set.
                     // Region and insurance selection also should be added like this way
                     if (this.$route.query['prof-id']) {
-                      const selectedProfession = this.professions.find(pro => pro.id === Number(this.$route.query['prof-id']))
-                      if (selectedProfession) {
-                          this.selected(selectedProfession)
-                      }
+                        const selectedProfession = this.professions.find(pro => pro.id === Number(this.$route.query['prof-id']))
+                        if (selectedProfession) {
+                            this.selected(selectedProfession)
+                        }
                     }
                     // console.log(this.professions)
                 })
@@ -372,10 +348,10 @@ export default {
                 })
         },
         getDoctorsForProfessionAndRegion() {
-          const profId = this.$route.query['prof-id'] || ''
-          const regionId = this.$route.query['region-id'] || ''
-          const clinicId = this.$route.query['clinic-id'] || ''
-          const queryLink = `${this.$apiUrl}/api-doctors?prof-id=${profId}&region-id=${regionId}&clinic-id=${clinicId}`
+            const profId = this.$route.query['prof-id'] || ''
+            const regionId = this.$route.query['region-id'] || ''
+            const clinicId = this.$route.query['clinic-id'] || ''
+            const queryLink = `${this.$apiUrl}/api-doctors?prof-id=${profId}&region-id=${regionId}&clinic-id=${clinicId}`
             axios.get(queryLink)
                 .then(response => {
                     // this.doctors = response.data
@@ -443,6 +419,61 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search-pagination ::v-deep {
+
+    li.VuePagination__pagination-item-prev-chunk,
+    .VuePagination__pagination-item-next-chunk {
+        display: none !important;
+    }
+
+    .page-link.active {
+        background-color: #4CB147;
+    }
+
+    li.VuePagination__pagination-item-prev-page a {
+        visibility: hidden;
+    }
+
+    li.VuePagination__pagination-item-prev-page {
+        background-image: url(../assets/icons/icon-back.svg);
+        background-repeat: no-repeat;
+        background-size: 15px;
+        background-position: center;
+        border: 1px solid #dee2e6;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        height: 37.5px;
+        cursor: pointer;
+
+        &:hover {
+            color: #4CB147 !important;
+        }
+    }
+
+    li.VuePagination__pagination-item-next-page a {
+        visibility: hidden;
+    }
+
+    li.VuePagination__pagination-item-next-page {
+        background-image: url(../assets/icons/next-icon.svg);
+        background-repeat: no-repeat;
+        background-size: 15px;
+        background-position: center;
+        border: 1px solid #dee2e6;
+        border-left: 0;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        height: 37.5px;
+        cursor: pointer;
+
+    }
+
+    .pagination>li>a {
+        color: #01234B;
+    }
+
+}
+
 .hold-doctor {
     // border-top: 1px solid #EDF0F4;
     border-bottom: 1.5px solid #EDF0F4;
@@ -538,6 +569,7 @@ export default {
     background-color: white;
     height: 48px;
     flex-wrap: nowrap;
+
     .input-holder {
         display: flex;
         align-items: center;
@@ -660,6 +692,9 @@ export default {
         font-weight: 500;
         line-height: 15px;
         padding-left: 13px;
+        display: block;
+        margin-top: 5px;
+        white-space: nowrap;
     }
 }
 </style>

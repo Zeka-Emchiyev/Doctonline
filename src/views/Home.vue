@@ -3,7 +3,7 @@
         <div class="contain-img">
             <Navbar></Navbar>
 
-<!--            <div class="input-group">
+            <!--            <div class="input-group">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -30,28 +30,30 @@
 
             <div class="search-content">
 
-                <div class="container">
+                <div class="container position-relative">
                     <div class="row justify-content-md-center">
                         <div class="col-md-9">
                             <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
-                                Sizə uyğun həkim <br/> seçin və randevu götürün
+                                Sizə uyğun həkim <br /> seçin və randevu götürün
                             </h1>
                             <div class="input-group justify-content-between">
                                 <div class="input-holder dropdown">
                                     <i class="bi bi-search icon-search"></i>
                                     <input v-model="searchProfession"
-                                           class="icon dropdown-toggle form-control border-0 input-search" type="text"
-                                           id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                                           aria-label="First name" placeholder="Xidmət,şikayət,həkim axtarin...">
+                                        class="icon dropdown-toggle form-control border-0 input-search" type="text"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+                                        aria-label="First name" placeholder="Ixtisaslar">
 
                                     <div class="dropdown-menu form-control  border overflow-auto"
-                                         aria-labelledby="dropdownMenuButton1"
-                                         style="max-height:360px; min-width:280px">
-                                        <p class="dropdown-item text-position">Ixtisaslar</p>
+                                        aria-labelledby="dropdownMenuButton1">
+                                        <div class="d-flex justify-content-end sticky-top">
+                                            <button class="btn d-inline d-md-none link">Imtina</button>
+                                        </div>
+                                        <p class="dropdown-item text-position d-inline">Ixtisaslar</p>
 
                                         <div class="flex-row flex-wrap">
                                             <div @click="selected(profession)" class="dropdown-item link"
-                                                 v-for="profession in filterProfessions">
+                                                v-for="profession in filterProfessions">
                                                 {{ profession.name }}
                                             </div>
                                         </div>
@@ -62,17 +64,19 @@
                                     <span class="span-line"></span>
                                     <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
                                     <input v-model="searchRegion"
-                                           class="icon dropdown-toggle form-control border-0 input-location" type="text"
-                                           id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
-                                           aria-label="First name" placeholder="Rayonlar">
+                                        class="icon dropdown-toggle form-control border-0 input-location" type="text"
+                                        id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
+                                        aria-label="First name" placeholder="Rayonlar">
 
                                     <div class="dropdown-menu form-control  border overflow-auto"
-                                         aria-labelledby="dropdownMenuButton2" style="max-height:365px; min-width:280px">
-                                        <p class="dropdown-item text-position">Rayonlar</p>
-
+                                        aria-labelledby="dropdownMenuButton2">
+                                        <div class="d-flex justify-content-end sticky-top">
+                                            <button class="btn d-inline d-md-none link">Imtina</button>
+                                        </div>
+                                        <p class="dropdown-item text-position d-inline">Rayonlar</p>
                                         <div class="flex-row flex-wrap">
                                             <div @click="select(region)" class="dropdown-item link"
-                                                 v-for="region in filterRegions">
+                                                v-for="region in filterRegions">
                                                 {{ region.name }}
                                             </div>
                                         </div>
@@ -87,17 +91,19 @@
                                     <span class="span-line"></span>
                                     <i class="bi bi-shield-check icon-insurance ms-2"></i>
                                     <input v-model="searchClinic"
-                                           class="icon dropdown-toggle form-control border-0 input-insurance" type="text"
-                                           id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
-                                           aria-label="First name" placeholder="Klinikalar">
+                                        class="icon dropdown-toggle form-control border-0 input-insurance" type="text"
+                                        id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
+                                        aria-label="First name" placeholder="Klinikalar">
 
-                                    <div class="dropdown-menu form-control  border overflow-auto"
-                                         aria-labelledby="dropdownMenuButton3" style="max-height:365px; min-width:280px">
-                                        <p class="dropdown-item text-position">Klinikalar</p>
+                                    <div class=" dropdown-menu form-control  border" aria-labelledby="dropdownMenuButton3">
+                                        <div class="d-flex justify-content-end sticky-top">
+                                            <button class="btn d-inline d-md-none link">Imtina</button>
+                                        </div>
+                                        <p class="dropdown-item text-position d-inline">Klinikalar</p>
 
                                         <div class="flex-row flex-wrap">
                                             <div @click="selectClinic(clinic)" class="dropdown-item link"
-                                                 v-for="clinic in filterClinics">
+                                                v-for="clinic in filterClinics">
                                                 {{ clinic.name }}
                                             </div>
                                         </div>
@@ -282,7 +288,8 @@ export default {
 
         searchProfessions() {
             // this.$router.push('/search/' + this.selectedProfession)
-            this.$router.push({path: '/search',
+            this.$router.push({
+                path: '/search',
                 query: {
                     'prof-id': this.selectedProfession,
                     'region-id': this.selectedRegion,
@@ -306,6 +313,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.dropdown-menu {
+    min-width: 310px;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .search-content {
     padding-top: 40px;
     padding-bottom: 40px;
@@ -332,6 +346,7 @@ export default {
     background-color: white;
     height: 48px;
     flex-wrap: nowrap;
+
     .input-holder {
         display: flex;
         align-items: center;
@@ -456,6 +471,16 @@ export default {
 }
 
 @media screen and (max-width: 576px) {
+    .dropdown-menu {
+        position: fixed !important;
+        margin-top: 0;
+        margin-left: 0;
+        min-width: auto;
+        max-height: none !important;
+        height: 100%;
+
+    }
+
     .icon-search {
         display: none !important;
         padding-top: 12px;
