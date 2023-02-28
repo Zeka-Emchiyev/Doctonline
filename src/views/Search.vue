@@ -297,7 +297,10 @@ export default {
         this.professionApi()
         this.regonsApi()
         this.clinicsApi()
-        this.getDoctorsForProfessionAndRegion()
+        const profId = this.$route.query['prof-id'] || ''
+        const regionId = this.$route.query['region-id'] || ''
+        const clinicId = this.$route.query['clinic-id'] || ''
+        this.getDoctorsForProfessionAndRegion(profId, regionId, clinicId)
 
         this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
         this.successModal = new bootstrap.Modal(document.getElementById('successModal'), { backdrop: 'static', keyboard: false })
@@ -347,10 +350,10 @@ export default {
                     // console.log(this.clinics)
                 })
         },
-        getDoctorsForProfessionAndRegion() {
-            const profId = this.$route.query['prof-id'] || ''
-            const regionId = this.$route.query['region-id'] || ''
-            const clinicId = this.$route.query['clinic-id'] || ''
+        getDoctorsForProfessionAndRegion(profId, regionId, clinicId) {
+            // const profId = this.$route.query['prof-id'] || ''
+            // const regionId = this.$route.query['region-id'] || ''
+            // const clinicId = this.$route.query['clinic-id'] || ''
             const queryLink = `${this.$apiUrl}/api-doctors?prof-id=${profId}&region-id=${regionId}&clinic-id=${clinicId}`
             axios.get(queryLink)
                 .then(response => {
@@ -379,8 +382,8 @@ export default {
         },
 
         searchProfessions() {
-            this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
-            window.location.reload()
+          this.getDoctorsForProfessionAndRegion(this.selectedProfession, this.selectedRegion, this.selectedClinic)
+          this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
         },
         setDay() {
             console.log('day')
