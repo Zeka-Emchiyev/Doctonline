@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>404 not found please try again</p>
+        <p class="text-center fw-bold my-5">404 not found please try again</p>
     </div>
 </template>
 
@@ -24,6 +24,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
