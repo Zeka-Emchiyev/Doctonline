@@ -362,7 +362,11 @@ export default {
                         this.doctors = response.data
                     }
                 })
-                .catch(e => console.log(e))
+                .catch(error => {
+                    if (error.response.status === 404) {
+                        router.push('*')
+                    }
+                })
         },
         selected(selected) {
 

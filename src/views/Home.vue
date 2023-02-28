@@ -44,7 +44,7 @@
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
                                         aria-label="First name" placeholder="Ixtisaslar">
 
-                                    <div class="dropdown-menu form-control  border overflow-auto"
+                                    <div class="profession-dropdown dropdown-menu form-control  border overflow-auto"
                                         aria-labelledby="dropdownMenuButton1">
                                         <div class="d-flex justify-content-end sticky-top">
                                             <button class="btn d-inline d-md-none link">Imtina</button>
@@ -68,7 +68,7 @@
                                         id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
                                         aria-label="First name" placeholder="Rayonlar">
 
-                                    <div class="dropdown-menu form-control  border overflow-auto"
+                                    <div class="region-dropdown dropdown-menu form-control  border overflow-auto"
                                         aria-labelledby="dropdownMenuButton2">
                                         <div class="d-flex justify-content-end sticky-top">
                                             <button class="btn d-inline d-md-none link">Imtina</button>
@@ -95,7 +95,8 @@
                                         id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
                                         aria-label="First name" placeholder="Klinikalar">
 
-                                    <div class=" dropdown-menu form-control  border" aria-labelledby="dropdownMenuButton3">
+                                    <div class="clinic-dropdown dropdown-menu form-control  border"
+                                        aria-labelledby="dropdownMenuButton3">
                                         <div class="d-flex justify-content-end sticky-top">
                                             <button class="btn d-inline d-md-none link">Imtina</button>
                                         </div>
@@ -471,6 +472,18 @@ export default {
 }
 
 @media screen and (max-width: 576px) {
+    .profession-dropdown {
+        inset: -205px auto auto 0px !important;
+    }
+
+    .region-dropdown {
+        inset: -240px auto auto 0px !important;
+    }
+
+    .clinic-dropdown {
+        inset: -275px auto auto 0px !important;
+    }
+
     .dropdown-menu {
         position: fixed !important;
         margin-top: 0;
