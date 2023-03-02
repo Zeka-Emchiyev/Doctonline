@@ -728,6 +728,8 @@ export default {
         width: 100% !important;
         // padding: 10px !important;
         // text-align: center;
+        border-radius: unset;
+
         background: url(../assets/icons/Group.svg) no-repeat scroll 1px 12px;
         padding-left: 30px;
 
