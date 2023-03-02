@@ -87,6 +87,8 @@
                             </div>
                         </div>
 
+                        <!-- Part of  Mobile -->
+
                         <div class="d-block d-md-none col-md-9">
                             <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
                                 Sizə uyğun həkim <br /> seçin və randevu götürün
@@ -329,6 +331,9 @@ export default {
         // console.log(this.$route.query)
         this.regonsApi()
         this.clinicsApi()
+        this.myModalProfessions = new bootstrap.Modal(document.getElementById('professionsModal'))
+        this.myModalregions = new bootstrap.Modal(document.getElementById('regionsModal'))
+        this.myModalclinics = new bootstrap.Modal(document.getElementById('clinicsModal'))
     },
 
     methods: {
@@ -364,17 +369,20 @@ export default {
             this.searchRegion = selected.name
             this.selectedRegion = selected.id
             console.log(this.selectedRegion)
+            this.myModalregions.hide()
         },
 
         selected(selected) {
             this.searchProfession = selected.name
             this.selectedProfession = selected.id
             console.log(this.selectedProfession)
+            this.myModalProfessions.hide()
         },
         selectClinic(selected) {
             this.searchClinic = selected.name
             this.selectedClinic = selected.id
             console.log(this.selectedClinic)
+            this.myModalclinics.hide()
         },
 
         searchProfessions() {
@@ -594,7 +602,7 @@ export default {
 
     .modal-dialog-scrollable .modal-body {
         overflow-x: hidden;
-        height: 570px;
+        height: 100vh;
     }
 
     .text-position {
@@ -671,12 +679,13 @@ export default {
     }
 
     .input-search {
-        // border-right: 1px solid #D2D1D1 !important;
+        border-bottom: 1px solid #D2D1D1 !important;
         background-color: #fff !important;
         width: 100% !important;
+        border-radius: unset;
         // padding: 10px !important;
         // text-align: center;
-        background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 8px;
+        background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 14px;
         padding-left: 30px;
 
 
@@ -689,6 +698,7 @@ export default {
         border-right: 1px solid #D2D1D1 !important;
         background-color: #fff !important;
         width: 100% !important;
+        border-radius: unset;
         // padding: 10px !important;
         // text-align: center;
         background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 8px;
@@ -700,6 +710,7 @@ export default {
         border-bottom: 1px solid #D2D1D1 !important;
         background-color: #fff !important;
         width: 100% !important;
+        border-radius: unset;
         // padding: 10px !important;
         // text-align: center;
         background: url(../assets/icons/Vector-location.svg) no-repeat scroll 1px 12px;
