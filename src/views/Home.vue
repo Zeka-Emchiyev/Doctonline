@@ -2,37 +2,11 @@
     <div class="container-fluid p-0">
         <div class="contain-img">
             <Navbar></Navbar>
-
-            <!--            <div class="input-group">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Dropdown button
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Dropdown button
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action2</a></li>
-                        <li><a class="dropdown-item" href="#">Another action2</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here2</a></li>
-                    </ul>
-                </div>
-            </div>-->
-
             <div class="search-content">
 
                 <div class="container position-relative">
                     <div class="row justify-content-md-center">
-                        <div class="col-md-9">
+                        <div class="d-none d-md-block col-md-9">
                             <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
                                 Sizə uyğun həkim <br /> seçin və randevu götürün
                             </h1>
@@ -44,7 +18,7 @@
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
                                         aria-label="First name" placeholder="Ixtisaslar">
 
-                                    <div class="profession-dropdown dropdown-menu form-control  border overflow-auto"
+                                    <div class="profession-dropdown dropdown-menu form-control  border"
                                         aria-labelledby="dropdownMenuButton1">
                                         <div class="d-flex justify-content-end sticky-top">
                                             <button class="btn d-inline d-md-none link">Imtina</button>
@@ -83,10 +57,6 @@
                                     </div>
                                 </div>
 
-
-                                <!-- <input type="text" aria-label="Insurance" class="form-control border-0 input-insurance"
-                                    placeholder="Paşa sığorta" disabled> -->
-
                                 <div class="input-holder dropdown">
                                     <span class="span-line"></span>
                                     <i class="bi bi-shield-check icon-insurance ms-2"></i>
@@ -116,6 +86,126 @@
                                 </button>
                             </div>
                         </div>
+
+                        <div class="d-block d-md-none col-md-9">
+                            <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
+                                Sizə uyğun həkim <br /> seçin və randevu götürün
+                            </h1>
+                            <div class="input-group justify-content-between">
+                                <div class="input-holder dropdown">
+                                    <i class="bi bi-search icon-search"></i>
+                                    <input v-model="searchProfession"
+                                        class="icon dropdown-toggle form-control border-0 input-search" type="text"
+                                        placeholder="Ixtisaslar" data-bs-toggle="modal" data-bs-target="#professionsModal">
+
+                                </div>
+
+                                <!-- Modal Professions-->
+                                <div class="modal fade" data-bs-backdrop="static" id="professionsModal" tabindex="-1"
+                                    aria-labelledby="professionsModalLabel" aria-hidden="true" data-bs-keyboard="false">
+                                    <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <input v-model="searchProfession"
+                                                    class="icon border-0 input-search-profession" type="text"
+                                                    placeholder="Ixtisaslar">
+                                                <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <p class="dropdown-item text-position">Ixtisaslar</p>
+
+                                                <div class="flex-row flex-wrap">
+                                                    <div @click="selected(profession)" class="dropdown-item text-link"
+                                                        v-for="profession in filterProfessions">
+                                                        {{ profession.name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-holder dropdown">
+                                    <span class="span-line"></span>
+                                    <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
+
+                                    <input v-model="searchRegion"
+                                        class="icon dropdown-toggle form-control border-0 input-location" type="text"
+                                        placeholder="Rayonlar" data-bs-toggle="modal" data-bs-target="#regionsModal">
+
+                                </div>
+
+
+                                <!-- Modal Regions-->
+                                <div class="modal fade" data-bs-backdrop="static" id="regionsModal" tabindex="-1"
+                                    aria-labelledby="regionsModalLabel" aria-hidden="true" data-bs-keyboard="false">
+                                    <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <input v-model="searchRegion" class="icon border-0 input-search-profession"
+                                                    type="text" placeholder="Rayonlar">
+                                                <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <p class="dropdown-item text-position">Rayonlar</p>
+
+                                                <div class="flex-row flex-wrap">
+                                                    <div @click="select(region)" class="dropdown-item text-link"
+                                                        v-for="region in filterRegions">
+                                                        {{ region.name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-holder dropdown">
+                                    <span class="span-line"></span>
+                                    <i class="bi bi-shield-check icon-insurance ms-2"></i>
+
+                                    <input v-model="searchClinic"
+                                        class="icon dropdown-toggle form-control border-0 input-insurance" type="text"
+                                        placeholder="Klinikalar" data-bs-toggle="modal" data-bs-target="#clinicsModal">
+                                </div>
+
+                                <button @click="searchProfessions()" class="icon-button btn btn-success rounded-start">
+                                    <span class="d-block d-md-none" style="color: #01234B;">Axtar</span>
+                                </button>
+                            </div>
+
+                            <!-- Modal Clinics-->
+                            <div class="modal fade" data-bs-backdrop="static" id="clinicsModal" tabindex="-1"
+                                aria-labelledby="clinicsModalLabel" aria-hidden="true" data-bs-keyboard="false">
+                                <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <input v-model="searchClinic" class="icon border-0 input-search-profession"
+                                                type="text" placeholder="Klinikalar">
+                                            <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <p class="dropdown-item text-position">Klinikalar</p>
+
+                                            <div class="flex-row flex-wrap">
+                                                <div @click="selectClinic(clinic)" class="dropdown-item text-link"
+                                                    v-for="clinic in filterClinics">
+                                                    {{ clinic.name }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
 
@@ -463,8 +553,10 @@ export default {
     cursor: pointer;
     padding: 1px 12px;
     // margin: 5px;
-    border-radius: 8px;
-    font-size: 13px;
+    // border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    border: none !important;
 
     &:hover {
         background-color: #DDFDDB;
@@ -472,16 +564,47 @@ export default {
 }
 
 @media screen and (max-width: 576px) {
-    .profession-dropdown {
-        inset: -205px auto auto 0px !important;
+
+    .link {
+        text-decoration: none;
+        font-weight: 400;
+        color: #01234B;
+        cursor: pointer;
+        padding: 1px 12px;
+        // margin: 5px;
+        // border-radius: 8px;
+        font-size: 16px;
+        background-color: #fff;
+        border: none !important;
+
+        &:hover {
+            background-color: #DDFDDB;
+        }
     }
 
-    .region-dropdown {
-        inset: -240px auto auto 0px !important;
+    .text-link {
+        text-decoration: none;
+        font-weight: 400;
+        color: #01234B;
+        cursor: pointer;
+        padding: 1px 12px;
+        font-size: 16px;
+        background-color: #fff;
     }
 
-    .clinic-dropdown {
-        inset: -275px auto auto 0px !important;
+    .modal-dialog-scrollable .modal-body {
+        overflow-x: hidden;
+        height: 570px;
+    }
+
+    .text-position {
+        color: #535F72;
+        font-size: 13px;
+        line-height: 20px;
+        font-weight: 500;
+        margin: 0;
+        padding-left: 13px;
+        padding-bottom: 6px;
     }
 
     .dropdown-menu {
@@ -548,18 +671,29 @@ export default {
     }
 
     .input-search {
-        border-bottom: 1px solid #D2D1D1 !important;
+        // border-right: 1px solid #D2D1D1 !important;
         background-color: #fff !important;
         width: 100% !important;
         // padding: 10px !important;
         // text-align: center;
-        background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 12px;
+        background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 8px;
         padding-left: 30px;
 
 
         &:focus {
             box-shadow: none;
         }
+    }
+
+    .input-search-profession {
+        border-right: 1px solid #D2D1D1 !important;
+        background-color: #fff !important;
+        width: 100% !important;
+        // padding: 10px !important;
+        // text-align: center;
+        background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 8px;
+        padding-left: 30px;
+        outline: none;
     }
 
     .input-location {
