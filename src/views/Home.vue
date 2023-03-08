@@ -628,11 +628,6 @@ export default {
         max-height: none !important;
     }
 
-
-    .fade.modal-backdrop.show {
-        opacity: 0 !important;
-    }
-
     .icon-search {
         display: none !important;
         padding-top: 12px;
@@ -827,4 +822,17 @@ export default {
 
     }
 }
+
+
 </style>
+
+<style>
+/*TODO: globalda edit edib. modallara class ver onun daxilindeki modal-content-i edit ele.*/
+  .modal-content {
+    border-radius: 0 !important;
+  }
+  .fade.modal-backdrop.show {
+    opacity: 0 !important;
+  }
+</style>
+
