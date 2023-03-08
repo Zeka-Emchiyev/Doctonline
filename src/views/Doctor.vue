@@ -9,7 +9,7 @@
               <div class="profile-image-main" :style="{
                 'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
               }"></div>
-<!--              <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture">-->
+              <!--              <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile picture">-->
             </div>
 
             <div class="col-9 col-sm-8 col-md-7 col-lg-8 col-xl-9 ">
@@ -329,8 +329,8 @@
             </div>
             <div class="text-center mt-2">
               <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
-                :class="{ 'text-white': !dateTimeSelected }"
-                class="btn btn-success d-none d-md-block col-11 my-3 mx-auto" :disabled="!dateTimeSelected">
+                :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success d-none d-md-block col-11 my-3 mx-auto"
+                :disabled="!dateTimeSelected">
                 Randevu al
               </button>
             </div>
@@ -415,6 +415,7 @@
   border-radius: 50%;
   background-position: center top;
 }
+
 #takeAppointmentModal {
   .profile-image {
     height: 100px;
@@ -679,6 +680,14 @@
 }
 
 @media screen and (max-width: 576px) {
+  .profile-image-main {
+    height: 82px;
+    width: 82px;
+    background-size: cover;
+    border-radius: 50%;
+    background-position: center top;
+  }
+
   .image {
     width: 80px;
     height: 80px;

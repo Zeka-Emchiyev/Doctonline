@@ -98,12 +98,13 @@
                                     <i class="bi bi-search icon-search"></i>
                                     <input v-model="searchProfession"
                                         class="icon dropdown-toggle form-control border-0 input-search" type="text"
-                                        placeholder="Ixtisaslar" data-bs-toggle="modal" data-bs-target="#professionsModal">
+                                        placeholder="Ixtisaslar" data-bs-toggle="modal" data-bs-target="#professionsModal"
+                                        disabled>
 
                                 </div>
 
                                 <!-- Modal Professions-->
-                                <div class="modal fade" data-bs-backdrop="static" id="professionsModal" tabindex="-1"
+                                <div class="modal fade " data-bs-backdrop="static" id="professionsModal" tabindex="-1"
                                     aria-labelledby="professionsModalLabel" aria-hidden="true" data-bs-keyboard="false">
                                     <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
                                         <div class="modal-content">
@@ -135,7 +136,8 @@
 
                                     <input v-model="searchRegion"
                                         class="icon dropdown-toggle form-control border-0 input-location" type="text"
-                                        placeholder="Rayonlar" data-bs-toggle="modal" data-bs-target="#regionsModal">
+                                        placeholder="Rayonlar" data-bs-toggle="modal" data-bs-target="#regionsModal"
+                                        disabled>
 
                                 </div>
 
@@ -172,7 +174,8 @@
 
                                     <input v-model="searchClinic"
                                         class="icon dropdown-toggle form-control border-0 input-insurance" type="text"
-                                        placeholder="Klinikalar" data-bs-toggle="modal" data-bs-target="#clinicsModal">
+                                        placeholder="Klinikalar" data-bs-toggle="modal" data-bs-target="#clinicsModal"
+                                        disabled>
                                 </div>
 
                                 <button @click="searchProfessions()" class="icon-button btn btn-success rounded-start">
@@ -595,8 +598,8 @@ export default {
         font-weight: 400;
         color: #01234B;
         cursor: pointer;
-        padding: 1px 12px;
-        font-size: 16px;
+        padding: 1.5px 12px;
+        font-size: 18px;
         background-color: #fff;
     }
 
@@ -604,6 +607,8 @@ export default {
         overflow-x: hidden;
         height: 100vh;
     }
+
+
 
     .text-position {
         color: #535F72;
@@ -621,8 +626,11 @@ export default {
         margin-left: 0;
         min-width: auto;
         max-height: none !important;
-        height: 100%;
+    }
 
+
+    .fade.modal-backdrop.show {
+        opacity: 0 !important;
     }
 
     .icon-search {
