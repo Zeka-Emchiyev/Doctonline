@@ -35,8 +35,9 @@
                     </div>
                     <div class="row px-3 p-3">
                       <div class="col-4">
-                        <img class="image rounded-circle" :src="`${$apiUrl}/${doctor.profile_photo}`"
-                          alt="profile picture">
+                        <div class="profile-image-main" :style="{
+                          'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+                        }"></div>
                       </div>
                       <div class="col-8">
                         <p class="text-success doc-profession">{{ doctor.profession }}</p>
@@ -230,7 +231,7 @@
 
             <div>
               <h2 class="mb-4 head">Xəritə</h2>
-              <img class="" src="../assets/Screen Shot 2020-10-11 at 15.48 1.png" alt="">
+              <GoogleMapLoader />
             </div>
 
             <FaqHolder id="scrollspyHeading5" />
@@ -407,6 +408,134 @@
     </div>
   </div>
 </template>
+<script>
+import { Carousel, Slide } from 'vue-carousel';
+import 'moment/locale/az';
+import axios from 'axios'
+import moment from 'moment'
+import FaqHolder from "@/components/FaqHolder";
+import NavbarDoctor from "@/components/NavbarDoctor";
+import GoogleMapLoader from '@/components/GoogleMapLoader.vue';
+
+export default {
+  name: 'Doctor',
+  components: { FaqHolder, Carousel, Slide, NavbarDoctor, GoogleMapLoader },
+  data() {
+    return {
+      selectedDay: null,//moment().toDate().toISOString(),
+      selectedTime: '',
+      selectedHeader: 'location',
+      selectedBox: 'clinic',
+      monthlyDates: [],
+      timeSlots: [],
+      form: {
+        date: null,
+        doctor_id: null,
+        email: null,
+        fullname: null,
+        phone: null,
+        time: null,
+      },
+      appointmentDate: null,
+      selectedDate: null,
+      moment,
+      doctor: '',
+      result: '',
+    };
+  },
+  computed: {
+    dateTimeSelected() {
+      return this.selectedDay && this.selectedTime
+    }
+  },
+  mounted() {
+    this.moment.locale('az')
+    this.user()
+    this.generateTimeSlots()
+    this.generateDays()
+    this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
+    this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'))
+  },
+
+  methods: {
+    createAppointment() {
+      this.form.doctor_id = this.doctor.id
+      this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+      this.form.time = this.selectedTime
+      axios.post(this.$apiUrl + "/api-appointments/create", this.form)
+        .then((resp) => {
+          console.log(resp)
+          this.result = resp.data
+          this.myModal.hide()
+          this.myModal.hide()
+          this.randevuModal.hide()
+        })
+        .catch(e => console.log(e))
+    },
+    generateDays() {
+      // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
+      // const today = moment()
+      const tomorrow = moment().add(1, 'days');
+      const monthLater = moment().add(1, 'month')
+      let enumerateDaysBetweenDates = (startDate, endDate) => {
+        let now = startDate.clone(), dates = [];
+        let i = 0;
+        while (now.isSameOrBefore(endDate)) {
+          dates.push({
+            id: i++,
+            date: now.toDate(),
+            showMore: false
+          });
+          now.add(1, 'days');
+        }
+        return dates;
+      };
+      this.monthlyDates = enumerateDaysBetweenDates(tomorrow, monthLater)
+    },
+    generateTimeSlots() {
+      const startTime = moment(this.doctor.start_time, "HH:mm")
+      const endTime = moment(this.doctor.end_time, "HH:mm")
+      const diffInMinutes = endTime.diff(startTime, 'minutes')
+      const slotMinute = 30
+      for (let i = 0;i <= diffInMinutes;i += slotMinute) {
+        const time = startTime.add(slotMinute, 'minutes')
+        this.timeSlots.push({
+          id: i,
+          timeFormatted: time.format('HH:mm'),
+          time: time
+        })
+      }
+    },
+    user() {
+      axios.get(this.$apiUrl + "/api-doctors?doctor-id=" + this.$route.params.id)
+        .then(response => {
+          this.doctor = response.data
+          this.generateTimeSlots()
+          this.monthlyDates = this.monthlyDates.map(day => {
+            return {
+              ...day,
+              timeSlots: JSON.parse(JSON.stringify(this.timeSlots))
+            }
+          })
+          console.log(this.monthlyDates)
+        })
+        .catch(e => console.log(e))
+    },
+    setDay(day) {
+      this.selectedDay = day.date
+    },
+    setSelectedTime(day, time) {
+      this.setDay(day)
+      this.selectedTime = time.timeFormatted
+      console.log(this.selectedDay)
+    },
+    showMoreTimeSlots(day, showState = true) {
+      const dayIndex = this.monthlyDates.findIndex(date => date.id === day.id)
+      this.monthlyDates[dayIndex].showMore = showState
+    }
+  },
+}
+</script>
 <style lang="scss">
 .profile-image-main {
   height: 150px;
@@ -765,129 +894,4 @@
 }
 </style>
 
-<script>
-import { Carousel, Slide } from 'vue-carousel';
-import 'moment/locale/az';
-import axios from 'axios'
-import moment from 'moment'
-import FaqHolder from "@/components/FaqHolder";
-import NavbarDoctor from "@/components/NavbarDoctor";
-export default {
-  name: 'Doctor',
-  components: { FaqHolder, Carousel, Slide, NavbarDoctor },
-  data() {
-    return {
-      selectedDay: null,//moment().toDate().toISOString(),
-      selectedTime: '',
-      selectedHeader: 'location',
-      selectedBox: 'clinic',
-      monthlyDates: [],
-      timeSlots: [],
-      form: {
-        date: null,
-        doctor_id: null,
-        email: null,
-        fullname: null,
-        phone: null,
-        time: null,
-      },
-      appointmentDate: null,
-      selectedDate: null,
-      moment,
-      doctor: '',
-      result: '',
-    };
-  },
-  computed: {
-    dateTimeSelected() {
-      return this.selectedDay && this.selectedTime
-    }
-  },
-  mounted() {
-    this.moment.locale('az')
-    this.user()
-    this.generateTimeSlots()
-    this.generateDays()
-    this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
-    this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'))
-  },
 
-  methods: {
-    createAppointment() {
-      this.form.doctor_id = this.doctor.id
-      this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-      this.form.time = this.selectedTime
-      axios.post(this.$apiUrl + "/api-appointments/create", this.form)
-        .then((resp) => {
-          console.log(resp)
-          this.result = resp.data
-          this.myModal.hide()
-          this.myModal.hide()
-          this.randevuModal.hide()
-        })
-        .catch(e => console.log(e))
-    },
-    generateDays() {
-      // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
-      // const today = moment()
-      const tomorrow = moment().add(1, 'days');
-      const monthLater = moment().add(1, 'month')
-      let enumerateDaysBetweenDates = (startDate, endDate) => {
-        let now = startDate.clone(), dates = [];
-        let i = 0;
-        while (now.isSameOrBefore(endDate)) {
-          dates.push({
-            id: i++,
-            date: now.toDate(),
-            showMore: false
-          });
-          now.add(1, 'days');
-        }
-        return dates;
-      };
-      this.monthlyDates = enumerateDaysBetweenDates(tomorrow, monthLater)
-    },
-    generateTimeSlots() {
-      const startTime = moment(this.doctor.start_time, "HH:mm")
-      const endTime = moment(this.doctor.end_time, "HH:mm")
-      const diffInMinutes = endTime.diff(startTime, 'minutes')
-      const slotMinute = 30
-      for (let i = 0;i <= diffInMinutes;i += slotMinute) {
-        const time = startTime.add(slotMinute, 'minutes')
-        this.timeSlots.push({
-          id: i,
-          timeFormatted: time.format('HH:mm'),
-          time: time
-        })
-      }
-    },
-    user() {
-      axios.get(this.$apiUrl + "/api-doctors?doctor-id=" + this.$route.params.id)
-        .then(response => {
-          this.doctor = response.data
-          this.generateTimeSlots()
-          this.monthlyDates = this.monthlyDates.map(day => {
-            return {
-              ...day,
-              timeSlots: JSON.parse(JSON.stringify(this.timeSlots))
-            }
-          })
-          console.log(this.monthlyDates)
-        })
-        .catch(e => console.log(e))
-    },
-    setDay(day) {
-      this.selectedDay = day.date
-    },
-    setSelectedTime(day, time) {
-      this.setDay(day)
-      this.selectedTime = time.timeFormatted
-      console.log(this.selectedDay)
-    },
-    showMoreTimeSlots(day, showState = true) {
-      const dayIndex = this.monthlyDates.findIndex(date => date.id === day.id)
-      this.monthlyDates[dayIndex].showMore = showState
-    }
-  },
-}
-</script>

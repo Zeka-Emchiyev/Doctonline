@@ -347,6 +347,12 @@ export default {
             axios.get(this.$apiUrl + '/api-clinics')
                 .then(resp => {
                     this.clinics = resp.data
+                    if (this.$route.query['clinic-id']) {
+                        const selectedClinic = this.clinics.find(clinic => clinic.id === Number(this.$route.query['clinic-id']))
+                        if (selectedClinic) {
+                            this.selectClinic(selectedClinic)
+                        }
+                    }
                     // console.log(this.clinics)
                 })
         },
@@ -382,8 +388,8 @@ export default {
         },
 
         searchProfessions() {
-          this.getDoctorsForProfessionAndRegion(this.selectedProfession, this.selectedRegion, this.selectedClinic)
-          this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
+            this.getDoctorsForProfessionAndRegion(this.selectedProfession, this.selectedRegion, this.selectedClinic)
+            this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
         },
         setDay() {
             console.log('day')

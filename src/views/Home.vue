@@ -184,7 +184,7 @@
                             </div>
 
                             <!-- Modal Clinics-->
-                            <div class="modal fade" data-bs-backdrop="static" id="clinicsModal" tabindex="-1"
+                            <div class="input-modal modal fade " data-bs-backdrop="static" id="clinicsModal" tabindex="-1"
                                 aria-labelledby="clinicsModalLabel" aria-hidden="true" data-bs-keyboard="false">
                                 <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
                                     <div class="modal-content">
@@ -822,17 +822,16 @@ export default {
 
     }
 }
-
-
 </style>
 
 <style>
 /*TODO: globalda edit edib. modallara class ver onun daxilindeki modal-content-i edit ele.*/
-  .modal-content {
+.modal-content {
     border-radius: 0 !important;
-  }
-  .fade.modal-backdrop.show {
+}
+
+.fade.modal-backdrop.show {
     opacity: 0 !important;
-  }
+}
 </style>
 
