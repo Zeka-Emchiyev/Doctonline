@@ -414,7 +414,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 .dropdown-menu {
     min-width: 310px;
     max-height: 400px;
@@ -606,6 +606,7 @@ export default {
     .modal-dialog-scrollable .modal-body {
         overflow-x: hidden;
         height: 100vh;
+        width: 100vh;
     }
 
 
@@ -822,16 +823,21 @@ export default {
 
     }
 }
-</style>
+</style> -->
 
 <style>
-/*TODO: globalda edit edib. modallara class ver onun daxilindeki modal-content-i edit ele.*/
-.modal-content {
-    border-radius: 0 !important;
-}
+@import url(../assets/Scss/Home.scss);
 
-.fade.modal-backdrop.show {
-    opacity: 0 !important;
+/*TODO: globalda edit edib. modallara class ver onun daxilindeki modal-content-i edit ele.*/
+@media screen and (max-width:576px) {
+    .modal-content {
+        border-radius: 0 !important;
+        border: 0 !important;
+    }
+
+    .fade.modal-backdrop.show {
+        opacity: 0 !important;
+    }
 }
 </style>
 

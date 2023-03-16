@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <p class="text-center fw-bold my-5">404 not found please try again</p>
+    <div class="text-center fw-bold my-5">
+
+        <p class="text-center fw-bold my-5">Page not found please try again</p>
+        <router-link to="/" class="text-decoration-none">Ana səhifə</router-link>
     </div>
 </template>
 
