@@ -108,7 +108,10 @@
                                     aria-labelledby="professionsModalLabel" aria-hidden="true" data-bs-keyboard="false">
                                     <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
                                         <div class="modal-content">
-                                            <div class="modal-header">
+                                            <div class="modal-header position-relative">
+                                                <i @click="removeProfession()"
+                                                    class="bi bi-x icon-close position-absolute"></i>
+
                                                 <input v-model="searchProfession"
                                                     class="icon border-0 input-search-profession" type="text"
                                                     placeholder="Ixtisaslar">
@@ -147,7 +150,8 @@
                                     aria-labelledby="regionsModalLabel" aria-hidden="true" data-bs-keyboard="false">
                                     <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
                                         <div class="modal-content">
-                                            <div class="modal-header">
+                                            <div class="modal-header position-relative">
+                                                <i @click="removeRegion()" class="bi bi-x icon-close position-absolute"></i>
                                                 <input v-model="searchRegion" class="icon border-0 input-search-profession"
                                                     type="text" placeholder="Rayonlar">
                                                 <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
@@ -188,7 +192,8 @@
                                 aria-labelledby="clinicsModalLabel" aria-hidden="true" data-bs-keyboard="false">
                                 <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header position-relative">
+                                            <i @click="removeClinic()" class="bi bi-x icon-close position-absolute"></i>
                                             <input v-model="searchClinic" class="icon border-0 input-search-profession"
                                                 type="text" placeholder="Klinikalar">
                                             <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
@@ -408,13 +413,22 @@ export default {
             //     this.$router.push({ path: '/search', query: { 'region-id': this.selectedRegion } })
             // }
 
+        },
+        removeProfession() {
+            this.searchProfession = ''
+        },
+        removeRegion() {
+            this.searchRegion = ''
+        },
+        removeClinic() {
+            this.searchClinic = ''
         }
 
     },
 };
 </script>
 
-<!-- <style lang="scss" scoped>
+<style lang="scss" scoped>
 .dropdown-menu {
     min-width: 310px;
     max-height: 400px;
@@ -575,6 +589,11 @@ export default {
 }
 
 @media screen and (max-width: 576px) {
+    .icon-close {
+        right: 95px;
+        color: #01234B;
+        font-size: 20px;
+    }
 
     .link {
         text-decoration: none;
@@ -823,11 +842,10 @@ export default {
 
     }
 }
-</style> -->
+</style>
+ 
 
 <style>
-@import url(../assets/Scss/Home.scss);
-
 /*TODO: globalda edit edib. modallara class ver onun daxilindeki modal-content-i edit ele.*/
 @media screen and (max-width:576px) {
     .modal-content {
