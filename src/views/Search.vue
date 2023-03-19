@@ -565,6 +565,7 @@ export default {
     background-size: 17px;
     line-height: 30px;
     background-position: 12px 15px;
+    border: none;
 
     &:focus {
         border-color: #4CB147;

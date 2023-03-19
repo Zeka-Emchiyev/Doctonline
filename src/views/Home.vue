@@ -434,6 +434,7 @@ export default {
     max-height: 400px;
     overflow-y: auto;
     overflow-x: hidden;
+    inset: 3px auto auto -30px !important;
 }
 
 .search-content {
@@ -510,6 +511,7 @@ export default {
     background-size: 17px;
     line-height: 30px;
     background-position: 12px 15px;
+    border: none;
 
     &:focus {
         border-color: #4CB147;

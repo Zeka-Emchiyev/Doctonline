@@ -31,18 +31,20 @@
                     </div>
 
                     <!-- Grid column -->
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <div class="col-md-4 col-lg-3 col-xl-3">
                         <!-- Links -->
-                        <h6 class="text-contact  mb-4">
+                        <h6 class="text-contact">
                             Əlaqə
                         </h6>
-                        <a href="tel:(050)-831-31-16" class="link text-decoration-none">+994 (50) 831 31 16</a>
+                        <div style="margin-bottom: 12px;">
+                            <a href="tel:(050)-831-31-16" class="link text-decoration-none">+994
+                                (50) 831 31 16</a>
+                        </div>
                         <p class="link">Xan Şuşinski küç 21</p>
                     </div>
-                    <div class="col-3 d-md-none mb-5">
+                    <div class="col-3 d-md-none mb-5 d-flex">
                         <a class="me-4" href="https://www.facebook.com/"><img src="../assets/fb.png" alt=""></a>
                         <a class="me-4" href="https://www.instagram.com/"><img src="../assets/instagram.png" alt=""></a>
-                        <a class="me-4" href="https://www.telegram.com/"><img src="../assets/telegram.png" alt=""></a>
                     </div>
                 </div>
                 <!-- Grid row -->
@@ -55,7 +57,6 @@
                     <div class="col-3 ms-5 d-none d-md-block">
                         <a class="me-5" href="https://www.facebook.com/"><img src="../assets/fb.png" alt=""></a>
                         <a class="me-5" href="https://www.instagram.com/"><img src="../assets/instagram.png" alt=""></a>
-                        <a class="me-5" href="https://www.telegram.com/"><img src="../assets/telegram.png" alt=""></a>
                     </div>
                     <div class="col-12 col-md-3">
                         <p class="text-footer">© 2023 Doctonline - Bütün hüquqlar qorunur.</p>
@@ -143,6 +144,7 @@ footer {
 .text-contact {
     font-size: 16px;
     line-height: 24px;
+    margin-bottom: 23px;
 }
 
 .text-footer {
