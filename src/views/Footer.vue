@@ -52,7 +52,7 @@
             <!-- Section: Links  -->
 
             <!-- Copyright -->
-            <div class="container-fluid footer bg-dark">
+            <div class="container-fluid footer foot-bg">
                 <div class="row justify-content-between p-3">
                     <div class="col-3 ms-5 d-none d-md-block">
                         <a class="me-5" href="https://www.facebook.com/"><img src="../assets/fb.png" alt=""></a>
@@ -151,5 +151,9 @@ footer {
     font-size: 16px;
     line-height: 24px;
     color: white;
+}
+
+.foot-bg {
+    background-color: #22334f;
 }
 </style>
