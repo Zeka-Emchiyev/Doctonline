@@ -154,6 +154,6 @@ footer {
 }
 
 .foot-bg {
-    background-color: #22334f;
+    background-color: #080d14;
 }
 </style>
