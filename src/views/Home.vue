@@ -845,7 +845,7 @@ export default {
     }
 }
 </style>
- 
+
 
 <style>
 /*TODO: globalda edit edib. modallara class ver onun daxilindeki modal-content-i edit ele.*/
