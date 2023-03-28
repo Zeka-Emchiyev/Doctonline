@@ -84,8 +84,8 @@
                         <div class="row mt-4">
                             <div class="col-3 col-lg-2">
                                 <div class="rounded-circle border profile-image" :style="{
-                                    'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
-                                }">
+                                                                        'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+                                                                    }">
                                 </div>
                                 <router-link class="text-decoration-none profile-link"
                                     :to="{ name: 'doctor', params: { id: doctor.id } }">
@@ -99,8 +99,8 @@
                                     {{ doctor.fullname }}
                                 </router-link>
                                 <span class="text-profession" style="display: block;">{{
-                                    doctor.profession
-                                }}</span>
+                                                                    doctor.profession
+                                                                    }}</span>
 
                                 <span class="city mb-1">{{ doctor.address }} </span>
                                 <span class="city fw-bold">{{ doctor.clinic }}</span>
@@ -148,8 +148,8 @@
                                 <div class="col-8">
                                     <h6>{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
                                     <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{
-                                        selectedTime
-                                    }}</p>
+                                                                            selectedTime
+                                                                            }}</p>
                                     <p>{{ selectedDoctor.clinic }}</p>
                                 </div>
 
@@ -564,7 +564,7 @@ export default {
     ;
     background-size: 17px;
     line-height: 30px;
-    background-position: 12px 15px;
+    background-position: 15px 15px;
     border: none;
 
     &:focus {

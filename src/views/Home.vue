@@ -472,7 +472,7 @@ export default {
 }
 
 .professions-box {
-    border: 1px solid #4CB147;
+    border: 1px solid #D9D9D9;
     border-radius: 10px;
     height: 200px;
     width: 180px;
@@ -510,7 +510,7 @@ export default {
     background: url("../assets/Vector.svg") no-repeat left;
     background-size: 17px;
     line-height: 30px;
-    background-position: 12px 15px;
+    background-position: 15px 15px;
     border: none;
 
     &:focus {
@@ -817,7 +817,7 @@ export default {
     }
 
     .professions-box {
-        border: 1px solid #4CB147;
+        border: 1px solid #D9D9D9;
         border-radius: 10px;
         height: 150px;
         width: 150px;
