@@ -144,7 +144,7 @@ footer {
 .text-contact {
     font-size: 16px;
     line-height: 24px;
-    margin-bottom: 23px;
+    margin-bottom: 16px;
 }
 
 .text-footer {

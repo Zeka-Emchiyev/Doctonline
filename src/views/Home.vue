@@ -7,7 +7,7 @@
                 <div class="container position-relative">
                     <div class="row justify-content-md-center">
                         <div class="d-none d-md-block col-md-9">
-                            <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
+                            <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown search-title">
                                 Sizə uyğun həkim <br /> seçin və randevu götürün
                             </h1>
                             <div class="input-group justify-content-between">
@@ -429,6 +429,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search-title {
+    color: #01234B;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 40px;
+
+}
+
 .dropdown-menu {
     min-width: 310px;
     max-height: 400px;
