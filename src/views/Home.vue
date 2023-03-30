@@ -7,7 +7,7 @@
                 <div class="container position-relative">
                     <div class="row justify-content-md-center">
                         <div class="d-none d-md-block col-md-9">
-                            <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
+                            <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown search-title">
                                 Sizə uyğun həkim <br /> seçin və randevu götürün
                             </h1>
                             <div class="input-group justify-content-between">
@@ -429,6 +429,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search-title {
+    color: #01234B;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 40px;
+
+}
+
 .dropdown-menu {
     min-width: 310px;
     max-height: 400px;
@@ -472,7 +480,7 @@ export default {
 }
 
 .professions-box {
-    border: 1px solid #4CB147;
+    border: 1px solid #D9D9D9;
     border-radius: 10px;
     height: 200px;
     width: 180px;
@@ -510,7 +518,7 @@ export default {
     background: url("../assets/Vector.svg") no-repeat left;
     background-size: 17px;
     line-height: 30px;
-    background-position: 12px 15px;
+    background-position: 15px 15px;
     border: none;
 
     &:focus {
@@ -817,7 +825,7 @@ export default {
     }
 
     .professions-box {
-        border: 1px solid #4CB147;
+        border: 1px solid #D9D9D9;
         border-radius: 10px;
         height: 150px;
         width: 150px;

@@ -19,7 +19,7 @@
                         <h6 class="text-contact fw-bold mb-4">
                             Əsas ixtisaslar
                         </h6>
-                        <div class="row overflow-hidden" style="max-height:404px ;">
+                        <div class="row overflow-hidden" style="max-height:419px ;">
                             <div class="col-md-4" v-for="profession in professions">
                                 <!-- <p @click="submit()" class="professions-text">{{ profession.name }}</p> -->
                                 <div class="professions-text" @click="getDoctorsForProfession(profession.id)">
@@ -131,7 +131,7 @@ export default {
 }
 
 footer {
-    background-color: #101825;
+    background-color: #444444;
 }
 
 .link {
@@ -144,7 +144,7 @@ footer {
 .text-contact {
     font-size: 16px;
     line-height: 24px;
-    margin-bottom: 23px;
+    margin-bottom: 16px;
 }
 
 .text-footer {
@@ -154,6 +154,6 @@ footer {
 }
 
 .foot-bg {
-    background-color: #080d14;
+    background-color: #4c4b4b;
 }
 </style>
