@@ -109,7 +109,7 @@
                                     <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
                                         <div class="modal-content">
                                             <div class="modal-header position-relative">
-                                                <i @click="removeProfession()"
+                                                <i v-if="searchProfession.length > 0" @click="removeProfession()"
                                                     class="bi bi-x icon-close position-absolute"></i>
 
                                                 <input v-model="searchProfession"
@@ -151,7 +151,8 @@
                                     <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
                                         <div class="modal-content">
                                             <div class="modal-header position-relative">
-                                                <i @click="removeRegion()" class="bi bi-x icon-close position-absolute"></i>
+                                                <i v-if="searchRegion.length > 0" @click="removeRegion()"
+                                                    class="bi bi-x icon-close position-absolute"></i>
                                                 <input v-model="searchRegion" class="icon border-0 input-search-profession"
                                                     type="text" placeholder="Rayonlar">
                                                 <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
@@ -193,7 +194,8 @@
                                 <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
                                     <div class="modal-content">
                                         <div class="modal-header position-relative">
-                                            <i @click="removeClinic()" class="bi bi-x icon-close position-absolute"></i>
+                                            <i v-if="searchClinic.length > 0" @click="removeClinic()"
+                                                class="bi bi-x icon-close position-absolute"></i>
                                             <input v-model="searchClinic" class="icon border-0 input-search-profession"
                                                 type="text" placeholder="Klinikalar">
                                             <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
@@ -804,8 +806,9 @@ export default {
         background-image: none;
         background-color: #F5FFF5;
         width: 100%;
-        margin: 0 !important;
-        padding: 0 !important;
+        margin-bottom: 34px;
+        padding-bottom: 34px;
+        height: auto;
     }
 
     .profession-container {
