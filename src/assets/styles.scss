@@ -19,8 +19,16 @@ body {
 }
 
 @font-face {
-    font-family: Montserrat-Regular;
+    font-family: Montserrat;
     src: url('../../public/fonts/montserrat/Montserrat-Regular.ttf');
+    font-weight: normal;
+}
+
+
+@font-face {
+    font-family: Montserrat;
+    src: url('../../public/fonts/montserrat/Montserrat-Medium.ttf');
+    font-weight: 500;
 }
 
 .btn-success {
