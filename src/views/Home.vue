@@ -16,14 +16,14 @@
                                     <input v-model="searchProfession"
                                         class="icon dropdown-toggle form-control border-0 input-search" type="text"
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                                        aria-label="First name" placeholder="Ixtisaslar">
+                                        aria-label="First name" placeholder="İxtisaslar">
 
                                     <div class="profession-dropdown dropdown-menu form-control  border"
                                         aria-labelledby="dropdownMenuButton1">
                                         <div class="d-flex justify-content-end sticky-top">
                                             <button class="btn d-inline d-md-none link">Imtina</button>
                                         </div>
-                                        <p class="dropdown-item text-position d-inline">Ixtisaslar</p>
+                                        <p class="dropdown-item text-position d-inline">İxtisaslar</p>
 
                                         <div class="flex-row flex-wrap">
                                             <div @click="selected(profession)" class="dropdown-item link"
@@ -98,7 +98,7 @@
                                     <i class="bi bi-search icon-search"></i>
                                     <input v-model="searchProfession"
                                         class="icon dropdown-toggle form-control border-0 input-search" type="text"
-                                        placeholder="Ixtisaslar" data-bs-toggle="modal" data-bs-target="#professionsModal"
+                                        placeholder="İxtisaslar" data-bs-toggle="modal" data-bs-target="#professionsModal"
                                         disabled>
 
                                 </div>
@@ -114,12 +114,12 @@
 
                                                 <input v-model="searchProfession"
                                                     class="icon border-0 input-search-profession" type="text"
-                                                    placeholder="Ixtisaslar">
+                                                    placeholder="İxtisaslar">
                                                 <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
                                             </div>
                                             <div class="modal-body">
 
-                                                <p class="dropdown-item text-position">Ixtisaslar</p>
+                                                <p class="dropdown-item text-position">İxtisaslar</p>
 
                                                 <div class="flex-row flex-wrap">
                                                     <div @click="selected(profession)" class="dropdown-item text-link"

@@ -13,11 +13,11 @@
                             <i class="bi bi-search icon-search"></i>
                             <input v-model="searchProfession" class="icon dropdown-toggle form-control border-0 input-all"
                                 type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="First name" placeholder="Ixtisaslar">
+                                aria-label="First name" placeholder="İxtisaslar">
 
                             <div class="dropdown-menu form-control  border overflow-auto"
                                 aria-labelledby="dropdownMenuButton1" style="max-height:360px; min-width:280px">
-                                <p class="dropdown-item text-position">Ixtisaslar</p>
+                                <p class="dropdown-item text-position">İxtisaslar</p>
 
                                 <div class="flex-row flex-wrap ">
                                     <div @click="selected(profession)" class="dropdown-item link"
