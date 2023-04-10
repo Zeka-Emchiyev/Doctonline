@@ -17,6 +17,8 @@
                                         class="icon dropdown-toggle form-control border-0 input-search" type="text"
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
                                         aria-label="First name" placeholder="İxtisaslar">
+                                  <i v-if="searchProfession.length > 0" @click="removeProfession()"
+                                     class="bi bi-x icon-close position-absolute"></i>
 
                                     <div class="profession-dropdown dropdown-menu form-control  border"
                                         aria-labelledby="dropdownMenuButton1">
@@ -41,6 +43,9 @@
                                         class="icon dropdown-toggle form-control border-0 input-location" type="text"
                                         id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
                                         aria-label="First name" placeholder="Rayonlar">
+                                  <i v-if="searchRegion.length > 0" @click="removeRegion()"
+                                     class="bi bi-x icon-close position-absolute"></i>
+
 
                                     <div class="region-dropdown dropdown-menu form-control  border overflow-auto"
                                         aria-labelledby="dropdownMenuButton2">
@@ -64,6 +69,8 @@
                                         class="icon dropdown-toggle form-control border-0 input-insurance" type="text"
                                         id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
                                         aria-label="First name" placeholder="Klinikalar">
+                                  <i v-if="searchClinic.length > 0" @click="removeClinic()"
+                                     class="bi bi-x icon-close position-absolute"></i>
 
                                     <div class="clinic-dropdown dropdown-menu form-control  border"
                                         aria-labelledby="dropdownMenuButton3">
@@ -195,7 +202,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header position-relative">
                                             <i v-if="searchClinic.length > 0" @click="removeClinic()"
-                                                class="bi bi-x icon-close position-absolute"></i>
+                                                class="bi bi-x icon-close position-absolute"></i>C
                                             <input v-model="searchClinic" class="icon border-0 input-search-profession"
                                                 type="text" placeholder="Klinikalar">
                                             <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
@@ -598,6 +605,11 @@ export default {
     &:hover {
         background-color: #DDFDDB;
     }
+}
+.icon-close {
+  right: 8px;
+  color: #01234B;
+  font-size: 23px;
 }
 
 @media screen and (max-width: 576px) {
