@@ -437,7 +437,6 @@ export default {
         time: null,
       },
       appointmentDate: null,
-      selectedDate: null,
       moment,
       doctor: '',
       result: '',
@@ -536,7 +535,7 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .profile-image-main {
   height: 150px;
   width: 150px;

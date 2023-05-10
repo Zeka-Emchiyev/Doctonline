@@ -74,7 +74,6 @@
                     </div>
                 </div>
 
-
             </div>
 
 
@@ -93,7 +92,6 @@
                                 </router-link>
                             </div>
                             <div class="col-9 col-lg-10">
-
                                 <router-link class="text-decoration-none rout-link"
                                     :to="{ name: 'doctor', params: { id: doctor.id } }">
                                     {{ doctor.fullname }}
@@ -116,8 +114,12 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <Calendar @dateSelected="showSelectedAppointmentModal" :doctor="doctor"></Calendar>
-
+                        <Calendar2
+                            @dateSelected="showSelectedAppointmentModal"
+                            :doctor="doctor"
+                            :selected-doctor="selectedDoctor"
+                            @showMore="showMoreSlotsForDoctor"
+                        />
                     </div>
                 </div>
             </div>
@@ -129,27 +131,35 @@
 
         </div>
 
+        <MoreSlotsModal
+            :show="showMoreSlotsModal"
+            :doctor="moreSlotsDoctor"
+            @closeModal="showMoreSlotsModal = false"
+            @dateSelected="showSelectedAppointmentModal"
+        />
+
         <!-- Modal -->
         <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
             aria-hidden="hidden">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="takeAppointmentModalLabel">Randevu detallari</h5>
+                        <h5 class="modal-title" id="takeAppointmentModalLabel">Randevu detalları</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="container d-flex align-items-center justify-content-center my-5 ">
                             <div class="row">
                                 <div class="col-4">
-                                    <img class="rounded-circle" style="height: 100px; width: 100px"
-                                        :src="`${$apiUrl}/${selectedDoctor.profile_photo}`" alt="">
+                                    <div class="rounded-circle border profile-image"
+                                         :style="{
+                                            'background-image': 'url(' + `${$apiUrl}/${selectedDoctor.profile_photo}` + ')'
+                                         }">
+                                    </div>
                                 </div>
                                 <div class="col-8">
                                     <h6>{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
-                                    <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{
-                                                                            selectedTime
-                                                                            }}</p>
+                                    <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
                                     <p>{{ selectedDoctor.clinic }}</p>
                                 </div>
 
@@ -202,12 +212,17 @@ import axios from 'axios'
 import Calendar from "@/components/Calendar"
 import 'moment/locale/az';
 import moment from 'moment'
+import Calendar2 from "@/components/Calendar2.vue";
+import MoreSlotsModal from "@/components/MoreSlotsModal.vue";
+import {isWeekend} from "@/helper/util";
 
 
 export default {
     name: 'ProjectsSearch',
     components: {
-        Navbar, Calendar, Pagination
+      MoreSlotsModal,
+      Calendar2,
+        Navbar, Pagination
     },
     data() {
         return {
@@ -249,7 +264,10 @@ export default {
                         last: ''
                     },
                 }
-            }
+            },
+            showMoreSlotsModal: false,
+            moreSlotsDoctor: null,
+            isSameDoctorTimeSelected: true,
         };
     },
     computed: {
@@ -308,6 +326,10 @@ export default {
     },
 
     methods: {
+        showMoreSlotsForDoctor(doctor) {
+          this.moreSlotsDoctor = doctor;
+          this.showMoreSlotsModal = true;
+        },
         myCallback(page) {
             console.log(this.pagination.page)
             window.scroll(0, 0)
@@ -391,18 +413,11 @@ export default {
             this.getDoctorsForProfessionAndRegion(this.selectedProfession, this.selectedRegion, this.selectedClinic)
             this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
         },
-        setDay() {
-            console.log('day')
-        },
-        setTime() {
-            console.log('time')
-        },
         showSelectedAppointmentModal(data) {
             this.selectedDoctor = data.doctor
-            this.selectedDate = data.time
+            this.selectedTime = data.time
             this.selectedDay = data.date
             this.myModal.show()
-            // console.log(data)
         },
         createAppointment() {
             this.form.doctor_id = this.selectedDoctor.id
@@ -420,7 +435,6 @@ export default {
             }
             this.form.fullname = ''
             this.form.phone = ''
-
         },
 
     },
@@ -606,7 +620,6 @@ export default {
     color: #01234B;
     font-weight: 600;
     font-size: 24px;
-
 }
 
 .text-profession {
