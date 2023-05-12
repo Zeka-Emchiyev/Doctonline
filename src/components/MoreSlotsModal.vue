@@ -35,7 +35,7 @@
                     </div>
                     
                     <div class="d-flex flex-column days-container justify-content-end px-4 mt-3">
-                        <div v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')" class="w-100">
+                        <div v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')" class="w-100 mb-2">
                             <div>
                                 {{ moment(day.date).format('dddd, DD MMMM') }}
                                 <div class="time-slots mt-2 d-flex flex-wrap">
@@ -297,17 +297,15 @@ export default {
     margin-top: 0 !important;
 
     .time-slot {
-      width: 56px;
-      height: 26px;
+      width: 66px;
+      height: 34px;
       cursor: pointer;
       text-align: center;
-      // display: block;
       border-radius: 6px;
-      background-color: #edf0f4;
       border: 1px solid #edf0f4;
       color: #01234B;
-      font-size: 12px;
-      line-height: 18px;
+      font-size: 14px;
+      line-height: 28px;
       letter-spacing: -.1px;
       font-weight: bold;
       transition: background-color .15s linear, color .15s linear, border-color .15s linear;

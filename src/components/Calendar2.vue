@@ -1,7 +1,7 @@
 <template>
     <div class="container d-flex justify-content-between mt-3">
         <div class="d-flex flex-column days-container justify-content-end">
-            <div v-for="day in nextTwoDays" :key="moment(day.date).format('MMM DD')" class="w-100">
+            <div v-for="day in nextTwoDays" :key="moment(day.date).format('MMM DD')" class="w-100 mb-2">
                 <div>
                     {{ moment(day.date).format('dddd, DD MMMM') }}
                     <div class="time-slots mt-2 d-flex flex-wrap justify-content-between">
