@@ -1,13 +1,16 @@
 <template>
-    <div class="container d-flex justify-content-end mt-3">
+    <div class="container d-flex justify-content-between mt-3">
         <div class="d-flex flex-column days-container justify-content-end">
             <div v-for="day in nextTwoDays" :key="moment(day.date).format('MMM DD')" class="w-100">
                 <div>
                     {{ moment(day.date).format('dddd, DD MMMM') }}
-                    <div class="time-slots mt-2 d-flex flex-wrap">
+                    <div class="time-slots mt-2 d-flex flex-wrap justify-content-between">
                         <div v-for="(timeSlot, index) in day.timeSlots">
                             <div v-if="index < 8" class="time-slot"
-                                 :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date && selectedDoctor.id === doctor.id }"
+                                 :class="{
+                                  'd-none d-md-block' : index > 3,
+                                  'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date && selectedDoctor.id === doctor.id
+                                }"
                                  @click="setSelectedTime(day, timeSlot)">
                                 {{ timeSlot.timeFormatted }}
                             </div>
@@ -248,17 +251,15 @@ export default {
         margin-top: 0 !important;
 
         .time-slot {
-            width: 56px;
-            height: 26px;
+            width: 66px;
+            height: 34px;
             cursor: pointer;
             text-align: center;
-            // display: block;
             border-radius: 6px;
-            background-color: #edf0f4;
             border: 1px solid #edf0f4;
             color: #01234B;
-            font-size: 12px;
-            line-height: 18px;
+            font-size: 14px;
+            line-height: 28px;
             letter-spacing: -.1px;
             font-weight: bold;
             transition: background-color .15s linear, color .15s linear, border-color .15s linear;
