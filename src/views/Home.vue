@@ -16,7 +16,7 @@
                                     <input v-model="searchProfession"
                                         class="icon dropdown-toggle form-control border-0 input-search" type="text"
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                                        aria-label="First name" placeholder="İxtisaslar">
+                                        aria-label="First name" placeholder="İxtisaslar üzrə">
                                   <i v-if="searchProfession.length > 0" @click="removeProfession()"
                                      class="bi bi-x icon-close position-absolute"></i>
 
@@ -25,7 +25,7 @@
                                         <div class="d-flex justify-content-end sticky-top">
                                             <button class="btn d-inline d-md-none link">Imtina</button>
                                         </div>
-                                        <p class="dropdown-item text-position d-inline">İxtisaslar</p>
+                                        <p class="dropdown-item text-position d-inline">İxtisaslar üzrə</p>
 
                                         <div class="flex-row flex-wrap">
                                             <div @click="selected(profession)" class="dropdown-item link"
@@ -42,7 +42,7 @@
                                     <input v-model="searchRegion"
                                         class="icon dropdown-toggle form-control border-0 input-location" type="text"
                                         id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
-                                        aria-label="First name" placeholder="Rayonlar">
+                                        aria-label="First name" placeholder="Rayonlar üzrə">
                                   <i v-if="searchRegion.length > 0" @click="removeRegion()"
                                      class="bi bi-x icon-close position-absolute"></i>
 
@@ -52,7 +52,7 @@
                                         <div class="d-flex justify-content-end sticky-top">
                                             <button class="btn d-inline d-md-none link">Imtina</button>
                                         </div>
-                                        <p class="dropdown-item text-position d-inline">Rayonlar</p>
+                                        <p class="dropdown-item text-position d-inline">Rayonlar üzrə</p>
                                         <div class="flex-row flex-wrap">
                                             <div @click="select(region)" class="dropdown-item link"
                                                 v-for="region in filterRegions">
@@ -68,7 +68,7 @@
                                     <input v-model="searchClinic"
                                         class="icon dropdown-toggle form-control border-0 input-insurance" type="text"
                                         id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
-                                        aria-label="First name" placeholder="Klinikalar">
+                                        aria-label="First name" placeholder="Klinikalar üzrə">
                                   <i v-if="searchClinic.length > 0" @click="removeClinic()"
                                      class="bi bi-x icon-close position-absolute"></i>
 
@@ -77,7 +77,7 @@
                                         <div class="d-flex justify-content-end sticky-top">
                                             <button class="btn d-inline d-md-none link">Imtina</button>
                                         </div>
-                                        <p class="dropdown-item text-position d-inline">Klinikalar</p>
+                                        <p class="dropdown-item text-position d-inline">Klinikalar üzrə</p>
 
                                         <div class="flex-row flex-wrap">
                                             <div @click="selectClinic(clinic)" class="dropdown-item link"
@@ -140,16 +140,16 @@
                                     </div>
                                 </div>
 
-                                <div class="input-holder dropdown">
+<!--                                <div class="input-holder dropdown">
                                     <span class="span-line"></span>
                                     <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
 
                                     <input v-model="searchRegion"
                                         class="icon dropdown-toggle form-control border-0 input-location" type="text"
-                                        placeholder="Rayonlar" data-bs-toggle="modal" data-bs-target="#regionsModal"
+                                        placeholder="Rayonlar üzrə" data-bs-toggle="modal" data-bs-target="#regionsModal"
                                         disabled>
 
-                                </div>
+                                </div>-->
 
 
                                 <!-- Modal Regions-->
@@ -161,12 +161,12 @@
                                                 <i v-if="searchRegion.length > 0" @click="removeRegion()"
                                                     class="bi bi-x icon-close position-absolute"></i>
                                                 <input v-model="searchRegion" class="icon border-0 input-search-profession"
-                                                    type="text" placeholder="Rayonlar">
+                                                    type="text" placeholder="Rayonlar üzrə">
                                                 <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
                                             </div>
                                             <div class="modal-body">
 
-                                                <p class="dropdown-item text-position">Rayonlar</p>
+                                                <p class="dropdown-item text-position">Rayonlar üzrə</p>
 
                                                 <div class="flex-row flex-wrap">
                                                     <div @click="select(region)" class="dropdown-item text-link"
@@ -180,15 +180,15 @@
                                     </div>
                                 </div>
 
-                                <div class="input-holder dropdown">
+<!--                                <div class="input-holder dropdown">
                                     <span class="span-line"></span>
                                     <i class="bi bi-shield-check icon-insurance ms-2"></i>
 
                                     <input v-model="searchClinic"
                                         class="icon dropdown-toggle form-control border-0 input-insurance" type="text"
-                                        placeholder="Klinikalar" data-bs-toggle="modal" data-bs-target="#clinicsModal"
+                                        placeholder="Klinikalar üzrə" data-bs-toggle="modal" data-bs-target="#clinicsModal"
                                         disabled>
-                                </div>
+                                </div>-->
 
                                 <button @click="searchProfessions()" class="icon-button btn btn-success rounded-start">
                                     <span class="d-block d-md-none" style="color: #01234B;">Axtar</span>
@@ -204,12 +204,12 @@
                                             <i v-if="searchClinic.length > 0" @click="removeClinic()"
                                                 class="bi bi-x icon-close position-absolute"></i>C
                                             <input v-model="searchClinic" class="icon border-0 input-search-profession"
-                                                type="text" placeholder="Klinikalar">
+                                                type="text" placeholder="Klinikalar üzrə">
                                             <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
                                         </div>
                                         <div class="modal-body">
 
-                                            <p class="dropdown-item text-position">Klinikalar</p>
+                                            <p class="dropdown-item text-position">Klinikalar üzrə</p>
 
                                             <div class="flex-row flex-wrap">
                                                 <div @click="selectClinic(clinic)" class="dropdown-item text-link"
@@ -795,14 +795,10 @@ export default {
         border: 1.5px solid #01234B;
         border-radius: 8px;
         background-color: white;
-        height: 245px;
+        height: auto;
         display: block;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 30px;
-        // position: relative;
         width: 100%;
-        // margin-bottom: 10px;
+        padding: 30px 15px;
     }
 
     .input-group i {

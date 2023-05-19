@@ -13,11 +13,11 @@
                             <i class="bi bi-search icon-search"></i>
                             <input v-model="searchProfession" class="icon dropdown-toggle form-control border-0 input-all"
                                 type="text" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="First name" placeholder="İxtisaslar">
+                                aria-label="First name" placeholder="İxtisaslar üzrə">
 
                             <div class="dropdown-menu form-control  border overflow-auto"
                                 aria-labelledby="dropdownMenuButton1" style="max-height:360px; min-width:280px">
-                                <p class="dropdown-item text-position">İxtisaslar</p>
+                                <p class="dropdown-item text-position">İxtisaslar üzrə</p>
 
                                 <div class="flex-row flex-wrap ">
                                     <div @click="selected(profession)" class="dropdown-item link"
@@ -33,11 +33,11 @@
                             <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
                             <input v-model="searchRegion" class="icon dropdown-toggle form-control border-0 input-location"
                                 type="text" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="First name" placeholder="Rayonlar">
+                                aria-label="First name" placeholder="Rayonlar üzrə">
 
                             <div class="dropdown-menu form-control  border overflow-auto"
                                 aria-labelledby="dropdownMenuButton2" style="max-height:360px; min-width:280px">
-                                <p class="dropdown-item text-position">Rayonlar</p>
+                                <p class="dropdown-item text-position">Rayonlar üzrə</p>
 
                                 <div class="flex-row flex-wrap">
                                     <div @click="select(region)" class="dropdown-item link" v-for="region in filterRegions">
@@ -53,11 +53,11 @@
 
                             <input v-model="searchClinic" class="icon dropdown-toggle form-control border-0 input-insurance"
                                 type="text" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="First name" placeholder="Klinikalar">
+                                aria-label="First name" placeholder="Klinikalar üzrə">
 
                             <div class="dropdown-menu form-control  border overflow-auto"
                                 aria-labelledby="dropdownMenuButton3" style="max-height:365px; min-width:280px">
-                                <p class="dropdown-item text-position">Klinikalar</p>
+                                <p class="dropdown-item text-position">Klinikalar üzrə</p>
 
                                 <div class="flex-row flex-wrap">
                                     <div @click="selectClinic(clinic)" class="dropdown-item link"
