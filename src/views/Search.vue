@@ -1,9 +1,7 @@
 <template>
     <div class="container-fluid">
-        <Navbar></Navbar>
         <div class="container mt-3">
-            <div class="row my-4">
-
+            <div class="my-4">
                 <div class="d-none d-md-block col-md-9">
                     <h1 class="animate__animated animate__bounce animate__zoomInDown">
                         Digər axtarışı edin
@@ -73,7 +71,135 @@
 
                     </div>
                 </div>
+                <div class="row justify-content-md-center">
+                    <div class="d-block d-md-none col-md-9">
+                        <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
+                            Sizə uyğun həkim <br /> seçin və randevu götürün
+                        </h1>
+                        <div class="input-group justify-content-between">
+                            <div class="input-holder dropdown">
+                                <i class="bi bi-search icon-search"></i>
+                                <input v-model="searchProfession"
+                                       class="icon dropdown-toggle form-control border-0 input-search" type="text"
+                                       placeholder="İxtisaslar" data-bs-toggle="modal" data-bs-target="#professionsModal"
+                                       disabled>
 
+                            </div>
+
+                            <!-- Modal Professions-->
+                            <div class="modal fade " data-bs-backdrop="static" id="professionsModal" tabindex="-1"
+                                 aria-labelledby="professionsModalLabel" aria-hidden="true" data-bs-keyboard="false">
+                                <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
+                                    <div class="modal-content">
+                                        <div class="modal-header position-relative">
+                                            <i v-if="searchProfession.length > 0" @click="removeProfession()"
+                                               class="bi bi-x icon-close position-absolute"></i>
+
+                                            <input v-model="searchProfession"
+                                                   class="icon border-0 input-search-profession" type="text"
+                                                   placeholder="İxtisaslar">
+                                            <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <p class="dropdown-item text-position">İxtisaslar</p>
+
+                                            <div class="flex-row flex-wrap">
+                                                <div @click="selected(profession)" class="dropdown-item text-link"
+                                                     v-for="profession in filterProfessions">
+                                                    {{ profession.name }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-holder dropdown">
+                                <span class="span-line"></span>
+                                <i class="bi bi-geo-alt-fill icon-location ms-2"></i>
+
+                                <input v-model="searchRegion"
+                                       class="icon dropdown-toggle form-control border-0 input-location" type="text"
+                                       placeholder="Rayonlar üzrə" data-bs-toggle="modal" data-bs-target="#regionsModal"
+                                       disabled>
+
+                            </div>
+
+
+                            <!-- Modal Regions-->
+                            <div class="modal fade" data-bs-backdrop="static" id="regionsModal" tabindex="-1"
+                                 aria-labelledby="regionsModalLabel" aria-hidden="true" data-bs-keyboard="false">
+                                <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
+                                    <div class="modal-content">
+                                        <div class="modal-header position-relative">
+                                            <i v-if="searchRegion.length > 0" @click="removeRegion()"
+                                               class="bi bi-x icon-close position-absolute"></i>
+                                            <input v-model="searchRegion" class="icon border-0 input-search-profession"
+                                                   type="text" placeholder="Rayonlar üzrə">
+                                            <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <p class="dropdown-item text-position">Rayonlar üzrə</p>
+
+                                            <div class="flex-row flex-wrap">
+                                                <div @click="select(region)" class="dropdown-item text-link"
+                                                     v-for="region in filterRegions">
+                                                    {{ region.name }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-holder dropdown">
+                                <span class="span-line"></span>
+                                <i class="bi bi-shield-check icon-insurance ms-2"></i>
+
+                                <input v-model="searchClinic"
+                                       class="icon dropdown-toggle form-control border-0 input-insurance" type="text"
+                                       placeholder="Klinikalar üzrə" data-bs-toggle="modal" data-bs-target="#clinicsModal"
+                                       disabled>
+                            </div>
+
+                            <button @click="searchProfessions()" class="icon-button btn btn-success rounded-start">
+                                <span class="d-block d-md-none" style="color: #01234B;">Axtar</span>
+                            </button>
+                        </div>
+
+                        <!-- Modal Clinics-->
+                        <div class="input-modal modal fade " data-bs-backdrop="static" id="clinicsModal" tabindex="-1"
+                             aria-labelledby="clinicsModalLabel" aria-hidden="true" data-bs-keyboard="false">
+                            <div class="modal-dialog modal-dialog-scrollable m-0 h-100">
+                                <div class="modal-content">
+                                    <div class="modal-header position-relative">
+                                        <i v-if="searchClinic.length > 0" @click="removeClinic()"
+                                           class="bi bi-x icon-close position-absolute"></i>C
+                                        <input v-model="searchClinic" class="icon border-0 input-search-profession"
+                                               type="text" placeholder="Klinikalar üzrə">
+                                        <button type="button" class="link" data-bs-dismiss="modal">Imtina</button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <p class="dropdown-item text-position">Klinikalar üzrə</p>
+
+                                        <div class="flex-row flex-wrap">
+                                            <div @click="selectClinic(clinic)" class="dropdown-item text-link"
+                                                 v-for="clinic in filterClinics">
+                                                {{ clinic.name }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -100,10 +226,13 @@
                                                                     doctor.profession
                                                                     }}</span>
 
-                                <span class="city mb-1">{{ doctor.address }} </span>
-                                <span class="city fw-bold">{{ doctor.clinic }}</span>
-                                <i class="bi bi-shield-check icon-ins pe-1"></i>
-                                <p class="insurance">Paşa siğorta</p>
+                                <span class="city mb-1">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                    {{ doctor.address }}
+                                </span>
+                                <span class="city">{{ doctor.clinic }}</span>
+<!--                                <i class="bi bi-shield-check icon-ins pe-1"></i>-->
+<!--                                <p class="insurance">Paşa siğorta</p>-->
 
                                 <!-- <span class="city ">{{ doctor.experiences }}</span> -->
                                 <!-- <div><i class="bi bi-star-fill star"></i>
@@ -322,10 +451,38 @@ export default {
 
         this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
         this.successModal = new bootstrap.Modal(document.getElementById('successModal'), { backdrop: 'static', keyboard: false })
-        // console.log(this.$route.query)
+        this.myModalProfessions = new bootstrap.Modal(document.getElementById('professionsModal'))
+        this.myModalregions = new bootstrap.Modal(document.getElementById('regionsModal'))
+        this.myModalclinics = new bootstrap.Modal(document.getElementById('clinicsModal'))
     },
 
+  watch: {
+    searchProfession(value) {
+      if (!value) {
+        this.selectedProfession = value;
+      }
+    },
+    searchRegion(value) {
+      if (!value) {
+        this.selectedRegion = value;
+      }
+    },
+    searchClinic(value) {
+      if (!value) {
+        this.selectedClinic = value;
+      }
+    }
+  },
     methods: {
+        removeProfession() {
+          this.searchProfession = ''
+        },
+        removeRegion() {
+          this.searchRegion = ''
+        },
+        removeClinic() {
+          this.searchClinic = ''
+        },
         showMoreSlotsForDoctor(doctor) {
           this.moreSlotsDoctor = doctor;
           this.showMoreSlotsModal = true;
@@ -392,24 +549,25 @@ export default {
                 })
                 .catch(e => console.log(e))
         },
-        selected(selected) {
-
-            this.searchProfession = selected.name
-            this.selectedProfession = selected.id
-            // console.log(this.selectedProfession)
-        },
         select(selected) {
-            this.searchRegion = selected.name
-            this.selectedRegion = selected.id
-            // console.log(this.selectedRegion)
+          this.searchRegion = selected.name
+          this.selectedRegion = selected.id
+          this.myModalregions.hide()
+        },
+  
+        selected(selected) {
+          this.searchProfession = selected.name
+          this.selectedProfession = selected.id
+          this.myModalProfessions.hide()
         },
         selectClinic(selected) {
-            this.searchClinic = selected.name
-            this.selectedClinic = selected.id
-            // console.log(this.selectedClinic)
+          this.searchClinic = selected.name
+          this.selectedClinic = selected.id
+          this.myModalclinics.hide()
         },
 
         searchProfessions() {
+          console.log(this.selectedProfession)
             this.getDoctorsForProfessionAndRegion(this.selectedProfession, this.selectedRegion, this.selectedClinic)
             this.$router.push({ path: '/search', query: { 'prof-id': this.selectedProfession, 'region-id': this.selectedRegion, 'clinic-id': this.selectedClinic } })
         },
@@ -676,7 +834,6 @@ export default {
     }
 
     .text-profession {
-        color: #848b98;
         font-size: 15px;
     }
 
@@ -719,5 +876,256 @@ export default {
         margin-top: 5px;
         white-space: nowrap;
     }
+}
+@media screen and (max-width: 576px) {
+  .icon-close {
+    right: 95px;
+    color: #01234B;
+    font-size: 20px;
+  }
+
+  .link {
+    text-decoration: none;
+    font-weight: 400;
+    color: #01234B;
+    cursor: pointer;
+    padding: 1px 12px;
+    // margin: 5px;
+    // border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    border: none !important;
+
+    &:hover {
+      background-color: #DDFDDB;
+    }
+  }
+
+  .text-link {
+    text-decoration: none;
+    font-weight: 400;
+    color: #01234B;
+    cursor: pointer;
+    padding: 1.5px 12px;
+    font-size: 18px;
+    background-color: #fff;
+  }
+
+  .modal-dialog-scrollable .modal-body {
+    overflow-x: hidden;
+    height: 100vh;
+    width: 100vh;
+  }
+
+
+
+  .text-position {
+    color: #535F72;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 500;
+    margin: 0;
+    padding-left: 13px;
+    padding-bottom: 6px;
+  }
+
+  .dropdown-menu {
+    position: fixed !important;
+    margin-top: 0;
+    margin-left: 0;
+    min-width: auto;
+    max-height: none !important;
+  }
+
+  .icon-search {
+    display: none !important;
+    padding-top: 12px;
+    padding-left: 17px;
+    font-size: 15px;
+    color: #01234B;
+  }
+
+  .btn-success {
+    background-color: #8DEB8B !important;
+  }
+
+  .icon-insurance {
+    display: none !important;
+    padding-top: 10px;
+    font-size: 18px;
+    color: #01234B;
+  }
+
+  .icon-location {
+    display: none !important;
+    padding-top: 10px;
+    font-size: 18px;
+    color: #01234B;
+  }
+
+  .span-line {
+    // border-bottom: 1px solid #A1A1A1;
+    margin: auto;
+    display: none;
+    // padding-left: 100%;
+  }
+
+  .icon-button {
+    padding-left: 0;
+    padding-right: 0;
+    background-image: none;
+    width: 100%;
+    // background-size: 17px;
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+
+
+    line-height: 30px;
+    // background-position: 12px 15px;
+
+    &:focus {
+      border-color: #4CB147;
+      box-shadow: 0 0 0 0.25rem rgb(76, 177, 71, 15%);
+    }
+  }
+
+  .input-search {
+    border-bottom: 1px solid #D2D1D1 !important;
+    background-color: #fff !important;
+    width: 100% !important;
+    border-radius: unset;
+    // padding: 10px !important;
+    // text-align: center;
+    background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 14px;
+    padding-left: 30px;
+
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .input-search-profession {
+    border-right: 1px solid #D2D1D1 !important;
+    background-color: #fff !important;
+    width: 100% !important;
+    border-radius: unset;
+    // padding: 10px !important;
+    // text-align: center;
+    background: url(../assets/icons/Vector-search.svg) no-repeat scroll 1px 8px;
+    padding-left: 30px;
+    outline: none;
+  }
+
+  .input-location {
+    border-bottom: 1px solid #D2D1D1 !important;
+    background-color: #fff !important;
+    width: 100% !important;
+    border-radius: unset;
+    // padding: 10px !important;
+    // text-align: center;
+    background: url(../assets/icons/Vector-location.svg) no-repeat scroll 1px 12px;
+    padding-left: 30px;
+
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .input-insurance {
+    border-bottom: 1px solid #D2D1D1 !important;
+    background-color: #fff !important;
+    width: 100% !important;
+    // padding: 10px !important;
+    // text-align: center;
+    border-radius: unset;
+
+    background: url(../assets/icons/Group.svg) no-repeat scroll 1px 12px;
+    padding-left: 30px;
+
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .search-content {
+    padding-top: 10px;
+    padding-bottom: 20px;
+  }
+
+  .input-group {
+    border: 1.5px solid #01234B;
+    border-radius: 8px;
+    background-color: white;
+    height: auto;
+    display: block;
+    width: 100%;
+    padding: 30px 15px;
+  }
+
+  .input-group i {
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    display: block;
+    z-index: 1;
+    // background-color: #4CB147;
+  }
+
+  .contain-img {
+    background-image: none;
+    background-color: #F5FFF5;
+    width: 100%;
+    margin-bottom: 34px;
+    padding-bottom: 34px;
+    height: auto;
+  }
+
+  .profession-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .title-txt {
+    font-size: 26px;
+    padding-left: 10px;
+  }
+
+  .profession-title {
+    font-size: 22px;
+    margin-bottom: 0;
+
+  }
+
+  .professions-box {
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    height: 150px;
+    width: 150px;
+    background-color: #F2FFF2A1;
+    text-align: center;
+    transition: box-shadow .3s;
+
+  }
+
+  .profession-photo {
+    height: 70px;
+    border: none;
+    background-color: #4CB147;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .professions-txt {
+    text-decoration: none;
+    font-weight: 500;
+    color: #01234B;
+    font-weight: bold;
+    font-size: 14px;
+
+  }
 }
 </style>
