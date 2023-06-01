@@ -73,7 +73,7 @@
                 </div>
                 <div class="row justify-content-md-center">
                     <div class="d-block d-md-none col-md-9">
-                        <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown">
+                        <h1 class="title-txt animate__animated animate__bounce animate__zoomInDown d-none d-md-block">
                             Sizə uyğun həkim <br /> seçin və randevu götürün
                         </h1>
                         <div class="input-group justify-content-between">
@@ -600,6 +600,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#takeAppointmentModal {
+  .modal-dialog,.modal-content {
+    height: 100%;
+  }
+}
 .search-pagination ::v-deep {
 
     li.VuePagination__pagination-item-prev-chunk,
@@ -826,6 +831,9 @@ export default {
 }
 
 @media screen and (max-width: 576px) {
+    .input-group {
+        border: none;
+    }
     .profile-image {
         width: 75px;
         height: 75px;
@@ -1057,7 +1065,6 @@ export default {
   }
 
   .input-group {
-    border: 1.5px solid #01234B;
     border-radius: 8px;
     background-color: white;
     height: auto;
