@@ -357,7 +357,6 @@ export default {
         return {
             selectedProfession: '',
             doctors: [],
-            active: true,
             professions: '',
             searchProfession: '',
             searchRegion: '',

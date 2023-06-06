@@ -345,43 +345,46 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="takeAppointmentModalLabel">Randevu detallari</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel">Doctonline</h5>
             </div>
-            <div class="modal-body">
-              <div class="container d-flex align-items-center justify-content-center my-5 ">
+            <div class="modal-body position-relative">
+              <button type="button" class="btn-close position-absolute" style="right: 15px; opacity: 0.3;"
+                data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="container align-items-center justify-content-center my-5 ">
                 <div class="row">
-                  <div class="col-4">
-                    <div class="profile-image rounded-circle" :style="{
-                      'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
-                    }"></div>
+                  <div class="col-3 col-md-2">
+                    <div class="profile-image rounded" :style="{
+                        'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+                      }">
+                    </div>
+
                     <!--                    <img :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile image" width="100%"-->
                     <!--                      class="rounded-circle">-->
                     <!--                    <img :src="$apiUrl + '/' + doctor.profile_photo" alt="profile image">-->
                   </div>
-                  <div class="col-8">
-                    <h6>{{ doctor.fullname }}, {{ doctor.profession }} </h6>
-                    <p> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
+                  <div class="col-9 col-md-10">
+                    <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
+                    <p class="text"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
                     <p>{{ doctor.clinic }}</p>
-                  </div>
-
-                  <div class="col-8 mt-3">
-                    <label for="">Ad, Soyad</label>
-                    <input v-model="form.fullname" class="form-control" type="text">
-                  </div>
-                  <div class="col-8 mt-2" width="100%">
-                    <label for="">Mobil nömrə</label>
-                    <input v-model="form.phone" class="form-control" type="text">
                   </div>
                 </div>
 
+                <div class="col-8 doc-profession">
+                  <p>Təsdiq üçün məlumatları doldurun</p>
+                  <div>
+                    <label class="" for="">Ad, Soyad</label>
+                    <input v-model="form.fullname" class="form-control" type="text" placeholder="Firəngiz Vahabova">
+                  </div>
+                </div>
+                <div class="col-8 mt-2 doc-profession" width="100%">
+                  <label for="">Mobil nömrə</label>
+                  <input v-model="form.phone" class="form-control" type="number" placeholder="0501234567">
+                </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-success" @click="createAppointment" data-bs-toggle="modal"
-                data-bs-target="#successModal">
-                Təsdiqlə
+              <button type="button" class="col-12 btn btn-primary py-2 mb-4" @click="createAppointment">
+                <div class="doc-profession">
+                  Randevunu təsdiqləyin
+                </div>
               </button>
             </div>
           </div>
@@ -452,8 +455,9 @@ export default {
     this.user()
     this.generateTimeSlots()
     this.generateDays()
-    this.myModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
+    this.takeAppointmentModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
     this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'))
+    this.successModal = new bootstrap.Modal(document.getElementById('successModal'))
   },
 
   methods: {
@@ -461,15 +465,17 @@ export default {
       this.form.doctor_id = this.doctor.id
       this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
       this.form.time = this.selectedTime
-      axios.post(this.$apiUrl + "/api-appointments/create", this.form)
-        .then((resp) => {
-          console.log(resp)
-          this.result = resp.data
-          this.myModal.hide()
-          this.myModal.hide()
-          this.randevuModal.hide()
-        })
-        .catch(e => console.log(e))
+      if (this.form.fullname !== null && this.form.phone !== null) {
+        axios.post(this.$apiUrl + "/api-appointments/create", this.form)
+          .then((resp) => {
+            console.log(resp)
+            this.result = resp.data
+            this.takeAppointmentModal.hide()
+            this.randevuModal.hide()
+            this.successModal.show()
+          })
+          .catch(e => console.log(e))
+      }
     },
     generateDays() {
       // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
@@ -544,10 +550,30 @@ export default {
   background-position: center top;
 }
 
+.fullname {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #01234B;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0;
+  /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  /* Firefox */
+}
+
 #takeAppointmentModal {
   .profile-image {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 70px;
     background-size: cover;
   }
 }
@@ -809,11 +835,18 @@ export default {
 
 @media screen and (max-width: 576px) {
   .profile-image-main {
-    height: 82px;
-    width: 82px;
+    height: 82px !important;
+    width: 82px !important;
     background-size: cover;
     border-radius: 50%;
     background-position: center top;
+  }
+
+  #takeAppointmentModal {
+    .modal-dialog {
+      margin: 0;
+      height: 100%;
+    }
   }
 
   .image {
