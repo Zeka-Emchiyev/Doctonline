@@ -341,14 +341,14 @@
 
       <!-- Modal -->
       <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
-        aria-hidden="true">
+        aria-hidden="hidden">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel">Doctonline</h5>
             </div>
             <div class="modal-body position-relative">
-              <button type="button" class="btn-close position-absolute" style="right: 15px; opacity: 0.3;"
+              <button type="button" class="btn-close position-absolute" style="right: 15px; opacity: 0.2;"
                 data-bs-dismiss="modal" aria-label="Close"></button>
               <div class="container align-items-center justify-content-center my-5 ">
                 <div class="row">
@@ -364,25 +364,25 @@
                   </div>
                   <div class="col-9 col-md-10">
                     <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
-                    <p class="text"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
+                    <p class="time-zone"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
                     <p>{{ doctor.clinic }}</p>
                   </div>
                 </div>
 
-                <div class="col-8 doc-profession">
-                  <p>Təsdiq üçün məlumatları doldurun</p>
+                <div class="col-8">
+                  <p class="doc-profession-modal"> Təsdiq üçün məlumatları doldurun</p>
                   <div>
-                    <label class="" for="">Ad, Soyad</label>
+                    <label class="doc-profession-modal mb-2 mt-2" for="">Ad, Soyad</label>
                     <input v-model="form.fullname" class="form-control" type="text" placeholder="Firəngiz Vahabova">
                   </div>
                 </div>
-                <div class="col-8 mt-2 doc-profession" width="100%">
-                  <label for="">Mobil nömrə</label>
+                <div class="mb-1 col-8 mt-2 doc-profession-modal" width="100%">
+                  <label class="mb-2 " for="">Mobil nömrə</label>
                   <input v-model="form.phone" class="form-control" type="number" placeholder="0501234567">
                 </div>
               </div>
-              <button type="button" class="col-12 btn btn-primary py-2 mb-4" @click="createAppointment">
-                <div class="doc-profession">
+              <button type="button" class="col-12 btn btn-primary mb-4" @click="createAppointment">
+                <div class="doc-profession-button">
                   Randevunu təsdiqləyin
                 </div>
               </button>
@@ -455,7 +455,7 @@ export default {
     this.user()
     this.generateTimeSlots()
     this.generateDays()
-    this.takeAppointmentModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'))
+    this.takeAppointmentModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
     this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'))
     this.successModal = new bootstrap.Modal(document.getElementById('successModal'))
   },
@@ -476,6 +476,8 @@ export default {
           })
           .catch(e => console.log(e))
       }
+        this.form.fullname = ''
+        this.form.phone = ''
     },
     generateDays() {
       // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
@@ -719,7 +721,29 @@ input[type=number] {
   color: #01234B;
   // font-family: Gilroy-Regular;
 }
-
+.doc-profession-modal {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #01234B;
+   font-family: Montserrat;
+}
+.doc-profession-button{
+  font-size: 20px;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #01234B;
+  font-family: Montserrat;
+}
+.time-zone{
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  color: #01234B;
+  line-height: 20px;
+}
 .name-surname {
   font-size: 34px;
   color: #01234B;
@@ -841,6 +865,15 @@ input[type=number] {
     border-radius: 50%;
     background-position: center top;
   }
+  .doc-profession-button{
+    font-size: 16px;
+  }
+  .time-zone{
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
 
   #takeAppointmentModal {
     .modal-dialog {
@@ -857,6 +890,11 @@ input[type=number] {
   .doc-profession {
     font-size: 16px;
     line-height: 20px;
+  }
+  .doc-profession-modal {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
   }
 
   .name-surname {
