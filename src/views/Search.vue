@@ -295,11 +295,11 @@
 
                                 <div class="col-8">
                                     <label class="doc-profession-modal mb-2 mt-2" for="">Ad, Soyad</label>
-                                    <input v-model="form.fullname" class="form-control" type="text" placeholder="Firəngiz Vahabova">
+                                    <input v-model="form.fullname" :class="{'form-control':true, 'input-error': !formValidation.fullname}" type="text" placeholder="Firəngiz Vahabova">
                                 </div>
                                 <div class="mb-1 col-8 mt-2 doc-profession-modal">
                                     <label class="mb-2 " for="">Mobil nömrə</label>
-                                    <input v-model="form.phone" class="form-control" type="number" placeholder="0501234567">
+                                    <input v-model="form.phone" :class="{'form-control':true, 'input-error': !formValidation.phone}" type="number" placeholder="0501234567">
                                 </div>
                             </div>
                             <button type="button" class="col-12 btn btn-primary mt-5" @click="createAppointment">
@@ -374,6 +374,10 @@ export default {
                 fullname: null,
                 phone: null,
                 time: null,
+            },
+            formValidation:{
+                phone: true,
+                fullname: true
             },
             selectedDoctor: {},
             appointmentDate: null,
@@ -574,22 +578,32 @@ export default {
             this.selectedDay = data.date
             this.myModal.show()
         },
-        createAppointment() {
-            this.form.doctor_id = this.selectedDoctor.id
-            this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-            this.form.time = this.selectedTime
-            if (this.form.fullname !== null && this.form.phone !== null) {
-                axios.post(this.$apiUrl + "/api-appointments/create", this.form)
-                    .then((resp) => {
-                        // console.log(resp)
-                        this.result = resp.data
-                        this.myModal.hide()
-                        this.successModal.show()
-                    })
-                    .catch(e => console.log(e))
+        formValidationClass(){
+            this.formValidation = {
+                phone: !!this.form.phone,
+                fullname: !!this.form.fullname,
             }
-            this.form.fullname = ''
-            this.form.phone = ''
+            return Object.values(this.formValidation).every((v) => v)
+        },
+        createAppointment() {
+            let is_valid = this.formValidationClass()
+            if (is_valid){
+                this.form.doctor_id = this.selectedDoctor.id
+                this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+                this.form.time = this.selectedTime
+                    axios.post(this.$apiUrl + "/api-appointments/create", this.form)
+                        .then((resp) => {
+                            console.log(resp)
+                            this.result = resp.data
+                            this.takeAppointmentModal.hide()
+                            this.randevuModal.hide()
+                            this.successModal.show()
+                        })
+                        .catch(e => console.log(e))
+
+                this.form.fullname = ''
+                this.form.phone = ''
+            }
         },
 
     },
@@ -597,6 +611,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.input-error {
+    border:1px solid red;
+}
 #takeAppointmentModal {
     .profile-image {
         height: 80px;

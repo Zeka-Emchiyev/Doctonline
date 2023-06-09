@@ -343,42 +343,40 @@
       <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
         aria-hidden="hidden">
         <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-content h-100">
             <div class="modal-header">
-              <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel">Doctonline</h5>
+                <router-link to="/" class="text-decoration-none">
+                    <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel" data-bs-dismiss="modal">Doctonline</h5>
+                </router-link>
             </div>
             <div class="modal-body position-relative">
               <button type="button" class="btn-close position-absolute" style="right: 15px; opacity: 0.2;"
                 data-bs-dismiss="modal" aria-label="Close"></button>
               <div class="container align-items-center justify-content-center my-5 ">
-                <div class="row">
-                  <div class="col-3 col-md-2">
-                    <div class="profile-image rounded" :style="{
-                        'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
-                      }">
-                    </div>
-
-                    <!--                    <img :src="`${$apiUrl}/${doctor.profile_photo}`" alt="profile image" width="100%"-->
-                    <!--                      class="rounded-circle">-->
-                    <!--                    <img :src="$apiUrl + '/' + doctor.profile_photo" alt="profile image">-->
+                  <div class="d-flex gap-3">
+                      <div class="">
+                          <div class="profile-image rounded" :style="{
+                                        'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+                                      }">
+                          </div>
+                      </div>
+                      <div class="">
+                          <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
+                          <div class="time-zone mb-2"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
+                          <div class="doctor-clinic">{{ doctor.clinic }}</div>
+                      </div>
                   </div>
-                  <div class="col-9 col-md-10">
-                    <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
-                    <p class="time-zone"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</p>
-                    <p>{{ doctor.clinic }}</p>
-                  </div>
-                </div>
 
-                <div class="col-8">
+                <div class="mt-4 col-8">
                   <p class="doc-profession-modal"> Təsdiq üçün məlumatları doldurun</p>
                   <div>
                     <label class="doc-profession-modal mb-2 mt-2" for="">Ad, Soyad</label>
-                    <input v-model="form.fullname" class="form-control" type="text" placeholder="Firəngiz Vahabova">
+                    <input v-model="form.fullname" :class="{'form-control':true, 'input-error': !formValidation.fullname}" type="text" placeholder="Firəngiz Vahabova">
                   </div>
                 </div>
-                <div class="mb-1 col-8 mt-2 doc-profession-modal" width="100%">
+                <div class="mb-1 col-8 mt-2 doc-profession-modal">
                   <label class="mb-2 " for="">Mobil nömrə</label>
-                  <input v-model="form.phone" class="form-control" type="number" placeholder="0501234567">
+                  <input v-model="form.phone" :class="{'form-control':true, 'input-error': !formValidation.phone}" type="number" placeholder="0501234567">
                 </div>
               </div>
               <button type="button" class="col-12 btn btn-primary mb-4" @click="createAppointment">
@@ -395,13 +393,28 @@
       <!-- Modal -->
       <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-content h-100">
             <div class="modal-header">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <router-link to="/" class="text-decoration-none" >
+                  <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel" data-bs-dismiss="modal">Doctonline</h5>
+                </router-link>
             </div>
-            <div class="modal-body">
-              <p class="clinic-border text-center"> <i style="color: #4CB147; "
-                  class="bi bi-check-circle-fill d-block fs-1 "></i>
+            <div class="modal-body mt-4">
+                    <div class="d-flex gap-3">
+                        <div class="">
+                            <div class="profile-image rounded" :style="{
+                                        'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
+                                      }">
+                            </div>
+                        </div>
+                        <div class="">
+                            <h6 class="fullname">{{ doctor.fullname }}, {{ doctor.profession }} </h6>
+                            <div class="time-zone mb-2"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
+                            <div class="doctor-clinic">{{ doctor.clinic }}</div>
+                        </div>
+                    </div>
+              <p class="ms-4 fullname mt-4">
+                  <img class="pe-2" src="@/assets/icons/check-circle.svg" alt="">
                 {{ result.message }}
               </p>
             </div>
@@ -439,6 +452,10 @@ export default {
         phone: null,
         time: null,
       },
+        formValidation:{
+            phone: true,
+            fullname: true
+        },
       appointmentDate: null,
       moment,
       doctor: '',
@@ -456,28 +473,36 @@ export default {
     this.generateTimeSlots()
     this.generateDays()
     this.takeAppointmentModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
-    this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'))
-    this.successModal = new bootstrap.Modal(document.getElementById('successModal'))
+    this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'),{ backdrop: 'static', keyboard: false })
+    this.successModal = new bootstrap.Modal(document.getElementById('successModal'),{ backdrop: 'static', keyboard: false })
   },
 
   methods: {
+      formValidationClass(){
+          this.formValidation = {
+              phone: !!this.form.phone,
+              fullname: !!this.form.fullname,
+          }
+          return Object.values(this.formValidation).every((v) => v)
+      },
     createAppointment() {
-      this.form.doctor_id = this.doctor.id
-      this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-      this.form.time = this.selectedTime
-      if (this.form.fullname !== null && this.form.phone !== null) {
-        axios.post(this.$apiUrl + "/api-appointments/create", this.form)
-          .then((resp) => {
-            console.log(resp)
-            this.result = resp.data
-            this.takeAppointmentModal.hide()
-            this.randevuModal.hide()
-            this.successModal.show()
-          })
-          .catch(e => console.log(e))
-      }
-        this.form.fullname = ''
-        this.form.phone = ''
+        let is_valid = this.formValidationClass()
+        if (is_valid) {
+            this.form.doctor_id = this.doctor.id
+            this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+            this.form.time = this.selectedTime
+            axios.post(this.$apiUrl + "/api-appointments/create", this.form)
+                .then((resp) => {
+                    console.log(resp)
+                    this.result = resp.data
+                    this.takeAppointmentModal.hide()
+                    this.randevuModal.hide()
+                    this.successModal.show()
+                })
+                .catch(e => console.log(e))
+        }
+            this.form.fullname = ''
+            this.form.phone = ''
     },
     generateDays() {
       // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
@@ -544,6 +569,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.input-error {
+  border:1px solid red;
+}
+.doctor-clinic{
+  color: #596573;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
 .profile-image-main {
   height: 150px;
   width: 150px;
@@ -553,9 +588,10 @@ export default {
 }
 
 .fullname {
+  font-family: Montserrat;
   font-size: 16px;
-  line-height: 20px;
   font-weight: 600;
+  line-height: 20px;
   color: #01234B;
 }
 
@@ -579,7 +615,13 @@ input[type=number] {
     background-size: cover;
   }
 }
-
+#successModal{
+  .profile-image {
+    height: 80px;
+    width: 70px;
+    background-size: cover;
+  }
+}
 .day-container {
   margin: 0 auto;
   width: 64px;
@@ -739,7 +781,7 @@ input[type=number] {
 }
 .time-zone{
   font-family: Montserrat;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: #01234B;
   line-height: 20px;
@@ -881,7 +923,18 @@ input[type=number] {
       height: 100%;
     }
   }
-
+  #successModal {
+    .modal-dialog {
+      margin: 0;
+      height: 600px;
+    }
+  }
+  #randevuModal {
+    .modal-dialog {
+      margin: 0;
+      height: 100%;
+    }
+  }
   .image {
     width: 80px;
     height: 80px;
