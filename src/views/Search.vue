@@ -620,6 +620,9 @@ export default {
         width: 70px;
         background-size: cover;
     }
+  .modal-content {
+    height: 100%;
+  }
 }
 .fullname {
     font-size: 16px;
