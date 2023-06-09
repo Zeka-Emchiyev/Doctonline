@@ -373,12 +373,12 @@
                   <p class="doc-profession-modal"> Təsdiq üçün məlumatları doldurun</p>
                   <div>
                     <label class="doc-profession-modal mb-2 mt-2" for="">Ad, Soyad</label>
-                    <input v-model="form.fullname" class="form-control" type="text" placeholder="Firəngiz Vahabova">
+                    <input v-model="form.fullname" :class="{'form-control':true, 'input-error': !formValidation.fullname}" type="text" placeholder="Firəngiz Vahabova">
                   </div>
                 </div>
-                <div class="mb-1 col-8 mt-2 doc-profession-modal" width="100%">
+                <div class="mb-1 col-8 mt-2 doc-profession-modal">
                   <label class="mb-2 " for="">Mobil nömrə</label>
-                  <input v-model="form.phone" class="form-control" type="number" placeholder="0501234567">
+                  <input v-model="form.phone" :class="{'form-control':true, 'input-error': !formValidation.phone}" type="number" placeholder="0501234567">
                 </div>
               </div>
               <button type="button" class="col-12 btn btn-primary mb-4" @click="createAppointment">
@@ -439,6 +439,10 @@ export default {
         phone: null,
         time: null,
       },
+        formValidation:{
+            phone: true,
+            fullname: true
+        },
       appointmentDate: null,
       moment,
       doctor: '',
@@ -461,23 +465,31 @@ export default {
   },
 
   methods: {
+      formValidationClass(){
+          this.formValidation = {
+              phone: !!this.form.phone,
+              fullname: !!this.form.fullname,
+          }
+          return Object.values(this.formValidation).every((v) => v)
+      },
     createAppointment() {
-      this.form.doctor_id = this.doctor.id
-      this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
-      this.form.time = this.selectedTime
-      if (this.form.fullname !== null && this.form.phone !== null) {
-        axios.post(this.$apiUrl + "/api-appointments/create", this.form)
-          .then((resp) => {
-            console.log(resp)
-            this.result = resp.data
-            this.takeAppointmentModal.hide()
-            this.randevuModal.hide()
-            this.successModal.show()
-          })
-          .catch(e => console.log(e))
-      }
-        this.form.fullname = ''
-        this.form.phone = ''
+        let is_valid = this.formValidationClass()
+        if (is_valid) {
+            this.form.doctor_id = this.doctor.id
+            this.form.date = moment(this.selectedDay).format('YYYY-MM-DD HH:mm')
+            this.form.time = this.selectedTime
+            axios.post(this.$apiUrl + "/api-appointments/create", this.form)
+                .then((resp) => {
+                    console.log(resp)
+                    this.result = resp.data
+                    this.takeAppointmentModal.hide()
+                    this.randevuModal.hide()
+                    this.successModal.show()
+                })
+                .catch(e => console.log(e))
+        }
+            this.form.fullname = ''
+            this.form.phone = ''
     },
     generateDays() {
       // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
@@ -544,6 +556,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.input-error {
+  border:1px solid red;
+}
 .profile-image-main {
   height: 150px;
   width: 150px;
