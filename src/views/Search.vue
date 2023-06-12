@@ -268,7 +268,7 @@
         />
 
         <!-- Modal -->
-        <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
+            <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
             aria-hidden="hidden">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -316,13 +316,28 @@
         <!-- Modal result -->
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content h-100">
                     <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <router-link to="/" class="text-decoration-none" >
+                            <h5 class="modal-title head ms-3" id="takeAppointmentModalLabel" data-bs-dismiss="modal">Doctonline</h5>
+                        </router-link>
                     </div>
-                    <div class="modal-body">
-                        <p class="clinic-border text-center"> <i style="color: #4CB147; "
-                                class="bi bi-check-circle-fill d-block fs-1 "></i>
+                    <div class="modal-body mt-4">
+                        <div class="d-flex gap-3">
+                            <div class="">
+                                <div class="profile-image rounded" :style="{
+                                        'background-image': 'url(' + `${$apiUrl}/${selectedDoctor.profile_photo}` + ')'
+                                      }">
+                                </div>
+                            </div>
+                            <div class="">
+                                <h6 class="fullname">{{ selectedDoctor.fullname }}, {{ selectedDoctor.profession }} </h6>
+                                <div class="time-zone mb-2"> {{ moment(selectedDay).format('DD MMMM YYYY dddd') }} - {{ selectedTime }}</div>
+                                <div class="doctor-clinic">{{ selectedDoctor.clinic }}</div>
+                            </div>
+                        </div>
+                        <p class="ms-4 fullname mt-4">
+                            <img class="pe-2" src="@/assets/icons/check-circle.svg" alt="">
                             {{ result.message }}
                         </p>
                     </div>
@@ -595,12 +610,10 @@ export default {
                         .then((resp) => {
                             console.log(resp)
                             this.result = resp.data
-                            this.takeAppointmentModal.hide()
-                            this.randevuModal.hide()
+                            this.myModal.hide()
                             this.successModal.show()
                         })
                         .catch(e => console.log(e))
-
                 this.form.fullname = ''
                 this.form.phone = ''
             }
@@ -623,6 +636,13 @@ export default {
   .modal-content {
     height: 100%;
   }
+}
+.doctor-clinic{
+    color: #596573;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
 }
 .fullname {
     font-size: 16px;
@@ -879,8 +899,8 @@ input::-webkit-inner-spin-button {
 // }
 
 .profile-image {
-    width: 104px;
-    height: 104px;
+    height: 80px;
+    width: 70px;
     background-size: cover;
     background-position: center top;
 }
@@ -902,7 +922,19 @@ input::-webkit-inner-spin-button {
     #takeAppointmentModal {
         .modal-dialog {
             margin: 0;
-            height: 100vh;
+            height: 100%;
+        }
+    }
+    #successModal {
+        .modal-dialog {
+            margin: 0;
+            height: 100%;
+        }
+    }
+    #randevuModal {
+        .modal-dialog {
+            margin: 0;
+            height: 100%;
         }
     }
     .doc-profession-modal {

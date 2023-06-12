@@ -926,7 +926,7 @@ input[type=number] {
   #successModal {
     .modal-dialog {
       margin: 0;
-      height: 600px;
+      height: 100%;
     }
   }
   #randevuModal {
