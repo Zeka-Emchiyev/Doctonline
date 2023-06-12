@@ -899,10 +899,17 @@ input::-webkit-inner-spin-button {
 // }
 
 .profile-image {
-    height: 80px;
-    width: 70px;
+    height: 104px;
+    width: 104px;
     background-size: cover;
     background-position: center top;
+}
+#successModal {
+    .profile-image {
+        height: 80px;
+        width: 70px;
+        background-size: cover;
+    }
 }
 
 @media screen and (max-width: 576px) {
