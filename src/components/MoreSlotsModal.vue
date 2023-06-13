@@ -10,7 +10,7 @@
                 <div class="modal-body px-0">
                     <div class="profile-section px-4">
                         <div v-if="doctor" class="row">
-                            <div class="col-lg-3 text-center">
+                            <div class="col-3">
                                 <div class="rounded-circle border profile-image"
                                    :style="{
                                       'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
@@ -21,7 +21,7 @@
                                     Profilə bax
                                 </router-link>
                             </div>
-                            <div class="col-lg-9">
+                            <div class="col-9">
                                 <router-link class="text-decoration-none rout-link" @click.native="closeModal"
                                              :to="{ name: 'doctor', params: { id: doctor.id } }">
                                     {{ doctor.fullname }}
