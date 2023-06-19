@@ -20,108 +20,6 @@
 
               </div>
 
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-success col-sm-12 d-md-none" data-bs-toggle="modal"
-                data-bs-target="#randevuModal">
-                Randevu al </button>
-
-              <!-- Modal -->
-              <div class="modal fade" id="randevuModal" tabindex="-1" aria-labelledby="randevuModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="row px-3 p-3">
-                      <div class="col-4">
-                        <div class="profile-image-main" :style="{
-                          'background-image': 'url(' + `${$apiUrl}/${doctor.profile_photo}` + ')'
-                        }"></div>
-                      </div>
-                      <div class="col-8">
-                        <p class="text-success doc-profession">{{ doctor.profession }}</p>
-                        <h5 class="name-surname">{{ doctor.fullname }}</h5>
-                      </div>
-
-                    </div>
-                    <div class="modal-body">
-                      <div class="container">
-                        <p>Görüş növü</p>
-                        <div class="row ms-2">
-
-                          <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
-                            :class="{ 'clinic-border': selectedBox === 'clinic' }">
-
-                            <div class="hold-on">
-                              <i class="icon-clinic bi bi-person-fill "></i>
-                              <span class="clinic-video-txt">Klinikada</span>
-                            </div>
-                          </div>
-                          <div @click="selectedBox = 'video'" class=" col-6 rounded-end b-default"
-                            :class="{ 'clinic-border': selectedBox === 'video' }">
-                            <div class="hold-on">
-                              <img class="icon-clinic" src="../assets/Group 432.svg" alt="">
-                              <span class="clinic-video-txt">Video</span>
-                            </div>
-
-                          </div>
-                        </div>
-
-                        <div class="location my-3">
-                          <p class="location-content my-3"> <i class="bi bi-check-circle-fill mx-3 location-icon"></i>
-                            {{ doctor.clinic }}</p>
-
-                        </div>
-                        <div>
-                          <small>Randevu saatını seçin</small>
-                        </div>
-
-                        <div>
-                          <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true"
-                            :pagination-enabled="false" navigationPrevLabel="" navigationNextLabel=""
-                            :navigationClickTargetSize="4" :scrollPerPage="false">
-                            <slide v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')">
-                              <div @click="setDay(day.date)" class="day-container"
-                                :class="{ 'bg-success text-white': selectedDay === day.date }">
-                                {{ moment(day.date).format('MMM DD') }}
-                              </div>
-                              <div class="time-slots mt-4">
-                                <div v-for="(timeSlot, index) in day.timeSlots">
-                                  <div v-if="index < 4 && !day.showMore" class="time-slot"
-                                    :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
-                                    @click="setSelectedTime(day, timeSlot)">
-                                    {{ timeSlot.timeFormatted }}
-                                  </div>
-                                  <div v-if="day.showMore" class="time-slot"
-                                    :class="{ 'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date }"
-                                    @click="setSelectedTime(day, timeSlot)">
-                                    {{ timeSlot.timeFormatted }}
-                                  </div>
-                                </div>
-                                <div v-show="!day.showMore" class="time-slot slot-more" @click="showMoreTimeSlots(day)">
-                                  daha çox
-                                </div>
-                                <div v-show="day.showMore" class="time-slot slot-more"
-                                  @click="showMoreTimeSlots(day, false)">daha
-                                  az</div>
-                              </div>
-                            </slide>
-                          </Carousel>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
-                        :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success  col-11 my-3 mx-auto"
-                        :disabled="!dateTimeSelected">
-                        Randevu al
-                      </button>
-                      <!-- <button class="btn btn-success">Randevu gotur</button> -->
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
           </div>
@@ -131,7 +29,9 @@
               <ul class="nav nav-pills">
                 <li class="nav-item">
                   <a class="col-2 text-header" :class="{ 'text-header-bottom-line': selectedHeader === 'information' }"
-                    href="#scrollspyHeading2" @click="selectedHeader = 'information'">Haqqında</a>
+                    href="#scrollspyHeading2" @click="selectedHeader = 'information'">Haqqında
+                  </a>
+
                 </li>
 
                 <li class="nav-item">
@@ -172,7 +72,7 @@
             </div>
 
 
-            <!-- Modal -->
+            <!-- Modal details content -->
             <div class="modal fade" id="informationModal" tabindex="-1" aria-labelledby="informationModalLabel"
               aria-hidden="true">
               <div class="modal-dialog">
@@ -192,7 +92,41 @@
                 Ətraflı
               </span>
             </p>
+              <div class="d-block d-md-none">
+              <div class="randevu-title mb-1">Pulsuz randevu təyin et</div>
+              <div class="container">
+                  <div class="row">
+                      <div @click="selectedBox = 'clinic'" class="col-6 rounded-start b-default m-auto"
+                           :class="{ 'clinic-border': selectedBox === 'clinic' }">
 
+                          <div class="hold-on">
+                              <i class="icon-clinic bi bi-person-fill "></i>
+                              <span class="clinic-video-txt">Klinikada</span>
+                          </div>
+                      </div>
+                      <div @click="selectedBox = 'video'" class=" col-6 rounded-end b-default"
+                           :class="{ 'clinic-border': selectedBox === 'video' }">
+                          <div class="hold-on">
+                              <img class="icon-clinic" src="../assets/Group 432.svg" alt="">
+                              <span class="clinic-video-txt">Video</span>
+                          </div>
+
+                      </div>
+                  </div>
+                </div>
+                  <div class="location-content mt-3">
+                      {{ doctor.clinic }}
+                  </div>
+                  <Calendar2  @dateSelected="showSelectedAppointmentModal"
+                              :doctor="doctor"
+                              @showMore="showMoreSlotsForDoctor"/>
+              </div>
+              <MoreSlotsModal
+                      :show="showMoreSlotsModal"
+                      :doctor="moreSlotsDoctor"
+                      @closeModal="showMoreSlotsModal = false"
+                      @dateSelected="showSelectedAppointmentModal"
+              />
             <h2 id="scrollspyHeading3" class="mb-4 head">Sığorta </h2>
             <div>
               <!-- {{ doctor. }} -->
@@ -300,7 +234,7 @@
                 {{ doctor.clinic }}</p>
             </div>
             <div class="d-none d-md-block">
-              <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
+                <Carousel ref="cr-2" id="cr-2" :per-page="4" :navigation-enabled="true" :pagination-enabled="false"
                 navigationPrevLabel="" navigationNextLabel="" :navigationClickTargetSize="4" :scrollPerPage="false">
                 <slide v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')">
                   <div @click="setDay(day.date)" class="day-container"
@@ -330,7 +264,7 @@
             </div>
             <div class="text-center mt-2">
               <button data-bs-toggle="modal" data-bs-target="#takeAppointmentModal"
-                :class="{ 'text-white': !dateTimeSelected }" class="btn btn-success d-none d-md-block col-11 my-3 mx-auto"
+                :class="{ 'text-white': !dateTimeSelected }" class="btn btn-primary d-none d-md-block col-11 my-3 mx-auto"
                 :disabled="!dateTimeSelected">
                 Randevu al
               </button>
@@ -338,6 +272,7 @@
           </div>
         </div>
       </div>
+
 
       <!-- Modal -->
       <div class="modal fade" id="takeAppointmentModal" tabindex="-1" aria-labelledby="takeAppointmentModalLabel"
@@ -390,7 +325,7 @@
       </div>
 
 
-      <!-- Modal -->
+      <!-- Modal success -->
       <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content h-100">
@@ -432,10 +367,12 @@ import moment from 'moment'
 import FaqHolder from "@/components/FaqHolder";
 import NavbarDoctor from "@/components/NavbarDoctor";
 import GoogleMapLoader from '@/components/GoogleMapLoader.vue';
+import Calendar2 from "@/components/Calendar2.vue";
+import MoreSlotsModal from "@/components/MoreSlotsModal.vue";
 
 export default {
   name: 'Doctor',
-  components: { FaqHolder, Carousel, Slide, NavbarDoctor, GoogleMapLoader },
+  components: {MoreSlotsModal, Calendar2, FaqHolder, Carousel, Slide, NavbarDoctor, GoogleMapLoader },
   data() {
     return {
       selectedDay: null,//moment().toDate().toISOString(),
@@ -456,9 +393,11 @@ export default {
             phone: true,
             fullname: true
         },
-      appointmentDate: null,
+        showMoreSlotsModal: false,
+        moreSlotsDoctor: null,
+        appointmentDate: null,
       moment,
-      doctor: '',
+      doctor: {},
       result: '',
     };
   },
@@ -484,6 +423,16 @@ export default {
               fullname: !!this.form.fullname,
           }
           return Object.values(this.formValidation).every((v) => v)
+      },
+      showMoreSlotsForDoctor(doctor) {
+          this.moreSlotsDoctor = doctor;
+          this.showMoreSlotsModal = true;
+      },
+      showSelectedAppointmentModal(data) {
+          this.selectedDoctor = data.doctor
+          this.selectedTime = data.time
+          this.selectedDay = data.date
+          this.takeAppointmentModal.show()
       },
     createAppointment() {
         let is_valid = this.formValidationClass()
@@ -652,7 +601,7 @@ input[type=number] {
     text-align: center;
     display: block;
     border-radius: 8px;
-    background-color: #72D86D;
+    background-color: #F9F9F9;
     border: 1px solid #edf0f4;
     color: #101825;
     font-size: 14px;
@@ -909,6 +858,12 @@ input[type=number] {
   }
   .doc-profession-button{
     font-size: 16px;
+  }
+  .randevu-title{
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
   }
   .time-zone{
     font-family: Montserrat;

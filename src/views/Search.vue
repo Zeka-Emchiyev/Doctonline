@@ -351,20 +351,17 @@
 import Pagination from 'vue-pagination-2'
 import Navbar from '@/components/Navbar.vue';
 import axios from 'axios'
-import Calendar from "@/components/Calendar"
 import 'moment/locale/az';
 import moment from 'moment'
 import Calendar2 from "@/components/Calendar2.vue";
 import MoreSlotsModal from "@/components/MoreSlotsModal.vue";
-import {isWeekend} from "@/helper/util";
 
 
 export default {
     name: 'ProjectsSearch',
     components: {
       MoreSlotsModal,
-      Calendar2,
-        Navbar, Pagination
+      Calendar2, Pagination
     },
     data() {
         return {

@@ -1,9 +1,11 @@
 <template>
-    <div class="container d-flex justify-content-between mt-3">
+    <div class="d-flex justify-content-between mt-3">
         <div class="d-flex flex-column days-container justify-content-end">
             <div v-for="day in nextTwoDays" :key="moment(day.date).format('MMM DD')" class="w-100 mb-2">
                 <div>
-                    {{ moment(day.date).format('dddd, DD MMMM') }}
+                    <div class="day-date mb-2">
+                        {{ moment(day.date).format('dddd, DD MMMM') }}
+                    </div>
                     <div class="time-slots mt-2 d-flex flex-wrap justify-content-between">
                         <div v-for="(timeSlot, index) in day.timeSlots">
                             <div v-if="index < 8" class="time-slot"
@@ -68,6 +70,7 @@ export default {
         this.moment.locale('az')
         this.user()
         this.generateDays()
+        console.log(this.doctor)
     },
 
     methods: {
@@ -76,6 +79,7 @@ export default {
             const addDayCount = 1;
             let tomorrow = moment().add(addDayCount, 'days');
             let nextTwoDay = moment().add(addDayCount + 1, 'days');
+            console.log(tomorrow.toString(), nextTwoDay.toString())
             // Hekim 6ci gun ishleyirse - ancaq bazar gun olan gunleri bypass etmek.
             if (worksOnSaturday) {
               if (isSunday(tomorrow)) {
@@ -178,6 +182,13 @@ export default {
 .slide-content {
     height: 290px;
     overflow-y: auto;
+}
+.day-date{
+    font-family: Montserrat;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #01234B;
 }
 .days-container {
   max-width: 300px;
