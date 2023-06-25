@@ -1,28 +1,31 @@
 <template>
-    <div class="d-flex justify-content-between mt-3">
-        <div class="d-flex flex-column days-container justify-content-end">
-            <div v-for="day in nextTwoDays" :key="moment(day.date).format('MMM DD')" class="w-100 mb-2">
-                <div>
-                    <div class="day-date mb-2">
-                        {{ moment(day.date).format('dddd, DD MMMM') }}
-                    </div>
-                    <div class="time-slots mt-2 d-flex flex-wrap justify-content-between">
-                        <div v-for="(timeSlot, index) in day.timeSlots">
-                            <div v-if="index < 8" class="time-slot"
-                                 :class="{
-                                  'd-none d-md-block' : index > 3,
-                                  'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date && selectedDoctor.id === doctor.id
-                                }"
-                                 @click="setSelectedTime(day, timeSlot)">
-                                {{ timeSlot.timeFormatted }}
+    <div class="">
+        <div class="d-flex justify-content-between mt-3">
+            <div class="d-flex flex-column days-container justify-content-end">
+                <div v-for="day in nextTwoDays" :key="moment(day.date).format('MMM DD')" class="w-100 mb-2">
+                    <div>
+                        <div class="day-date mb-2">
+                            {{ moment(day.date).format('dddd, DD MMMM') }}
+                        </div>
+                        <div class="time-slots mt-2 d-flex flex-wrap justify-content-between">
+                            <div v-for="(timeSlot, index) in day.timeSlots">
+                                <div v-if="index < 8" class="time-slot"
+                                     :class="{
+                                      'd-none d-md-block' : index > 3,
+                                      'bg-success text-white': selectedTime === timeSlot.timeFormatted && selectedDay === day.date && selectedDoctor.id === doctor.id
+                                    }"
+                                     @click="setSelectedTime(day, timeSlot)">
+                                    {{ timeSlot.timeFormatted }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <a v-if="!buttonLink" class="text-end more-text" @click="$emit('showMore', doctor)">Daha çox</a>
             </div>
-            <p class="text-end text-decoration-underline more-text" @click="$emit('showMore', doctor)">Daha çox</p>
-        </div>
 
+        </div>
+        <button v-if="buttonLink" class="other-days-button w-100" @click="$emit('showMore', doctor)">Digər günlər</button>
     </div>
 </template>
 
@@ -33,7 +36,7 @@ import {isSunday, isWeekend} from "@/helper/util";
 
 export default {
     name: 'Calendar2',
-    emit: ['day', 'time',],
+    emit: ['day', 'time'],
     props: {
         doctor: {
             type: Object,
@@ -42,7 +45,11 @@ export default {
         selectedDoctor: {
           type: Object,
           default: () => { }
-        }
+        },
+        buttonLink: {
+            type: Boolean,
+            default: () => { }
+        },
     },
     data() {
         return {
@@ -79,7 +86,6 @@ export default {
             const addDayCount = 1;
             let tomorrow = moment().add(addDayCount, 'days');
             let nextTwoDay = moment().add(addDayCount + 1, 'days');
-            console.log(tomorrow.toString(), nextTwoDay.toString())
             // Hekim 6ci gun ishleyirse - ancaq bazar gun olan gunleri bypass etmek.
             if (worksOnSaturday) {
               if (isSunday(tomorrow)) {
@@ -179,6 +185,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.other-days-button{
+    width: 100%;
+    max-width: 90%;
+    margin-left:10px;
+    border: 1px solid #BFBEBE;
+    background-color: #fff;
+    color: #01234B;
+    border-radius: 8px;
+    padding:10px 10px ;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+.other-days-button:hover{
+    background-color: #01234B;
+    color: #fff;
+
+}
 .slide-content {
     height: 290px;
     overflow-y: auto;

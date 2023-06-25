@@ -119,7 +119,12 @@
                   </div>
                   <Calendar2  @dateSelected="showSelectedAppointmentModal"
                               :doctor="doctor"
-                              @showMore="showMoreSlotsForDoctor"/>
+                              @showMore="showMoreSlotsForDoctor"
+                              :selected-doctor="doctor"
+                              v-if="doctor.id"
+                              :buttonLink="buttonLink"
+                              />
+
               </div>
               <MoreSlotsModal
                       :show="showMoreSlotsModal"
@@ -399,6 +404,7 @@ export default {
       moment,
       doctor: {},
       result: '',
+        buttonLink: true,
     };
   },
   computed: {
@@ -411,9 +417,10 @@ export default {
     this.user()
     this.generateTimeSlots()
     this.generateDays()
-    this.takeAppointmentModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
-    this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'),{ backdrop: 'static', keyboard: false })
-    this.successModal = new bootstrap.Modal(document.getElementById('successModal'),{ backdrop: 'static', keyboard: false })
+    // this.takeAppointmentModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
+    // this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'),{ backdrop: 'static', keyboard: false })
+    // this.successModal = new bootstrap.Modal(document.getElementById('successModal'),{ backdrop: 'static', keyboard: false })
+      console.log(this.doctor, 'doctor')
   },
 
   methods: {

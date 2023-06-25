@@ -498,6 +498,7 @@ export default {
         },
         showMoreSlotsForDoctor(doctor) {
           this.moreSlotsDoctor = doctor;
+            console.log(doctor, 'search page')
           this.showMoreSlotsModal = true;
         },
         myCallback(page) {

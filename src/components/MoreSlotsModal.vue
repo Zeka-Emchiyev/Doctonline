@@ -95,7 +95,7 @@ export default {
     }
   },
   mounted() {
-      this.showMoreModalInput = new bootstrap.Modal(document.getElementById('appointmentSlotsMoreModal'));
+      this.showMoreModalInput = new bootstrap.Modal(document.getElementById('appointmentSlotsMoreModal'), { backdrop: 'static', keyboard: false });
       document.getElementById('appointmentSlotsMoreModal').addEventListener('hidden.bs.modal',  () => {
           this.$emit("closeModal");
       })
@@ -172,6 +172,7 @@ export default {
       this.monthlyDates = enumerateDaysBetweenDates(tomorrow, monthLater)
     },
     generateTimeSlots() {
+        this.timeSlots = []
       const startTime = moment(this.doctor.start_time, "HH:mm")
       const endTime = moment(this.doctor.end_time, "HH:mm")
       const diffInMinutes = endTime.diff(startTime, 'minutes')
@@ -283,6 +284,9 @@ export default {
     height: 181px;
     overflow-y: auto;
   }
+    .modal.fade .modal-dialog {
+        transform: translate(0, -14px);
+    }
 
   .randevu-take {
     margin-top: 0 !important;
