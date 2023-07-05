@@ -420,7 +420,6 @@ export default {
     this.takeAppointmentModal = new bootstrap.Modal(document.getElementById('takeAppointmentModal'), { backdrop: 'static', keyboard: false })
     this.randevuModal = new bootstrap.Modal(document.getElementById('randevuModal'),{ backdrop: 'static', keyboard: false })
     this.successModal = new bootstrap.Modal(document.getElementById('successModal'),{ backdrop: 'static', keyboard: false })
-      console.log(this.doctor, 'doctor')
   },
 
   methods: {
@@ -495,7 +494,8 @@ export default {
       }
     },
     user() {
-      axios.get(this.$apiUrl + "/api-doctors?doctor-id=" + this.$route.params.id)
+      const doctorId = this.$route.params.slug.split('-').slice(-1);
+      axios.get(this.$apiUrl + "/api-doctors?doctor-id=" + doctorId)
         .then(response => {
           this.doctor = response.data
           this.generateTimeSlots()

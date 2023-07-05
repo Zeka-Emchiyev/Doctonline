@@ -213,13 +213,13 @@
                                                                     }">
                                 </div>
                                 <router-link class="text-decoration-none profile-link"
-                                    :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                    :to="{ name: 'doctor', params: { slug: doctor.slug } }">
                                     Profilə bax
                                 </router-link>
                             </div>
                             <div class="col-9 col-lg-10">
                                 <router-link class="text-decoration-none rout-link"
-                                    :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                    :to="{ name: 'doctor', params: { slug: doctor.slug } }">
                                     {{ doctor.fullname }}
                                 </router-link>
                                 <span class="text-profession" style="display: block;">{{

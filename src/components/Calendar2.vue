@@ -77,7 +77,6 @@ export default {
         this.moment.locale('az')
         this.user()
         this.generateDays()
-        console.log(this.doctor)
     },
 
     methods: {
