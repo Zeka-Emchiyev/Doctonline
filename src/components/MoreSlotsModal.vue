@@ -17,13 +17,13 @@
                                    }">
                                 </div>
                                 <router-link class="text-decoration-none profile-link" @click.native="closeModal"
-                                             :to="{ name: 'doctor', params: { id: doctor.id } }">
-                                    Profilə bax
+                                             :to="{ name: 'doctor', params: { slug: doctor.slug } }">
+                                            Profilə bax
                                 </router-link>
                             </div>
                             <div class="col-9">
                                 <router-link class="text-decoration-none rout-link" @click.native="closeModal"
-                                             :to="{ name: 'doctor', params: { id: doctor.id } }">
+                                             :to="{ name: 'doctor', params: { slug: doctor.slug } }">
                                     {{ doctor.fullname }}
                                 </router-link>
                                 <span class="text-profession" style="display: block;">{{doctor.profession}}</span>
