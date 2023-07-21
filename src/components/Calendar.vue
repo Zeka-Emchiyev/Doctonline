@@ -240,26 +240,6 @@ export default {
     border-right: 1px solid #EDF1F7;
 }
 
-.VueCarousel-navigation-button {
-    top: 20px;
-}
-
-.VueCarousel-navigation-prev {
-    &:before {
-        content: url(@/assets/icons/arrow-ios-left.svg);
-        height: 20px;
-        width: 20px;
-    }
-}
-
-.VueCarousel-navigation-next {
-    &:before {
-        content: url(@/assets/icons/arrow-ios-right.svg);
-        height: 20px;
-        width: 20px;
-    }
-}
-
 @media screen and (max-width: 576px) {
     .slide-content {
         height: 181px;

@@ -244,7 +244,8 @@
                 <slide v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')">
                   <div @click="setDay(day.date)" class="day-container"
                     :class="{ 'bg-success text-white': selectedDay === day.date }">
-                    {{ moment(day.date).format('MMM DD') }}
+<!--                    <span style="font-size: 12px;">{{ moment(day.date).format('dd.').toLowerCase() }}</span>-->
+                    <p>{{ moment(day.date).format('MMM DD') }}</p>
                   </div>
                   <div class="time-slots mt-4">
                     <div v-for="(timeSlot, index) in day.timeSlots">
@@ -374,15 +375,16 @@ import NavbarDoctor from "@/components/NavbarDoctor";
 import GoogleMapLoader from '@/components/GoogleMapLoader.vue';
 import Calendar2 from "@/components/Calendar2.vue";
 import MoreSlotsModal from "@/components/MoreSlotsModal.vue";
+import { isSunday, isWeekend } from "@/helper/util";
 
 export default {
   name: 'Doctor',
-  components: {MoreSlotsModal, Calendar2, FaqHolder, Carousel, Slide, NavbarDoctor, GoogleMapLoader },
+  components: { MoreSlotsModal, Calendar2, FaqHolder, Carousel, Slide, NavbarDoctor, GoogleMapLoader },
   data() {
     return {
       selectedDay: null,//moment().toDate().toISOString(),
       selectedTime: '',
-      selectedHeader: 'location',
+      selectedHeader: 'information',
       selectedBox: 'clinic',
       monthlyDates: [],
       timeSlots: [],
@@ -460,19 +462,44 @@ export default {
             this.form.phone = ''
     },
     generateDays() {
-      // todo : 6ci gunleri hekimden yoxlamaq. bazar gunlerini cixarmaq.
-      // const today = moment()
-      const tomorrow = moment().add(1, 'days');
-      const monthLater = moment().add(1, 'month')
+      const worksOnSaturday = !!this.doctor.saturdayStatus
+      const addDayCount = 1;
+      let tomorrow = moment().add(1, 'days');
+      let monthLater = moment().add(1, 'month');
+
+      if (worksOnSaturday) {
+        if (isSunday(tomorrow)) {
+          tomorrow = moment().add(addDayCount + 1, 'days');
+        }
+      }
+      // Hekim 6ci gun ishleyirse
+      else {
+        if (isWeekend(tomorrow)) {
+          tomorrow = moment().add(addDayCount + 2, 'days');
+        }
+      }
       let enumerateDaysBetweenDates = (startDate, endDate) => {
         let now = startDate.clone(), dates = [];
         let i = 0;
         while (now.isSameOrBefore(endDate)) {
-          dates.push({
-            id: i++,
-            date: now.toDate(),
-            showMore: false
-          });
+          i++
+          if (worksOnSaturday) {
+            if (!isSunday(now)) {
+              dates.push({
+                id: i,
+                date: now.toDate(),
+                showMore: false
+              });
+            }
+          } else {
+            if (!isWeekend(now)) {
+              dates.push({
+                id: i,
+                date: now.toDate(),
+                showMore: false
+              });
+            }
+          }
           now.add(1, 'days');
         }
         return dates;
@@ -581,6 +608,7 @@ input[type=number] {
 .day-container {
   margin: 0 auto;
   width: 64px;
+  font-size: 14px;
   height: 36px;
   display: flex;
   align-items: center;
@@ -594,6 +622,9 @@ input[type=number] {
   transition: border-color .15s linear, background-color .15s linear;
   //margin-left: 5px;
   //margin-right: 5px;
+  p {
+    margin: 0;
+  }
 }
 
 .time-slots {
@@ -634,15 +665,19 @@ input[type=number] {
 //   height: auto !important;
 // }
 
+</style>
+<style lang="scss">
 .VueCarousel-slide {
   border-right: 1px solid #EDF1F7;
 }
 
 .VueCarousel-navigation-button {
-  top: 20px;
+  outline: none !important;
+  top: 20px !important;
 }
 
 .VueCarousel-navigation-prev {
+  left: 10px !important;
   &:before {
     content: url(@/assets/icons/arrow-ios-left.svg);
     height: 20px;
@@ -651,14 +686,13 @@ input[type=number] {
 }
 
 .VueCarousel-navigation-next {
+  right: 10px !important;
   &:before {
     content: url(@/assets/icons/arrow-ios-right.svg);
     height: 20px;
     width: 20px;
   }
 }
-</style>
-<style lang="scss">
 .icon-clinic {
   // background-color: #0F42B0;
   color: #01234B;
@@ -978,5 +1012,4 @@ input[type=number] {
   }
 }
 </style>
-
 
