@@ -244,7 +244,7 @@
                 <slide v-for="day in monthlyDates" :key="moment(day.date).format('MMM DD')">
                   <div @click="setDay(day.date)" class="day-container"
                     :class="{ 'bg-success text-white': selectedDay === day.date }">
-                    {{ moment(day.date).format('MMM DD') }}
+                     {{ moment(day.date).format('MMM DD') }}
                   </div>
                   <div class="time-slots mt-4">
                     <div v-for="(timeSlot, index) in day.timeSlots">
@@ -382,7 +382,7 @@ export default {
     return {
       selectedDay: null,//moment().toDate().toISOString(),
       selectedTime: '',
-      selectedHeader: 'location',
+      selectedHeader: 'information',
       selectedBox: 'clinic',
       monthlyDates: [],
       timeSlots: [],

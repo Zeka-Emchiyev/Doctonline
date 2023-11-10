@@ -18,7 +18,7 @@
                                 <p class="dropdown-item text-position">İxtisaslar üzrə</p>
 
                                 <div class="flex-row flex-wrap ">
-                                    <div @click="selected(profession)" class="dropdown-item link"
+                                    <div @click="selectProfession(profession)" class="dropdown-item link"
                                         v-for="profession in filterProfessions">
                                         {{ profession.name }}
                                     </div>
@@ -38,7 +38,7 @@
                                 <p class="dropdown-item text-position">Rayonlar üzrə</p>
 
                                 <div class="flex-row flex-wrap">
-                                    <div @click="select(region)" class="dropdown-item link" v-for="region in filterRegions">
+                                    <div @click="selectRegion(region)" class="dropdown-item link" v-for="region in filterRegions">
                                         {{ region.name }}
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                             <p class="dropdown-item text-position">İxtisaslar</p>
 
                                             <div class="flex-row flex-wrap">
-                                                <div @click="selected(profession)" class="dropdown-item text-link"
+                                                <div @click="selectProfession(profession)" class="dropdown-item text-link"
                                                      v-for="profession in filterProfessions">
                                                     {{ profession.name }}
                                                 </div>
@@ -145,7 +145,7 @@
                                             <p class="dropdown-item text-position">Rayonlar üzrə</p>
 
                                             <div class="flex-row flex-wrap">
-                                                <div @click="select(region)" class="dropdown-item text-link"
+                                                <div @click="selectRegion(region)" class="dropdown-item text-link"
                                                      v-for="region in filterRegions">
                                                     {{ region.name }}
                                                 </div>
@@ -455,8 +455,6 @@ export default {
 
     mounted() {
         this.professionApi()
-        this.regonsApi()
-        this.clinicsApi()
         const profId = this.$route.query['prof-id'] || ''
         const regionId = this.$route.query['region-id'] || ''
         const clinicId = this.$route.query['clinic-id'] || ''
@@ -506,49 +504,36 @@ export default {
             window.scroll(0, 0)
         },
 
-        professionApi() {
-            axios.get(this.$apiUrl + "/api-professions")
-                .then(response => {
-                    this.professions = response.data
-                    // check if prof id exist. if so then set.
-                    // Region and insurance selection also should be added like this way
-                    if (this.$route.query['prof-id']) {
-                        const selectedProfession = this.professions.find(pro => pro.id === Number(this.$route.query['prof-id']))
-                        if (selectedProfession) {
-                            this.selected(selectedProfession)
-                        }
+        async professionApi() {
+            try {
+                const [professionsResponse, regionsResponse, clinicsResponse] = await Promise.all([
+                    axios.get(this.$apiUrl  + "/api-professions"),
+                    axios.get(this.$apiUrl +"/api-regions"),
+                    axios.get(this.$apiUrl + "/api-clinics")
+                ])
+                this.professions = professionsResponse.data;
+                this.regions = regionsResponse.data;
+                this.clinics = clinicsResponse.data
+                if (this.$route.query['prof-id']) {
+                    const selectedProfession = this.professions.find(pro => pro.id === Number(this.$route.query['prof-id']))
+                    if (selectedProfession) {
+                        this.selectProfession(selectedProfession)
                     }
-                    // console.log(this.professions)
-                })
-                .catch(e => console.log(e))
+                }
+                if(this.$route.query['region-id']){
+                    const selectedRegion = this.regions.find(region =>region.id === Number(this.$route.query['region-id']) )
+                    this.searchRegion = selectedRegion.name
+                }
+                if(this.$route.query['clinic-id']){
+                    const selectedClinic = this.clinics.find(clinic => clinic.id === Number(this.$route.query['clinic-id']))
+                    this.searchClinic = selectedClinic.name
+                }
+            } catch (error) {
+                console.log(error);
+            }
         },
-        regonsApi() {
-            axios.get(this.$apiUrl + '/api-regions')
-                .then(resp => {
-                    this.regions = resp.data
 
-                    if (this.$route.query['region-id']) {
-                        const selectedRegion = this.regions.find(region => region.id === Number(this.$route.query['region-id']))
-                        if (selectedRegion) {
-                            this.select(selectedRegion)
-                        }
-                    }
-                })
-                .catch(e => console.log(e))
-        },
-        clinicsApi() {
-            axios.get(this.$apiUrl + '/api-clinics')
-                .then(resp => {
-                    this.clinics = resp.data
-                    if (this.$route.query['clinic-id']) {
-                        const selectedClinic = this.clinics.find(clinic => clinic.id === Number(this.$route.query['clinic-id']))
-                        if (selectedClinic) {
-                            this.selectClinic(selectedClinic)
-                        }
-                    }
-                    // console.log(this.clinics)
-                })
-        },
+
         getDoctorsForProfessionAndRegion(profId, regionId, clinicId) {
             // const profId = this.$route.query['prof-id'] || ''
             // const regionId = this.$route.query['region-id'] || ''
@@ -559,17 +544,19 @@ export default {
                     // this.doctors = response.data
                     if (response.data != null) {
                         this.doctors = response.data
+                        // console.log(this.doctors[0].profession)
+                        // this.searchProfession = this.doctors[0].profession
                     }
                 })
                 .catch(e => console.log(e))
         },
-        select(selected) {
+        selectRegion(selected) {
           this.searchRegion = selected.name
           this.selectedRegion = selected.id
           this.myModalregions.hide()
         },
   
-        selected(selected) {
+        selectProfession(selected) {
           this.searchProfession = selected.name
           this.selectedProfession = selected.id
           this.myModalProfessions.hide()

@@ -28,7 +28,7 @@
                                         <p class="dropdown-item text-position d-inline">İxtisaslar üzrə</p>
 
                                         <div class="flex-row flex-wrap">
-                                            <div @click="selected(profession)" class="dropdown-item link"
+                                            <div @click="selectProfession(profession)" class="dropdown-item link"
                                                 v-for="profession in filterProfessions">
                                                 {{ profession.name }}
                                             </div>
@@ -54,7 +54,7 @@
                                         </div>
                                         <p class="dropdown-item text-position d-inline">Rayonlar üzrə</p>
                                         <div class="flex-row flex-wrap">
-                                            <div @click="select(region)" class="dropdown-item link"
+                                            <div @click="selectRegion(region)" class="dropdown-item link"
                                                 v-for="region in filterRegions">
                                                 {{ region.name }}
                                             </div>
@@ -106,7 +106,7 @@
                                     <input v-model="searchProfession"
                                         class="icon dropdown-toggle form-control border-0 input-search" type="text"
                                         placeholder="İxtisaslar" data-bs-toggle="modal" data-bs-target="#professionsModal"
-                                        disabled>
+                                        >
 
                                 </div>
 
@@ -129,7 +129,7 @@
                                                 <p class="dropdown-item text-position">İxtisaslar</p>
 
                                                 <div class="flex-row flex-wrap">
-                                                    <div @click="selected(profession)" class="dropdown-item text-link"
+                                                    <div @click="selectProfession(profession)" class="dropdown-item text-link"
                                                         v-for="profession in filterProfessions">
                                                         {{ profession.name }}
                                                     </div>
@@ -169,7 +169,7 @@
                                                 <p class="dropdown-item text-position">Rayonlar üzrə</p>
 
                                                 <div class="flex-row flex-wrap">
-                                                    <div @click="select(region)" class="dropdown-item text-link"
+                                                    <div @click="selectRegion(region)" class="dropdown-item text-link"
                                                         v-for="region in filterRegions">
                                                         {{ region.name }}
                                                     </div>
@@ -382,14 +382,14 @@ export default {
                     this.clinics = resp.data
                 })
         },
-        select(selected) {
+        selectRegion(selected) {
             this.searchRegion = selected.name
             this.selectedRegion = selected.id
             console.log(this.selectedRegion)
             this.myModalregions.hide()
         },
 
-        selected(selected) {
+        selectProfession(selected) {
             this.searchProfession = selected.name
             this.selectedProfession = selected.id
             console.log(this.selectedProfession)
